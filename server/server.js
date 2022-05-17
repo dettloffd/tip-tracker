@@ -62,7 +62,3 @@ app.use((error, req, res, next) => {
 //message = ((`Systems fuuuunctional on port`, `${PORT}`, `boiiiii`))
 app.listen(`${PORT}`, console.log(`Systems functional on port`.rainbow.bold, `${PORT}`.rainbow.bold));
 //app.listen(`${PORT}`, console.log(message));
-
-//////MONGO;
-//user: dbUser
-//ps: mongo123
