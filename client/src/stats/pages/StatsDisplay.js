@@ -15,12 +15,7 @@ const StatsEntries = () => {
 
   return (
     <>
-      <Flex
-      direction={"column"}
-      border={"1px solid red"}
-      width="40vw"
-      // min-width="50vw"
-      >
+
         <Box>
           <input
             type="date"
@@ -49,7 +44,7 @@ const StatsEntries = () => {
 
 
             {chartFieldsArray.map((chart) => (
-              <Box width={"100%"}>
+              <Box flexBasis={"100%"}>
                 <ChartConstructor
                   key={chart.chartTitle}
                   {...chart}
@@ -60,7 +55,6 @@ const StatsEntries = () => {
 
           <Divider></Divider>
         </Box>
-      </Flex>
       
     </>
   );

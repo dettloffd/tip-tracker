@@ -40,11 +40,11 @@ const UserEntries = () => {
 
   return (
     <>
-      <Flex width={"40vw"}>
+      
         <EntryLog entries={testEntries}></EntryLog>
         {/* <EntryLog entries={data.data.entries}></EntryLog> */}
 
-      </Flex>
+      
     </>
   );
 };
