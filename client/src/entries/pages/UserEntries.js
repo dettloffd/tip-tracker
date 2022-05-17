@@ -2,7 +2,6 @@ import React from "react";
 import EntryLog from "../components/EntryLog";
 import { useQuery } from "react-query";
 import { getAllEntries, getEntriesByUserId } from "../api/entriesApi";
-import { Flex } from "@chakra-ui/react";
 
 const UserEntries = () => {
   let userId = "5f0aa38f2a9f992d74ff4533";
@@ -26,7 +25,6 @@ const UserEntries = () => {
   );
   //////////////for testing; gets every entry in database
 
-
   if (isLoading) {
     return <p>hold on</p>;
   }
@@ -36,17 +34,16 @@ const UserEntries = () => {
     return <p>errorrrrrr</p>;
   }
 
-  let testEntries = (data.data.entries.slice(-5, -1));
+  if (data) {
+    let testEntries = data.data.entries.slice(-5, -1);
 
-  return (
-    <>
-      
+    return (
+      <>
         <EntryLog entries={testEntries}></EntryLog>
         {/* <EntryLog entries={data.data.entries}></EntryLog> */}
-
-      
-    </>
-  );
+      </>
+    );
+  }
 };
 
 export default UserEntries;

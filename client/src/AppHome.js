@@ -1,7 +1,7 @@
 import { Box, Flex } from "@chakra-ui/react";
 import React from "react";
 import EntryInputForm from "./entries/components/EntryInputForm";
-import UserEntries from "./entries/pages/UserEntries";
+import EntryLog from "./entries/components/EntryLog";
 import StatsDisplay from "./stats/pages/StatsDisplay";
 // import EntryInputForm from "./entries/components/EntryInputForm";
 // import UserEntries from "./entries/pages/UserEntries";
@@ -19,7 +19,7 @@ const AppHome = () => {
       <EntryInputForm />
       <Flex justify="center" maxW={"80rem"}>
         <Flex width={"40vw"}>
-          <UserEntries />
+          <EntryLog />
         </Flex>
         <Flex direction={"column"} width="40vw">
           <StatsDisplay />
