@@ -76,9 +76,9 @@ const ChartConstructor = (props) => {
     xAxis: { categories: chartData.categories },
     plotOptions: {
       series: {
-          color: '#38B2AC'
-      }
-  },
+        color: "#38B2AC",
+      },
+    },
 
     yAxis: {
       // In order to keep the bar graph more readable
@@ -131,6 +131,39 @@ const ChartConstructor = (props) => {
           p={1}
           alignSelf={"center"}
           width={"100%"}
+          maxW={"30rem"}
+          justify={"space-between"}
+        >
+          <Flex align={"center"}>
+          <Icon
+              as={MdOutlineTrendingUp}
+              w={6}
+              h={6}
+              color="teal.500"
+              m={2}
+            />
+            <Text >Highest</Text> {" ~ "}
+            <Text>{highAndLowValues.topValue.x}: {highAndLowValues.topValue.y}</Text>
+            </Flex>
+
+            <Flex align={"center"}>
+          <Icon
+              as={MdOutlineTrendingDown}
+              w={6}
+              h={6}
+              color="teal.500"
+              m={2}
+            />
+            <Text>Lowest~</Text>
+            {highAndLowValues.bottomValue.x}: {highAndLowValues.bottomValue.y}
+            </Flex>
+
+        </Flex>
+
+        {/* <Flex
+          p={1}
+          alignSelf={"center"}
+          width={"100%"}
           maxW={"25rem"}
           justify={"space-between"}
         >
@@ -149,8 +182,9 @@ const ChartConstructor = (props) => {
           </Flex>
         </Flex>
 
-        <Divider />
-        <Flex
+        <Divider /> */}
+
+        {/* <Flex
           p={1}
           alignSelf={"center"}
           width={"100%"}
@@ -170,7 +204,7 @@ const ChartConstructor = (props) => {
           <Flex align={"center"}>
             {highAndLowValues.bottomValue.x} : {highAndLowValues.bottomValue.y}
           </Flex>
-        </Flex>
+        </Flex> */}
       </Flex>
     </>
   );

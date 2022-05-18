@@ -1,14 +1,13 @@
 import React from "react";
 import EntryItem from "./EntryItem";
-// import { List, Divider } from "@material-ui/core";
 import { List } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { getAllEntries, getEntriesByUserId } from "../api/entriesApi";
+import MoonLoader from "react-spinners/MoonLoader";
 
-
-
-const EntryLog = (props) => {
+const EntryLog = ({numResults}) => {
   let userId = "5f0aa38f2a9f992d74ff4533";
+  console.log(numResults);
   /////testing purposes
 
   // const { data, error, isLoading, isError } = useQuery(
@@ -30,7 +29,8 @@ const EntryLog = (props) => {
   //////////////for testing; gets every entry in database
 
   if (isLoading) {
-    return <p>hold on</p>;
+    return <MoonLoader color={"#4FD1C5"} loading={true} />
+    ;
   }
 
   if (isError) {
@@ -38,7 +38,7 @@ const EntryLog = (props) => {
   }
 
   if (data) {
-    let testEntries = data.data.entries.slice(-5, -1);
+    let testEntries = data.data.entries.slice(0, numResults);
 
     return (
       <>
