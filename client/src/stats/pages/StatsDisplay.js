@@ -40,8 +40,6 @@ const StatsEntries = () => {
           >
             setDateRange
           </button>
-          {/* </Grid><Grid item xs={11} md={8} lg={4}> */}
-
 
             {chartFieldsArray.map((chart) => (
               <Box flexBasis={"100%"}>

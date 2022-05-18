@@ -33,7 +33,7 @@ export const chartFieldsArray = [
       //low={"Lowest Average Total Tips by Weekday "},
     },
     {
-      chartTitle: "Average Number of Deliveries per Weekday",
+      chartTitle: "Average Number of Transactions per Weekday",
       chartType: "bar",
       url: "avg/numTransactions/day",
       xKey: "day",

@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-import { Box, Divider, Flex } from "@chakra-ui/react";
+import { MdOutlineTrendingDown, MdOutlineTrendingUp } from "react-icons/md";
+
+import { Box, Divider, Flex, Icon, Text } from "@chakra-ui/react";
 import { useHttpHook } from "../../hooks/useHttpHook";
 
 import useChartConstructorHook from "../../hooks/useChartConstructorHook";
 import useHighLowStatsHook from "../../hooks/useHighLowStatsHook";
-
 
 const ChartConstructor = (props) => {
   const [chartData, setChartData] = useState({ categories: [], yValues: [] });
@@ -73,6 +74,11 @@ const ChartConstructor = (props) => {
       text: `${props.chartTitle}`,
     },
     xAxis: { categories: chartData.categories },
+    plotOptions: {
+      series: {
+          color: '#38B2AC'
+      }
+  },
 
     yAxis: {
       // In order to keep the bar graph more readable
@@ -107,25 +113,66 @@ const ChartConstructor = (props) => {
   };
   return (
     <>
-    <Flex direction={"column"}>
-        <Box >
+      <Flex
+        boxShadow="md"
+        bg="white"
+        p={1}
+        m={1}
+        //   w={"lg"}
+        borderRadius="lg"
+        direction={"column"}
+      >
+        <Box>
           <HighchartsReact highcharts={Highcharts} options={options} />
         </Box>
-        <Box
- 
+        <Divider></Divider>
+
+        <Flex
+          p={1}
+          alignSelf={"center"}
+          width={"100%"}
+          maxW={"25rem"}
+          justify={"space-between"}
         >
-          <h3>
-            High: {highAndLowValues.topValue.x} with{" "}
-            {highAndLowValues.topValue.y}
-          </h3>
-          <Divider />
-          <h3>
-            Low: {highAndLowValues.bottomValue.x} with{" "}
-            {highAndLowValues.bottomValue.y}
-          </h3>
-        </Box>
+          <Flex align={"center"}>
+            <Icon
+              as={MdOutlineTrendingUp}
+              w={6}
+              h={6}
+              color="green.300"
+              m={2}
+            />
+            <Text>High value</Text>
+          </Flex>
+          <Flex align={"center"}>
+            {highAndLowValues.topValue.x} : {highAndLowValues.topValue.y}
+          </Flex>
         </Flex>
-        </>
+
+        <Divider />
+        <Flex
+          p={1}
+          alignSelf={"center"}
+          width={"100%"}
+          maxW={"25rem"}
+          justify={"space-between"}
+        >
+          <Flex align={"center"}>
+            <Icon
+              as={MdOutlineTrendingDown}
+              w={6}
+              h={6}
+              color="red.300"
+              m={2}
+            />
+            <Text>Low value</Text>
+          </Flex>
+          <Flex align={"center"}>
+            {highAndLowValues.bottomValue.x} : {highAndLowValues.bottomValue.y}
+          </Flex>
+        </Flex>
+      </Flex>
+    </>
   );
 };
 
