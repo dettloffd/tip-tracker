@@ -27,9 +27,9 @@ export default function SideBar() {
   }
 
   let navItems = [
-    { navSize: navSize, icon: MdAttachMoney, title: "Dashboard", index: 0 },
-    { navSize: navSize, icon: MdAttachMoney, title: "Stats", index: 1 },
-    { navSize: navSize, icon: MdAttachMoney, title: "Otherstuff", index: 2 },
+    { navSize: navSize, icon: MdAttachMoney, title: "Dashboard" },
+    { navSize: navSize, icon: MdAttachMoney, title: "Stats" },
+    { navSize: navSize, icon: MdAttachMoney, title: "Otherstuff" },
   ];
 
   return (
@@ -69,14 +69,14 @@ export default function SideBar() {
           />
           
 
-          {navItems.map((item) => (
+          {navItems.map((item, index) => (
             <NavItem
               navSize={item.navSize}
               icon={item.icon}
               title={item.title}
-              active={item.index == activeItem ? true : false}
+              active={index == activeItem ? true : false}
               handleClick={handleClick}
-              index={item.index}
+              index={index}
             //   onClick={(e) => {
             //     //   setActiveItem(e.target.value);
             //       console.log(e.target.value);
