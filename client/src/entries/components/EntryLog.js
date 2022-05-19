@@ -1,13 +1,12 @@
 import React from "react";
 import EntryItem from "./EntryItem";
-import { List } from "@chakra-ui/react";
+import { Flex, List } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { getAllEntries, getEntriesByUserId } from "../api/entriesApi";
 import MoonLoader from "react-spinners/MoonLoader";
 
-const EntryLog = ({numResults}) => {
+const EntryLog = ({ numResults }) => {
   let userId = "5f0aa38f2a9f992d74ff4533";
-  console.log(numResults);
   /////testing purposes
 
   // const { data, error, isLoading, isError } = useQuery(
@@ -29,8 +28,11 @@ const EntryLog = ({numResults}) => {
   //////////////for testing; gets every entry in database
 
   if (isLoading) {
-    return <MoonLoader color={"#4FD1C5"} loading={true} />
-    ;
+    return (
+      <Flex width="100%" justify={"center"} p={6}>
+      <MoonLoader  size={200} color={"#4FD1C5"} loading={true} />
+    </Flex>
+    );
   }
 
   if (isError) {
