@@ -5,15 +5,14 @@ import format from "date-fns/format";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { addDays, subDays } from "date-fns";
-import { Button } from "@chakra-ui/react";
+import { Box, Button, Flex, Input } from "@chakra-ui/react";
 
-const DateRangeSelector = ({setDateRange}) => {
-
+const DateRangeSelector = ({ setDateRange }) => {
   const [range, setRange] = useState([
     {
       startDate: subDays(new Date(), 365),
       endDate: new Date(),
-      key: "selection", 
+      key: "selection",
     },
   ]);
 
@@ -40,35 +39,46 @@ const DateRangeSelector = ({setDateRange}) => {
   };
 
   return (
-    <div className="calendarWrap">
-      <input
+    <Flex padding={3}  className="calendarWrap">
+      <Input
+      focusBorderColor="teal.400"
+        width={"20rem"}
+        textAlign="center"
         onClick={() => setOpen((open) => !open)}
         value={`${format(range[0].startDate, "yyyy-MM-dd")} to ${format(
           range[0].endDate,
           "yyyy-MM-dd"
         )}`}
-        className="inputBox"
+        // className="inputBox"
       />
 
       <div ref={refOne}>
         {open && (
           <DateRangePicker
-          rangeColors={["#38B2AC"]}
+            rangeColors={["#38B2AC"]}
             onChange={(item) => setRange([item.selection])}
             editableDateInputs={true}
             moveRangeOnFirstSelection={false}
             ranges={range}
             months={2}
-            direction="vertical"
+            direction="horizontal"
             className="calendarElement"
           />
         )}
       </div>
-      <Button onClick={()=>setDateRange({startDate: (format(range[0].startDate, "yyyy-MM-dd")), endDate: format(
-          range[0].endDate,
-          "yyyy-MM-dd"
-        )})}>HELLO</Button>
-    </div>
+      <Button
+        variant="solid"
+        colorScheme="teal"
+        onClick={() =>
+          setDateRange({
+            startDate: format(range[0].startDate, "yyyy-MM-dd"),
+            endDate: format(range[0].endDate, "yyyy-MM-dd"),
+          })
+        }
+      >
+        HELLO
+      </Button>
+    </Flex>
   );
 };
 

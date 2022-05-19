@@ -23,6 +23,9 @@ const AppHome = () => {
       border={"1px solid black"}
     >
 
+
+
+
       
 
 
@@ -33,8 +36,15 @@ const AppHome = () => {
       </Flex> */}
 
       <h1>App Homeeeee</h1>
+      <Flex justify="center" maxW={"80rem"}>
+        <Flex p={4} m={4} width={"35vw"}>
+        <EntryInputForm />
+        </Flex>
+        <Flex direction={"column"} width="45vw">
+          <h1>placeholder</h1>
+        </Flex>
+      </Flex>
       
-      <EntryInputForm />
       <Box p={6}><DateRangeSelector setDateRange={setDateRange} /></Box>
       <Flex justify="center" maxW={"80rem"}>
         <Flex width={"35vw"}>

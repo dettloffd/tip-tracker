@@ -53,7 +53,7 @@ const EntryInputForm = (props) => {
 
   return (
     <>
-      <Box bg="white" p={6} rounded="md" w={"sm"} textAlign="center">
+      <Box bg="white" p={6} rounded="md" width={"100%"} textAlign="center">
         <Formik
           enableReinitialize
           initialValues={initialFormState}
