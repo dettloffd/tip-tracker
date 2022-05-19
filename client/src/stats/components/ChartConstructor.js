@@ -11,6 +11,8 @@ import useChartConstructorHook from "../../hooks/useChartConstructorHook";
 import useHighLowStatsHook from "../../hooks/useHighLowStatsHook";
 
 const ChartConstructor = (props) => {
+
+  console.log(props);
   const [chartData, setChartData] = useState({ categories: [], yValues: [] });
 
   const [highAndLowValues, setHighAndLowValues] = useState({
@@ -32,6 +34,7 @@ const ChartConstructor = (props) => {
   );
 
   const { errorMessage, sendRequest } = useHttpHook();
+  
 
   let requestUrl = `http://localhost:5000/api/stats/${props.url}?startDate=${props.dateRange.startDate}&endDate=${props.dateRange.endDate}`;
 

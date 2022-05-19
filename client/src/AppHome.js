@@ -12,9 +12,8 @@ import StatsDisplay from "./stats/pages/StatsDisplay";
 import DateRangeSelector from "./util/DateRangeSelector";
 
 const AppHome = () => {
-  const [selectedDateRange, setSelectedDateRange] = useState(null);
+  const [dateRange, setDateRange] = useState(null);
 
-  console.log(selectedDateRange);
   return (
     <Flex
       bg="gray.100"
@@ -36,13 +35,13 @@ const AppHome = () => {
       <h1>App Homeeeee</h1>
       
       <EntryInputForm />
-      <Box p={6}><DateRangeSelector setSelectedDateRange={setSelectedDateRange} /></Box>
+      <Box p={6}><DateRangeSelector setDateRange={setDateRange} /></Box>
       <Flex justify="center" maxW={"80rem"}>
         <Flex width={"35vw"}>
           <EntryLog numResults={8} />
         </Flex>
         <Flex direction={"column"} width="45vw">
-          <StatsDisplay />
+          <StatsDisplay dateRange={dateRange} />
         </Flex>
       </Flex>
     </Flex>

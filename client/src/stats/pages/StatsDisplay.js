@@ -5,19 +5,19 @@ import { Box, Divider, Flex } from "@chakra-ui/react";
 import ChartConstructor from "../components/ChartConstructor";
 import { chartFieldsArray } from "../chartFieldsArray";
 
-const StatsEntries = () => {
+const StatsEntries = ({dateRange}) => {
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
+  // const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
 
 
   return (
     <>
 
         <Box>
-          <input
+          {/* <input
             type="date"
             value={startDate}
             onChange={(e) => {
@@ -31,15 +31,15 @@ const StatsEntries = () => {
             onChange={(e) => {
               setEndDate(e.target.value);
             }}
-          />
+          /> */}
 
-          <button
+          {/* <button
             onClick={() => {
               setDateRange({ startDate: startDate, endDate: endDate });
             }}
           >
             setDateRange
-          </button>
+          </button> */}
 
             {chartFieldsArray.map((chart) => (
               <Box flexBasis={"100%"}>

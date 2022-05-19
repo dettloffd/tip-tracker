@@ -7,22 +7,19 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { addDays, subDays } from "date-fns";
 import { Button } from "@chakra-ui/react";
 
-const DateRangeSelector = ({setSelectedDateRange}) => {
+const DateRangeSelector = ({setDateRange}) => {
 
   const [range, setRange] = useState([
     {
-      startDate: subDays(new Date(), 30),
+      startDate: subDays(new Date(), 365),
       endDate: new Date(),
       key: "selection", 
     },
   ]);
 
-//   console.log(range);
-
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    // setCalendar(format(new Date(), "yyyy-MM-dd"));
     document.addEventListener("keydown", hideOnEscape, true);
     document.addEventListener("click", hideOnClickOutside, true);
   }, []);
@@ -67,10 +64,10 @@ const DateRangeSelector = ({setSelectedDateRange}) => {
           />
         )}
       </div>
-      <Button onClick={()=>setSelectedDateRange({startDate: new Date(format(range[0].startDate, "yyyy-MM-dd")), endDate: new Date(format(
+      <Button onClick={()=>setDateRange({startDate: (format(range[0].startDate, "yyyy-MM-dd")), endDate: format(
           range[0].endDate,
           "yyyy-MM-dd"
-        ))})}>HELLO</Button>
+        )})}>HELLO</Button>
     </div>
   );
 };
