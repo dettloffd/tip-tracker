@@ -44,15 +44,6 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
     mapEntryData("Average Tip", (tipsTotal / numTransactions).toFixed(2)),
   ];
 
-  // let something = new Date(date);
-  // console.log(something);
-  // console.log(format(something, "EEEE, MMMM do" ));
-
-  // let formattedDate = format(new Date(date),"EEEE, MMMM do");
-  // let otherFormatted = format(new Date(date),"EEEE, yyyy-MM-dd");
-  
-  // console.log(otherFormatted);
-
   const entryButtons = [
     { name: "Edit", functionality: toggleEditing, icon: <MdModeEditOutline /> },
     { name: "Delete", functionality: toggleDeleting, icon: <MdDelete /> },
