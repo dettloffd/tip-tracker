@@ -12,7 +12,7 @@ import StatsDisplay from "./stats/pages/StatsDisplay";
 import DateRangeSelector from "./util/DateRangeSelector";
 
 const AppHome = () => {
-  const [dateRange, setDateRange] = useState(null);
+  const [dateRange, setDateRange] = useState({startDate: "", endDate: ""});
 
   return (
     <Flex
