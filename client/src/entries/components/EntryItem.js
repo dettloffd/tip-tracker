@@ -20,10 +20,10 @@ import {
 //
 import useToggleStateHook from "../../hooks/useToggleStateHook";
 import GeneralModal from "../../UIElements/GeneralModal";
-import EntryInputForm from "./EntryInputForm";
 import EditEntryInputForm from "./EditEntryForm";
 import DeleteEntryForm from "./DeleteEntryForm";
 //
+import format from "date-fns/format";
 
 
 // const entryIcons = [<MdToday />, <MdReceipt />, <MdAttachMoney />, <MdOutlinePriceCheck />];
@@ -38,11 +38,20 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
   }
 
   const dataRows = [
-    mapEntryData("Date", date),
+    mapEntryData("Date", format(new Date(date),"EEEE, yyyy-MM-dd")),
     mapEntryData("Number of Transactions", numTransactions),
     mapEntryData("Tips Total", tipsTotal),
     mapEntryData("Average Tip", (tipsTotal / numTransactions).toFixed(2)),
   ];
+
+  // let something = new Date(date);
+  // console.log(something);
+  // console.log(format(something, "EEEE, MMMM do" ));
+
+  // let formattedDate = format(new Date(date),"EEEE, MMMM do");
+  // let otherFormatted = format(new Date(date),"EEEE, yyyy-MM-dd");
+  
+  // console.log(otherFormatted);
 
   const entryButtons = [
     { name: "Edit", functionality: toggleEditing, icon: <MdModeEditOutline /> },
@@ -87,7 +96,7 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
           }}
         >
           {dataRows.map((row, index) => (
-            <ListItem _hover={{ bg: "gray.100" }} p={1}>
+            <ListItem _hover={{ bg: "gray.100" }} >
               <Flex justify="space-between" alignItems="center">
                 <Box>
                   {/* <ListIcon size="lg">{entryIcons[index]}</ListIcon> {row.name} */}
