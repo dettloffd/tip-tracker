@@ -3,9 +3,14 @@ import { monthParser } from "../util/monthParser";
 
 const useHighLowStatsHook = (xKey, yKey) => {
   const extractHighAndLowValues = (chartResponse) => {
+
+    // if ()
+
     let toBeSorted = [...chartResponse.data.results].sort(
       (a, b) => a[yKey] - b[yKey]
     );
+
+    // console.log(chartResponse);
     // use spread operator in order to not mutate array
 
     let low = toBeSorted[0];
