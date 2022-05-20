@@ -57,6 +57,10 @@ const ChartConstructor = (props) => {
             categories: chartData.xAxis,
             yValues: chartData.yAxis,
           });
+          setHighAndLowValues({
+            topValue: { x: null, y: null },
+            bottomValue: { x: null, y: null },
+          });
         } else {
           let values = extractHighAndLowValues(chartResponse);
           // console.log(values);
