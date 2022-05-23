@@ -3,10 +3,8 @@ import {
   Box,
   Button,
   Flex,
-  List,
   Icon,
   ListItem,
-  ListIcon,
   Divider,
 } from "@chakra-ui/react";
 import {
@@ -42,11 +40,6 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
     mapEntryData("Tips Total", tipsTotal),
     mapEntryData("Average Tip", (tipsTotal / numTransactions).toFixed(2)),
   ];
-
-  let anothaone = (format(new Date(date),"yyyy-MM-dd"));
-
-  // console.log(formatInTimeZone(something, 'America/New_York', 'EEEE, yyyy-MM-dd' ));
-  // console.log(formatInTimeZone(something, 'America/New_York', 'EEEE, yyyy-MM-dd' ));
 
   const entryButtons = [
     { name: "Edit", functionality: toggleEditing, icon: <MdModeEditOutline /> },

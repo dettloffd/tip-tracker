@@ -36,8 +36,8 @@ export default function SideBar() {
         height="95vh"
         marginTop="2.5vh"
         boxShadow="0 4px 0 rgba(0,0,0,0.05)"
-        borderRadius={navSize == "small" ? "15px" : "30px"}
-        w={navSize == "small" ? "75px" : "200px"}
+        borderRadius={navSize === "small" ? "15px" : "30px"}
+        w={navSize === "small" ? "75px" : "200px"}
         flexDir="column"
         justifyContent="space-between"
         backgroundColor="white"
@@ -46,7 +46,7 @@ export default function SideBar() {
           p={"5%"}
           flexDir={"column"}
           w="100%"
-          alignItems={navSize == "small" ? "center" : "flex-start"}
+          alignItems={navSize === "small" ? "center" : "flex-start"}
           as="nav"
         >
           <IconButton
@@ -55,7 +55,7 @@ export default function SideBar() {
             _hover={{ background: "none" }}
             icon={<MdAttachMoney />}
             onClick={() => {
-              if (navSize == "small") {
+              if (navSize === "small") {
                 setNavSize("large");
               } else {
                 setNavSize("small");
@@ -69,7 +69,7 @@ export default function SideBar() {
               navSize={item.navSize}
               icon={item.icon}
               title={item.title}
-              active={index == activeItem ? true : false}
+              active={index === activeItem ? true : false}
               handleClick={handleClick}
               index={index}
             //   onClick={(e) => {
@@ -87,13 +87,13 @@ export default function SideBar() {
           alignItems={"flex-start"}
           mb={4}
         >
-          <Divider display={navSize == "small" ? "none" : "flex"} />
+          <Divider display={navSize === "small" ? "none" : "flex"} />
           <Flex mt={4} align="center">
             <Avatar size={"sm"} />
             <Flex
               flexDir={"column"}
               ml="4"
-              display={navSize == "small" ? "none" : "flex"}
+              display={navSize === "small" ? "none" : "flex"}
             >
               <Heading as="h3" size="sm">
                 Something something
