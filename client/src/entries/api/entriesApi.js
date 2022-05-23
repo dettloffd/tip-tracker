@@ -16,7 +16,6 @@ export const getAllEntries = async () => {
 
 export const getAllEntriesBetweenDates = async ({queryKey}) => {
   const [_key, {startDate, endDate}] = queryKey;
-  console.log(startDate);
 
   try {
     const response = await axios({

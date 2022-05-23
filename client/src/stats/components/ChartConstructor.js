@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import NoDataToDisplay from "highcharts/modules/no-data-to-display";
@@ -10,7 +11,10 @@ import { useHttpHook } from "../../hooks/useHttpHook";
 
 import useChartConstructorHook from "../../hooks/useChartConstructorHook";
 import useHighLowStatsHook from "../../hooks/useHighLowStatsHook";
+
 import { format, parseISO } from "date-fns";
+import { useQuery } from "react-query";
+import { fetchChartDataWithDates, fetchChartDataNoDates } from "../api/statsApi";
 
 const ChartConstructor = (props) => {
   const [chartData, setChartData] = useState({ categories: [], yValues: [] });
@@ -25,6 +29,7 @@ const ChartConstructor = (props) => {
     },
   });
 
+
   const { constructAxis } = useChartConstructorHook(props.xKey, props.yKey);
 
   const { extractHighAndLowValues } = useHighLowStatsHook(
@@ -32,62 +37,65 @@ const ChartConstructor = (props) => {
     props.yKey
   );
 
-  const { errorMessage, sendRequest } = useHttpHook();
+  // const { errorMessage, sendRequest } = useHttpHook();
   // necessary import in order for noData module to work correctly
   NoDataToDisplay(Highcharts);
 
-  let requestUrl = `http://localhost:5000/api/stats/${props.url}?startDate=${props.dateRange.startDate}&endDate=${props.dateRange.endDate}`;
+  let startDate = props.dateRange.startDate;
+  let endDate = props.dateRange.endDate;
+  let url = props.url;
+
+  const dateRangeProvided = props.dateRange.startDate !== "";
+  let theQueryKey;
+  let theQueryFn;
+
+  if (dateRangeProvided) {
+    theQueryKey = [`fetchChartDataWithDates_${props.xKey}_${props.yKey}`, { startDate, endDate, url }];
+    theQueryFn = fetchChartDataWithDates;
+  } else {
+    theQueryKey = [`fetchChartDataNoDates_${props.xKey}_${props.yKey}`, {url}];
+    theQueryFn = fetchChartDataNoDates;
+  }
+
+
+  const { data, error, isLoading, isError } = useQuery(theQueryKey, theQueryFn);
 
   useEffect(() => {
-
-
-
-
-
-    const getChartData = async () => {
-      try {
-        let chartResponse = await sendRequest({
-          url: requestUrl,
-          reqMethod: "GET",
+    if (data) {
+      // if no data returned from database call..
+      if (data.data.count == 0) {
+        // set x and y axis to empty arrays
+        // this will inform highcharts that there is no data triggering a noData message
+        let chartData = { xAxis: [], yAxis: [] };
+        setChartData({
+          categories: chartData.xAxis,
+          yValues: chartData.yAxis,
         });
+        setHighAndLowValues({
+          topValue: { x: null, y: null },
+          bottomValue: { x: null, y: null },
+        });
+      } else {
+        let values = extractHighAndLowValues(data);
+        let chartData = constructAxis(data);
+        setChartData({
+          categories: chartData.xAxis,
+          yValues: chartData.yAxis,
+        });
+        //Much more succint but less explicit version of above..
+        // setChartData({
+        //   categories: constructAxis(chartResponse).xAxis,
+        //   yValues: constructAxis(chartResponse).yAxis,
+        // });
 
-        // if no data returned from database call..
-        if (chartResponse.data.count == 0) {
-          // set x and y axis to empty arrays
-          // this will inform highcharts that there is no data triggering a noData message
-          let chartData = { xAxis: [], yAxis: [] };
-          setChartData({
-            categories: chartData.xAxis,
-            yValues: chartData.yAxis,
-          });
-          setHighAndLowValues({
-            topValue: { x: null, y: null },
-            bottomValue: { x: null, y: null },
-          });
-        } else {
-          let values = extractHighAndLowValues(chartResponse);
-          let chartData = constructAxis(chartResponse);
-          setChartData({
-            categories: chartData.xAxis,
-            yValues: chartData.yAxis,
-          });
-          //Much more succint but less explicit version of above..
-          // setChartData({
-          //   categories: constructAxis(chartResponse).xAxis,
-          //   yValues: constructAxis(chartResponse).yAxis,
-          // });
+        setHighAndLowValues({
+          topValue: { x: values.topValue.x, y: values.topValue.y },
+          bottomValue: { x: values.bottomValue.x, y: values.bottomValue.y },
+        });
+      }      
 
-          setHighAndLowValues({
-            topValue: { x: values.topValue.x, y: values.topValue.y },
-            bottomValue: { x: values.bottomValue.x, y: values.bottomValue.y },
-          });
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getChartData();
-  }, [props.dateRange]);
+    }
+  }, [data]);
 
   const options = {
     chart: {
