@@ -7,8 +7,8 @@ import { chartFieldsArray } from "../chartFieldsArray";
 
 const StatsEntries = ({dateRange}) => {
 
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  // const [startDate, setStartDate] = useState("");
+  // const [endDate, setEndDate] = useState("");
 
   // const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
 

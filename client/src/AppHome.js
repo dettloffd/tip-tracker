@@ -18,7 +18,7 @@ const AppHome = () => {
   return (
     
     <Flex width="100%" bg="gray.100" height={"100%"} > 
-    <SideBar></SideBar>
+    <SideBar/>
     
     
     <Flex
@@ -30,12 +30,6 @@ const AppHome = () => {
       width="100%"
     >
       
-
-
-
-
-      
-
 
       {/* <DateRangePicker></DateRangePicker> */}
 
@@ -55,8 +49,8 @@ const AppHome = () => {
       
       <Box p={6}><DateRangeSelector setDateRange={setDateRange} /></Box>
       <Flex justify="center" maxW={"80rem"}>
-        <Flex width={"30vw"}>
-          <EntryLog numResults={8} />
+        <Flex direction={"column"} width={"30vw"}>
+          <EntryLog numResults={10} dateRange={{startDate: "", endDate: ""}} />
         </Flex>
         <Flex direction={"column"} width="40vw">
           <StatsDisplay dateRange={dateRange} />

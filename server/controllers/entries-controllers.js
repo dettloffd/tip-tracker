@@ -44,6 +44,60 @@ const getAll = async (req, res, next) => {
   // res.json({ count: entries.length, entries: entries });
 };
 
+
+const getAllEntriesBetweenDates = async (req, res, next) => {
+  // const { startDate, endDate } = req.params;
+  const queryString = req.query;
+
+  console.log(queryString);
+
+  let startDate = queryString.startDate;
+  let endDate = queryString.endDate;
+  try {
+    entries = await Entry.aggregate([
+      {
+        $project: {
+          //date: {"$dateToString": {"format": "%Y-%m-%d", "date": "$date"}},
+          date: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+          numTransactions: 1,
+          tipsTotal: 1,
+          creator: 1,
+        },
+      },
+      {
+        $match: {
+          date: {
+            $gte: startDate,
+            $lte: endDate,
+          },
+        },
+      },
+      
+
+      { $sort: { date: -1 } },
+    ]);
+  } catch (err) {
+    // const error = new HttpError('Blah blah blah', 404, 404);
+    // return next(error);
+
+    return res.json({ message: err });
+  }
+
+  res.json({ count: entries.length, entries: entries });
+
+  // let entries;
+
+  // try {
+  //   entries = await Entry.find();
+  // } catch (err) {
+  //   res.json({ message: err });
+  // }
+
+  // res.json({ count: entries.length, entries: entries });
+};
+
+
+
 const getEntriesByUserId = async (req, res, next) => {
   //const userId = req.params.uid;
 
@@ -253,6 +307,7 @@ const deleteEntry = async (req, res, next) => {
 };
 
 exports.getAll = getAll;
+exports.getAllEntriesBetweenDates = getAllEntriesBetweenDates;
 exports.getEntriesByUserId = getEntriesByUserId;
 exports.createEntry = createEntry;
 exports.editEntry = editEntry;

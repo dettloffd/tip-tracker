@@ -23,6 +23,7 @@ import { useMutation } from "react-query";
 import formatToday from "../../util/formatToday";
 import entryValidationSchema from "../../util/entryValidationSchema";
 import { addEntry } from "../api/entriesApi";
+import { format, parseISO } from "date-fns";
 
 const EntryInputForm = (props) => {
   const queryClient = useQueryClient();
@@ -33,8 +34,19 @@ const EntryInputForm = (props) => {
     },
   });
 
+//   let todaysDate = new Date().toISOString();
+//   console.log(todaysDate);
+//  let notToIso = format(new Date(), "yyyy-MM-dd");
+//  console.log(notToIso);
+//  let possible = format(parseISO(new Date().toISOString()), "yyyy-MM-dd");
+//  console.log(possible);
+
+// test for differences
+
   const initialFormState = {
-    date: formatToday(),
+    // date: new Date().toISOString(),
+    date: format(parseISO(new Date().toISOString()), "yyyy-MM-dd"),
+    // date: formatToday(),
     tipsTotal: 0,
     numTransactions: 0,
   };
@@ -43,6 +55,7 @@ const EntryInputForm = (props) => {
     const newEntry = {
       tipsTotal: values.tipsTotal,
       date: values.date,
+      // date: values.date,
       numTransactions: values.numTransactions,
       creator: 1337,
       _id: props.__id,

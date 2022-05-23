@@ -1,11 +1,12 @@
 import React from "react";
 import EntryItem from "./EntryItem";
-import { Flex, List } from "@chakra-ui/react";
+import { Flex, List, Text } from "@chakra-ui/react";
 import { useQuery } from "react-query";
-import { getAllEntries, getEntriesByUserId } from "../api/entriesApi";
+import { getAllEntries, getAllEntriesBetweenDates } from "../api/entriesApi";
 import MoonLoader from "react-spinners/MoonLoader";
 
-const EntryLog = ({ numResults }) => {
+const EntryLog = ({ numResults, dateRange }) => {
+  const { startDate, endDate } = dateRange;
   let userId = "5f0aa38f2a9f992d74ff4533";
   /////testing purposes
 
@@ -21,17 +22,25 @@ const EntryLog = ({ numResults }) => {
   // );
   //////https://www.sitepoint.com/react-query-fetch-manage-data/
 
-  const { data, error, isLoading, isError } = useQuery(
-    "userEntries",
-    getAllEntries
-  );
-  //////////////for testing; gets every entry in database
+  const dateRangeProvided = dateRange.startDate !== "";
+  let theQueryKey;
+  let theQueryFn;
+
+  if (dateRangeProvided) {
+    theQueryKey = ["userEntriesBetweenDates", { startDate, endDate }];
+    theQueryFn = getAllEntriesBetweenDates;
+  } else {
+    theQueryKey = "userEntries";
+    theQueryFn = getAllEntries;
+  }
+
+  const { data, error, isLoading, isError } = useQuery(theQueryKey, theQueryFn);
 
   if (isLoading) {
     return (
       <Flex width="100%" justify={"center"} p={6}>
-      <MoonLoader  size={200} color={"#4FD1C5"} loading={true} />
-    </Flex>
+        <MoonLoader size={200} color={"#4FD1C5"} loading={true} />
+      </Flex>
     );
   }
 
@@ -40,27 +49,26 @@ const EntryLog = ({ numResults }) => {
   }
 
   if (data) {
-    let testEntries = data.data.entries.slice(0, numResults);
+    let entriesToDisplay = data.data.entries.slice(0, numResults);
 
     return (
       <>
-        <List
-          width={"100%"}
-          //   maxW=" 500px"
-          //   maxW="36rem"
-        >
-          {testEntries.map((entry) => (
-            <>
-              <EntryItem
-                {...entry}
-                /////THIS ALLOWS FOR just this instead of below... basically just passing the whole entry object in
-                // date={entry.date}
-                // numDelivs={entry.numDelivs}
-                // tipsTotal={entry.tipsTotal}
-              />
-            </>
-          ))}
-        </List>
+      
+        {entriesToDisplay.length > 0 ? (
+          <List
+            width={"100%"}
+            //   maxW=" 500px"
+            //   maxW="36rem"
+          >
+            {entriesToDisplay.map((entry) => (
+              <>
+                <EntryItem {...entry} />
+              </>
+            ))}
+          </List>
+        ) : (
+          <Text fontSize='2xl' textAlign={"center"}>No entries for time period provided</Text>
+        )}
       </>
     );
   }

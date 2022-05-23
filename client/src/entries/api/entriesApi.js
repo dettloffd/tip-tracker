@@ -8,7 +8,23 @@ export const getAllEntries = async () => {
       data: null,
       headers: {},
     });
-    //console.log(response.data.entries);
+    return response;
+  } catch (err) {}
+};
+
+// "/between/:startDate/:endDate" 
+
+export const getAllEntriesBetweenDates = async ({queryKey}) => {
+  const [_key, {startDate, endDate}] = queryKey;
+  console.log(startDate);
+
+  try {
+    const response = await axios({
+      reqMethod: "GET",
+      url: `http://localhost:5000/api/entries/between/?startDate=${startDate}&endDate=${endDate}`,
+      data: null,
+      headers: {},
+    });
     return response;
   } catch (err) {}
 };

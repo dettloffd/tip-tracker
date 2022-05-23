@@ -8,7 +8,7 @@ const DeleteEntryForm = ({_id}) => {
 
   const { isLoading, isSuccess, mutate } = useMutation(deleteEntry, {
     onSuccess: () => {
-      queryClient.invalidateQueries("userEntries");
+      queryClient.invalidateQueries();
     },
   });
 

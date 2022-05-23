@@ -9,6 +9,10 @@ const entriesControllers = require("../controllers/entries-controllers");
 
 router.get("/", entriesControllers.getAll);
 
+// router.get("/between/:startDate/:endDate", entriesControllers.getAllEntriesBetweenDates);
+router.get("/between", entriesControllers.getAllEntriesBetweenDates)
+
+
 router.get("/user/:uid", entriesControllers.getEntriesByUserId);
 
 

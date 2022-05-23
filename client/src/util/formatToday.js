@@ -10,6 +10,5 @@ export default function formatDate() {
   
     return [year, month, day].join("-");
   }
-  console.log(formatDate());
   //console.log(formatDate(todaysDate));
   

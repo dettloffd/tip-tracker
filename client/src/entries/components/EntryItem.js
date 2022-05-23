@@ -23,10 +23,9 @@ import GeneralModal from "../../UIElements/GeneralModal";
 import EditEntryInputForm from "./EditEntryForm";
 import DeleteEntryForm from "./DeleteEntryForm";
 //
-import format from "date-fns/format";
+// import format from "date-fns/format";
+import {format, parseISO, parse} from "date-fns";
 
-
-// const entryIcons = [<MdToday />, <MdReceipt />, <MdAttachMoney />, <MdOutlinePriceCheck />];
 const entryIcons = [MdToday, MdReceipt, MdAttachMoney, MdOutlinePriceCheck];
 
 const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
@@ -37,12 +36,18 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
     return { name, data };
   }
 
+
   const dataRows = [
-    mapEntryData("Date", format(new Date(date),"EEEE, yyyy-MM-dd")),
+    mapEntryData("Date", format(parseISO(date),'EEEE, yyyy-MM-dd')),
     mapEntryData("Number of Transactions", numTransactions),
     mapEntryData("Tips Total", tipsTotal),
     mapEntryData("Average Tip", (tipsTotal / numTransactions).toFixed(2)),
   ];
+
+  let anothaone = (format(new Date(date),"yyyy-MM-dd"));
+
+  // console.log(formatInTimeZone(something, 'America/New_York', 'EEEE, yyyy-MM-dd' ));
+  // console.log(formatInTimeZone(something, 'America/New_York', 'EEEE, yyyy-MM-dd' ));
 
   const entryButtons = [
     { name: "Edit", functionality: toggleEditing, icon: <MdModeEditOutline /> },
