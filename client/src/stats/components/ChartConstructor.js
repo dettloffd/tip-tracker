@@ -10,12 +10,10 @@ import { useHttpHook } from "../../hooks/useHttpHook";
 
 import useChartConstructorHook from "../../hooks/useChartConstructorHook";
 import useHighLowStatsHook from "../../hooks/useHighLowStatsHook";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 
 const ChartConstructor = (props) => {
   const [chartData, setChartData] = useState({ categories: [], yValues: [] });
-  console.log(props.dateRange);
-
   const [highAndLowValues, setHighAndLowValues] = useState({
     topValue: {
       x: "",
@@ -41,6 +39,11 @@ const ChartConstructor = (props) => {
   let requestUrl = `http://localhost:5000/api/stats/${props.url}?startDate=${props.dateRange.startDate}&endDate=${props.dateRange.endDate}`;
 
   useEffect(() => {
+
+
+
+
+
     const getChartData = async () => {
       try {
         let chartResponse = await sendRequest({
@@ -63,9 +66,7 @@ const ChartConstructor = (props) => {
           });
         } else {
           let values = extractHighAndLowValues(chartResponse);
-          // console.log(values);
           let chartData = constructAxis(chartResponse);
-          console.log(chartData);
           setChartData({
             categories: chartData.xAxis,
             yValues: chartData.yAxis,
@@ -105,13 +106,10 @@ const ChartConstructor = (props) => {
         props.dateRange.startDate == ""
           ? "Date Range: All Time"
           : "Date Range: " +
-            format(new Date(props.dateRange.startDate), "yyyy/MM/dd") +
+            format(parseISO(props.dateRange.startDate), "yyyy/MM/dd") +
             " - " +
-            format(new Date(props.dateRange.endDate), "yyyy/MM/dd"),
-            
-
-      //text: (format(new Date(props.dateRange.startDate), "yyyy-MM-dd")) + " - " + format(new Date(props.dateRange.endDate), "yyyy/MM/dd")
-      // text: "sdsdsd"
+            format(parseISO(props.dateRange.endDate), "yyyy/MM/dd"),
+          
     },
     xAxis: { categories: chartData.categories },
     plotOptions: {
