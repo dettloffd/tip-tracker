@@ -1,5 +1,4 @@
 import React from "react";
-import EntryLog from "../components/EntryLog";
 import { useQuery } from "react-query";
 import { getAllEntries, getEntriesByUserId } from "../api/entriesApi";
 import { List } from "@chakra-ui/react";

@@ -4,8 +4,6 @@ import { monthParser } from "../util/monthParser";
 const useHighLowStatsHook = (xKey, yKey) => {
   const extractHighAndLowValues = (chartResponse) => {
 
-    // if ()
-
     let toBeSorted = [...chartResponse.data.results].sort(
       (a, b) => a[yKey] - b[yKey]
     );

@@ -8,12 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import {
-  MdAttachMoney,
-  MdReceipt,
-  MdToday,
-  MdModeEditOutline,
-  MdDelete,
-  MdOutlinePriceCheck,
+  MdAttachMoney
 } from "react-icons/md";
 import NavItem from "./NavItem";
 

@@ -1,16 +1,10 @@
 import { React, useState } from "react";
 import {
-  Box,
-  Button,
-  Container,
   CloseButton,
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
 } from "@chakra-ui/react";
 
 export default function GeneralModal(props) {

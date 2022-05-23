@@ -2,14 +2,9 @@ import { Box, Flex } from "@chakra-ui/react";
 import React, { useState } from "react";
 import EntryInputForm from "./entries/components/EntryInputForm";
 import EntryLog from "./entries/components/EntryLog";
-import EntryPage from "./entries/pages/EntryPage";
 import StatsDisplay from "./stats/pages/StatsDisplay";
 import SideBar from "./UIElements/SideBar";
-// import EntryInputForm from "./entries/components/EntryInputForm";
-// import UserEntries from "./entries/pages/UserEntries";
 
-
-// import { DateRangePicker } from 'react-date-range';
 import DateRangeSelector from "./util/DateRangeSelector";
 
 const AppHome = () => {

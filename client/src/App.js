@@ -1,6 +1,6 @@
 import './App.css';
 import AppHome from './AppHome';
-import { React, useCallback, useState } from "react";
+import { React } from "react";
 import {ChakraProvider} from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'

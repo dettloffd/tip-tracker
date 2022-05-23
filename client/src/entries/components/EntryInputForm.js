@@ -6,21 +6,18 @@ import {
   Flex,
   FormControl,
   FormLabel,
-  FormErrorMessage,
   Input,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  VStack,
   FormHelperText,
 } from "@chakra-ui/react";
 
 import { useQueryClient } from "react-query";
 import { useMutation } from "react-query";
 
-import formatToday from "../../util/formatToday";
 import entryValidationSchema from "../../util/entryValidationSchema";
 import { addEntry } from "../api/entriesApi";
 import { format, parseISO } from "date-fns";

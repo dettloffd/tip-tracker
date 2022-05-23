@@ -49,8 +49,6 @@ const getAllEntriesBetweenDates = async (req, res, next) => {
   // const { startDate, endDate } = req.params;
   const queryString = req.query;
 
-  console.log(queryString);
-
   let startDate = queryString.startDate;
   let endDate = queryString.endDate;
   try {

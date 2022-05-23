@@ -23,8 +23,7 @@ import GeneralModal from "../../UIElements/GeneralModal";
 import EditEntryInputForm from "./EditEntryForm";
 import DeleteEntryForm from "./DeleteEntryForm";
 //
-// import format from "date-fns/format";
-import {format, parseISO, parse} from "date-fns";
+import {format, parseISO} from "date-fns";
 
 const entryIcons = [MdToday, MdReceipt, MdAttachMoney, MdOutlinePriceCheck];
 
