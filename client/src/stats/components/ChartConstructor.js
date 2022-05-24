@@ -16,7 +16,9 @@ import { useQuery } from "react-query";
 import { fetchChartDataBetweenDates, fetchChartDataNoDates } from "../api/statsApi";
 
 // {dateRange, yKey, xKey, chartType, chartTitle   }
-const ChartConstructor = ({   dateRange , yKey, xKey, chartType, chartTitle   }) => {
+// const ChartConstructor = ({   dateRange: {startDate}, dateRange: {endDate} , yKey, xKey, chartType, chartTitle   }) => {
+  const ChartConstructor = ({   dateRange: {startDate, endDate} , yKey, xKey, chartType, chartTitle   }) => {
+
   const [chartData, setChartData] = useState({ categories: [], yValues: [] });
   const [highAndLowValues, setHighAndLowValues] = useState({
     topValue: {
@@ -29,16 +31,14 @@ const ChartConstructor = ({   dateRange , yKey, xKey, chartType, chartTitle   })
     },
   });
 
-  console.log(dateRange);
-
   // necessary import in order for noData module to work correctly
   NoDataToDisplay(Highcharts);
 
-  let startDate = dateRange.startDate;
-  let endDate = dateRange.endDate;
+  // let startDate = startDate;
+  // let endDate = endDate;
   // let url = props.url;
 
-  const dateRangeProvided = dateRange.startDate !== "";
+  const dateRangeProvided = startDate !== "";
   let theQueryKey;
   let theQueryFn;
   let statVar = yKey;
@@ -116,12 +116,12 @@ const ChartConstructor = ({   dateRange , yKey, xKey, chartType, chartTitle   })
       // If no start / end date provided, don't show anything..
       // otherwise, formata and show the date range in the subtitle
       text:
-        dateRange.startDate == ""
+        startDate == ""
           ? "Date Range: All Time"
           : "Date Range: " +
-            format(parseISO(dateRange.startDate), "yyyy/MM/dd") +
+            format(parseISO(startDate), "yyyy/MM/dd") +
             " - " +
-            format(parseISO(dateRange.endDate), "yyyy/MM/dd"),
+            format(parseISO(endDate), "yyyy/MM/dd"),
           
     },
     xAxis: { categories: chartData.categories },
