@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import NoDataToDisplay from "highcharts/modules/no-data-to-display";
 
 import { MdOutlineTrendingDown, MdOutlineTrendingUp } from "react-icons/md";
 
-import { Box, Divider, Flex, Icon, Text, useStyles } from "@chakra-ui/react";
+import { Box, Divider, Flex, Icon, Text } from "@chakra-ui/react";
 
 import useChartConstructorHook from "../../hooks/useChartConstructorHook";
 import useHighLowStatsHook from "../../hooks/useHighLowStatsHook";
 
 import { format, parseISO } from "date-fns";
 import { useQuery } from "react-query";
-import { fetchChartDataBetweenDates, fetchChartDataNoDates } from "../api/statsApi";
-
-// {dateRange, yKey, xKey, chartType, chartTitle   }
-// const ChartConstructor = ({   dateRange: {startDate}, dateRange: {endDate} , yKey, xKey, chartType, chartTitle   }) => {
-  const ChartConstructor = ({   dateRange: {startDate, endDate} , yKey, xKey, chartType, chartTitle   }) => {
-
+import {
+  fetchChartDataBetweenDates,
+  fetchChartDataNoDates,
+} from "../api/statsApi";
+const ChartConstructor = ({
+  dateRange: { startDate, endDate },
+  yKey,
+  xKey,
+  chartType,
+  chartTitle,
+}) => {
   const [chartData, setChartData] = useState({ categories: [], yValues: [] });
   const [highAndLowValues, setHighAndLowValues] = useState({
     topValue: {
@@ -34,33 +38,34 @@ import { fetchChartDataBetweenDates, fetchChartDataNoDates } from "../api/statsA
   // necessary import in order for noData module to work correctly
   NoDataToDisplay(Highcharts);
 
-  // let startDate = startDate;
-  // let endDate = endDate;
-  // let url = props.url;
-
   const dateRangeProvided = startDate !== "";
   let theQueryKey;
   let theQueryFn;
-  let statVar = yKey;
-  let timeVar = xKey;
-
 
   if (dateRangeProvided) {
-    theQueryKey = [`fetchChartDataBetweenDates_${xKey}_${yKey}`, { startDate, endDate, statVar, timeVar }];
+    theQueryKey = [
+      `fetchChartDataBetweenDates_${xKey}_${yKey}`,
+      { startDate, endDate, statVar: yKey, timeVar: xKey },
+    ];
     theQueryFn = fetchChartDataBetweenDates;
   } else {
-    theQueryKey = [`fetchChartDataNoDates_${xKey}_${yKey}`, {statVar, timeVar}];
+    theQueryKey = [
+      `fetchChartDataNoDates_${xKey}_${yKey}`,
+      { statVar: yKey, timeVar: xKey },
+    ];
     theQueryFn = fetchChartDataNoDates;
   }
 
+  const { data } = useQuery(theQueryKey, theQueryFn);
 
-  const { data, error, isLoading, isError } = useQuery(theQueryKey, theQueryFn);
+  const { constructAxis } = useChartConstructorHook(xKey, yKey);
+
+  const { extractHighAndLowValues } = useHighLowStatsHook(xKey, yKey);
 
   useEffect(() => {
     if (data) {
-      // console.log(data);
       // if no data returned from database call..
-      if (data.data.count == 0) {
+      if (data.data.count === 0) {
         // set x and y axis to empty arrays
         // this will inform highcharts that there is no data triggering a noData message
         let chartData = { xAxis: [], yAxis: [] };
@@ -73,10 +78,8 @@ import { fetchChartDataBetweenDates, fetchChartDataNoDates } from "../api/statsA
           bottomValue: { x: null, y: null },
         });
       } else {
-        console.log(data);
         let values = extractHighAndLowValues(data);
         let chartData = constructAxis(data);
-        // console.log(values);
         setChartData({
           categories: chartData.xAxis,
           yValues: chartData.yAxis,
@@ -91,16 +94,9 @@ import { fetchChartDataBetweenDates, fetchChartDataNoDates } from "../api/statsA
           topValue: { x: values.topValue.x, y: values.topValue.y },
           bottomValue: { x: values.bottomValue.x, y: values.bottomValue.y },
         });
-      }      
-
+      }
     }
   }, [data]);
-  const { constructAxis } = useChartConstructorHook(xKey, yKey);
-
-  const { extractHighAndLowValues } = useHighLowStatsHook(
-    xKey,
-    yKey
-  );
 
   const options = {
     chart: {
@@ -122,7 +118,6 @@ import { fetchChartDataBetweenDates, fetchChartDataNoDates } from "../api/statsA
             format(parseISO(startDate), "yyyy/MM/dd") +
             " - " +
             format(parseISO(endDate), "yyyy/MM/dd"),
-          
     },
     xAxis: { categories: chartData.categories },
     plotOptions: {
