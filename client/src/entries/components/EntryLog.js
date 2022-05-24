@@ -1,6 +1,6 @@
 import React from "react";
 import EntryItem from "./EntryItem";
-import { Flex, List, Text } from "@chakra-ui/react";
+import { Container, Flex, List, Text } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { getAllEntries, getAllEntriesBetweenDates } from "../api/entriesApi";
 import MoonLoader from "react-spinners/MoonLoader";
@@ -55,8 +55,9 @@ const EntryLog = ({ numResults, dateRange }) => {
       <>
       
         {entriesToDisplay.length > 0 ? (
+          <Flex justifyContent={"center"}>
           <List
-            width={"100%"}
+            flexBasis={"90%"}
             //   maxW=" 500px"
             //   maxW="36rem"
           >
@@ -66,6 +67,7 @@ const EntryLog = ({ numResults, dateRange }) => {
               </>
             ))}
           </List>
+          </Flex>
         ) : (
           <Text fontSize='2xl' textAlign={"center"}>No entries for time period provided</Text>
         )}

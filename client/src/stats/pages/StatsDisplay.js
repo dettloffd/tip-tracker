@@ -8,19 +8,20 @@ import { chartFieldsArray } from "../chartFieldsArray";
 const StatsEntries = ({ dateRange }) => {
   return (
     <>
-      <Box>
+    {/* This is the container for the column of charts - child of this item is the container of the chart */}
+      <Flex direction={"column"} align={"center"}>
         {chartFieldsArray.map((chart) => (
-          <Box flexBasis={"100%"}>
+          // <Box flexBasis={"90%"}>
             <ChartConstructor
               key={chart.chartTitle}
               {...chart}
               dateRange={dateRange}
             />
-          </Box>
+          // </Box>
         ))}
 
-        <Divider />
-      </Box>
+        {/* <Divider /> */}
+      </Flex>
     </>
   );
 };

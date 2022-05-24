@@ -169,7 +169,10 @@ const ChartConstructor = ({
   };
   return (
     <>
+    {/* This is the container for the chart */}
       <Flex
+      
+      width={"90%"}
         boxShadow="md"
         bg="white"
         p={1}
@@ -177,6 +180,7 @@ const ChartConstructor = ({
         //   w={"lg"}
         borderRadius="lg"
         direction={"column"}
+        
       >
         <Box>
           <HighchartsReact
@@ -214,6 +218,12 @@ const ChartConstructor = ({
           </Flex>
         </Flex>
 
+      </Flex>
+    </>
+  );
+};
+
+export default ChartConstructor;
         {/* <Flex
           p={1}
           alignSelf={"center"}
@@ -259,9 +269,3 @@ const ChartConstructor = ({
             {highAndLowValues.bottomValue.x} : {highAndLowValues.bottomValue.y}
           </Flex>
         </Flex> */}
-      </Flex>
-    </>
-  );
-};
-
-export default ChartConstructor;

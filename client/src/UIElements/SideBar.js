@@ -31,7 +31,7 @@ export default function SideBar() {
       
     <>
       <Flex
-        pos="fixed"
+        pos="sticky"
         left="3"
         height="95vh"
         marginTop="2.5vh"

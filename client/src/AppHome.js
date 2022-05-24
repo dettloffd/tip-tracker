@@ -37,17 +37,17 @@ const AppHome = () => {
         <Flex p={4} m={4} width={"30vw"}>
         <EntryInputForm />
         </Flex>
-        <Flex direction={"column"} width="40vw">
+        {/* <Flex direction={"column"} width="40vw">
           <h1>placeholder</h1>
-        </Flex>
+        </Flex> */}
       </Flex>
       
       <Box p={6}><DateRangeSelector setDateRange={setDateRange} /></Box>
       <Flex justify="center" maxW={"80rem"}>
-        <Flex direction={"column"} width={"30vw"}>
+        <Flex direction={"column"} width={"40vw"}>
           <EntryLog numResults={10} dateRange={{startDate: "", endDate: ""}} />
         </Flex>
-        <Flex direction={"column"} width="40vw">
+        <Flex direction={"column"} width="50vw">
           <StatsDisplay dateRange={dateRange} />
         </Flex>
       </Flex>
