@@ -13,13 +13,15 @@ function formatDate() {
   return [year, month, day].join("-");
 }
 
-const avgVarByTime = async (req, res, next) => {
+const avgVarByTimeBetweenDates = async (req, res, next) => {
   const queryString = req.query;
 
-  let startDate = queryString.startDate ? queryString.startDate : "1900-01-01";
-  let endDate = queryString.endDate ? queryString.endDate : formatDate();
+  let startDate = queryString.startDate;
+  let endDate = queryString.endDate;
+  let statVar = queryString.statVar;
+  let timeVar = queryString.statVar;
 
-  const { statVar, timeVar } = req.params;
+  // const { statVar, timeVar } = req.params;
 
   //////////////http://localhost:5000/api/stats/avg/avgTip/day/?startDate=1900-01-01&endDate=2021-08-09
 
@@ -79,6 +81,71 @@ const avgVarByTime = async (req, res, next) => {
 
   });
 };
+
+
+const avgVarByTimeGetAll = async (req, res, next) => {
+  const queryString = req.query;
+  let statVar = queryString.statVar;
+  let timeVar = queryString.statVar;
+  
+
+  console.log(timeVar);
+
+  // console.log(queryString.statVar);
+
+  // const { statVar, timeVar } = req.params;
+
+  //////////////http://localhost:5000/api/stats/avg/avgTip/day/?startDate=1900-01-01&endDate=2021-08-09
+
+  let results;
+
+  try {
+    results = await Entry.aggregate([
+      {
+        $project: {
+          formattedDate: {
+            $dateToString: { format: "%Y-%m-%d", date: "$date" },
+          },
+          day: { $dayOfWeek: "$date" },
+          month: { $month: "$date" },
+          year: { $year: "$date" },
+          numTransactions: 1,
+          tipsTotal: 1,
+  
+          avgTip: {
+            $round: [{ $divide: ["$tipsTotal", "$numTransactions"] }, 2],
+          },
+        },
+      },
+  
+      { $group: { _id: `$${timeVar}`, Avg: { $avg: `$${statVar}` } } },
+      // Uses timeVar (day, month, year..) to group
+      // starVar holds whether it's going to be average tip, tip total, numTransactions, etc.
+  
+      {
+        $project: {
+          _id: 0,
+          // can change to _id: 1, .... if a reason is found to use _id rather than the time variable
+          [timeVar]: "$_id",
+          [statVar]: { $round: ["$Avg", 2] },
+        },
+      }, // remove "_id", change to actual time period being requested in results
+  
+      { $sort: { [timeVar]: 1 } },  // return the results sorted in ascending order by the time variable - day, month, year, etc
+    ]);
+  } catch (err) {
+    res.json({ message: err });
+  }
+
+  res.json({
+    count: results.length,
+    results: results,
+    params: { statVar, timeVar },
+    // dateStuff: { startDate, endDate },
+
+  });
+};
+
 
 
 
@@ -162,7 +229,8 @@ const testing = async (req, res, next) => {
 // };
 
 exports.testing = testing;
-exports.avgVarByTime = avgVarByTime;
+exports.avgVarByTimeBetweenDates = avgVarByTimeBetweenDates;
+exports.avgVarByTimeGetAll = avgVarByTimeGetAll;
 //exports.avgTipByWeekDay = avgTipByWeekDay;
 
 ///////////////

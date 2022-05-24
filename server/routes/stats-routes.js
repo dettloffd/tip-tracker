@@ -6,9 +6,15 @@ const statsControllers = require("../controllers/stats-controllers");
 
 
 router.get("/", statsControllers.testing);
+router.get("/avgBetweenDates", statsControllers.avgVarByTimeBetweenDates);
+// router.get("/avg/:statVar/:timeVar", statsControllers.avgVarByTimeGetAll);
+
+router.get("/avg", statsControllers.avgVarByTimeGetAll);
 
 
-router.get("/avg/:statVar/:timeVar", statsControllers.avgVarByTime);
+
+
+
 
 //router.get("/avgTipByWeekDay", statsControllers.avgTipByWeekDay);
 

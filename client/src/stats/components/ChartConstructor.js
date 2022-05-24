@@ -14,7 +14,7 @@ import useHighLowStatsHook from "../../hooks/useHighLowStatsHook";
 
 import { format, parseISO } from "date-fns";
 import { useQuery } from "react-query";
-import { fetchChartDataWithDates, fetchChartDataNoDates } from "../api/statsApi";
+import { fetchChartDataBetweenDates, fetchChartDataNoDates } from "../api/statsApi";
 
 const ChartConstructor = (props) => {
   const [chartData, setChartData] = useState({ categories: [], yValues: [] });
@@ -30,12 +30,7 @@ const ChartConstructor = (props) => {
   });
 
 
-  const { constructAxis } = useChartConstructorHook(props.xKey, props.yKey);
 
-  const { extractHighAndLowValues } = useHighLowStatsHook(
-    props.xKey,
-    props.yKey
-  );
 
   // const { errorMessage, sendRequest } = useHttpHook();
   // necessary import in order for noData module to work correctly
@@ -43,17 +38,20 @@ const ChartConstructor = (props) => {
 
   let startDate = props.dateRange.startDate;
   let endDate = props.dateRange.endDate;
-  let url = props.url;
+  // let url = props.url;
 
   const dateRangeProvided = props.dateRange.startDate !== "";
   let theQueryKey;
   let theQueryFn;
+  let statVar = props.yKey;
+  let timeVar = props.xKey;
+
 
   if (dateRangeProvided) {
-    theQueryKey = [`fetchChartDataWithDates_${props.xKey}_${props.yKey}`, { startDate, endDate, url }];
-    theQueryFn = fetchChartDataWithDates;
+    theQueryKey = [`fetchChartDataBetweenDates_${props.xKey}_${props.yKey}`, { startDate, endDate, statVar, timeVar }];
+    theQueryFn = fetchChartDataBetweenDates;
   } else {
-    theQueryKey = [`fetchChartDataNoDates_${props.xKey}_${props.yKey}`, {url}];
+    theQueryKey = [`fetchChartDataNoDates_${props.xKey}_${props.yKey}`, {statVar, timeVar}];
     theQueryFn = fetchChartDataNoDates;
   }
 
@@ -62,6 +60,7 @@ const ChartConstructor = (props) => {
 
   useEffect(() => {
     if (data) {
+      // console.log(data);
       // if no data returned from database call..
       if (data.data.count == 0) {
         // set x and y axis to empty arrays
@@ -76,8 +75,10 @@ const ChartConstructor = (props) => {
           bottomValue: { x: null, y: null },
         });
       } else {
+        console.log(data);
         let values = extractHighAndLowValues(data);
         let chartData = constructAxis(data);
+        // console.log(values);
         setChartData({
           categories: chartData.xAxis,
           yValues: chartData.yAxis,
@@ -96,6 +97,12 @@ const ChartConstructor = (props) => {
 
     }
   }, [data]);
+  const { constructAxis } = useChartConstructorHook(props.xKey, props.yKey);
+
+  const { extractHighAndLowValues } = useHighLowStatsHook(
+    props.xKey,
+    props.yKey
+  );
 
   const options = {
     chart: {

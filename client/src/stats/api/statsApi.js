@@ -1,12 +1,12 @@
 import axios from "axios";
 
-export const fetchChartDataWithDates = async ({ queryKey }) => {
-  const [_key, { startDate, endDate, url }] = queryKey;
-  // console.log(queryKey);
+export const fetchChartDataBetweenDates = async ({ queryKey }) => {
+  const [_key, { startDate, endDate, statVar, timeVar }] = queryKey;
+//   console.log(queryKey);
   try {
     const response = await axios({
       reqMethod: "GET",
-      url: `http://localhost:5000/api/stats/${url}?startDate=${startDate}&endDate=${endDate}`,
+      url: `http://localhost:5000/api/stats/avgBetweenDates/?startDate=${startDate}&endDate=${endDate}&statVar=${statVar}&timeVar=${timeVar}`,
       data: null,
       headers: {},
     });
@@ -15,12 +15,12 @@ export const fetchChartDataWithDates = async ({ queryKey }) => {
 };
 
 export const fetchChartDataNoDates = async ({ queryKey }) => {
-  const [_key, { url }] = queryKey;
-  // console.log(queryKey);
+  const [_key, { statVar, timeVar }] = queryKey;
+//   console.log(queryKey);
   try {
     const response = await axios({
       reqMethod: "GET",
-      url: `http://localhost:5000/api/stats/${url}`,
+      url: `http://localhost:5000/api/stats/avg/?statVar=${statVar}&timeVar=${timeVar}`,
       data: null,
       headers: {},
     });
