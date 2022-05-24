@@ -7,7 +7,6 @@ import NoDataToDisplay from "highcharts/modules/no-data-to-display";
 import { MdOutlineTrendingDown, MdOutlineTrendingUp } from "react-icons/md";
 
 import { Box, Divider, Flex, Icon, Text, useStyles } from "@chakra-ui/react";
-import { useHttpHook } from "../../hooks/useHttpHook";
 
 import useChartConstructorHook from "../../hooks/useChartConstructorHook";
 import useHighLowStatsHook from "../../hooks/useHighLowStatsHook";
@@ -16,7 +15,8 @@ import { format, parseISO } from "date-fns";
 import { useQuery } from "react-query";
 import { fetchChartDataBetweenDates, fetchChartDataNoDates } from "../api/statsApi";
 
-const ChartConstructor = (props) => {
+// {dateRange, yKey, xKey, chartType, chartTitle   }
+const ChartConstructor = ({   dateRange , yKey, xKey, chartType, chartTitle   }) => {
   const [chartData, setChartData] = useState({ categories: [], yValues: [] });
   const [highAndLowValues, setHighAndLowValues] = useState({
     topValue: {
@@ -29,29 +29,27 @@ const ChartConstructor = (props) => {
     },
   });
 
+  console.log(dateRange);
 
-
-
-  // const { errorMessage, sendRequest } = useHttpHook();
   // necessary import in order for noData module to work correctly
   NoDataToDisplay(Highcharts);
 
-  let startDate = props.dateRange.startDate;
-  let endDate = props.dateRange.endDate;
+  let startDate = dateRange.startDate;
+  let endDate = dateRange.endDate;
   // let url = props.url;
 
-  const dateRangeProvided = props.dateRange.startDate !== "";
+  const dateRangeProvided = dateRange.startDate !== "";
   let theQueryKey;
   let theQueryFn;
-  let statVar = props.yKey;
-  let timeVar = props.xKey;
+  let statVar = yKey;
+  let timeVar = xKey;
 
 
   if (dateRangeProvided) {
-    theQueryKey = [`fetchChartDataBetweenDates_${props.xKey}_${props.yKey}`, { startDate, endDate, statVar, timeVar }];
+    theQueryKey = [`fetchChartDataBetweenDates_${xKey}_${yKey}`, { startDate, endDate, statVar, timeVar }];
     theQueryFn = fetchChartDataBetweenDates;
   } else {
-    theQueryKey = [`fetchChartDataNoDates_${props.xKey}_${props.yKey}`, {statVar, timeVar}];
+    theQueryKey = [`fetchChartDataNoDates_${xKey}_${yKey}`, {statVar, timeVar}];
     theQueryFn = fetchChartDataNoDates;
   }
 
@@ -97,33 +95,33 @@ const ChartConstructor = (props) => {
 
     }
   }, [data]);
-  const { constructAxis } = useChartConstructorHook(props.xKey, props.yKey);
+  const { constructAxis } = useChartConstructorHook(xKey, yKey);
 
   const { extractHighAndLowValues } = useHighLowStatsHook(
-    props.xKey,
-    props.yKey
+    xKey,
+    yKey
   );
 
   const options = {
     chart: {
-      type: `${props.chartType}`,
+      type: `${chartType}`,
       //height: (9 / 16 * 100) + '%',
       //16:9 ratio
       //height: "500px",
     },
     title: {
-      text: `${props.chartTitle}`,
+      text: `${chartTitle}`,
     },
     subtitle: {
       // If no start / end date provided, don't show anything..
       // otherwise, formata and show the date range in the subtitle
       text:
-        props.dateRange.startDate == ""
+        dateRange.startDate == ""
           ? "Date Range: All Time"
           : "Date Range: " +
-            format(parseISO(props.dateRange.startDate), "yyyy/MM/dd") +
+            format(parseISO(dateRange.startDate), "yyyy/MM/dd") +
             " - " +
-            format(parseISO(props.dateRange.endDate), "yyyy/MM/dd"),
+            format(parseISO(dateRange.endDate), "yyyy/MM/dd"),
           
     },
     xAxis: { categories: chartData.categories },
@@ -137,13 +135,13 @@ const ChartConstructor = (props) => {
       // In order to keep the bar graph more readable
       // Take the lowest of all the y values and divide in half
       min:
-        `${props.chartType}` === "bar"
+        `${chartType}` === "bar"
           ? Math.min(...chartData.yValues) / 2
           : Math.min(...chartData.yValues),
     },
     series: [
       {
-        name: `${props.chartTitle}`,
+        name: `${chartTitle}`,
         data: chartData.yValues,
       },
     ],
