@@ -2,10 +2,12 @@ import React from "react";
 import {
   Box,
   Button,
+  Divider,
   Flex,
   Icon,
   ListItem,
-  Divider,
+  Text,
+  
 } from "@chakra-ui/react";
 import {
   MdAttachMoney,
@@ -35,7 +37,7 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
 
 
   const dataRows = [
-    mapEntryData("Date", format(parseISO(date),'EEEE, yyyy-MM-dd')),
+    // mapEntryData("Date", format(parseISO(date),'EEEE, yyyy-MM-dd')),
     mapEntryData("Number of Transactions", numTransactions),
     mapEntryData("Tips Total", tipsTotal),
     mapEntryData("Average Tip", (tipsTotal / numTransactions).toFixed(2)),
@@ -72,10 +74,10 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
         <Box
           boxShadow="md"
           bg="white"
-          p={4}
+          p={3}
         //   w={"lg"}
           borderRadius="lg"
-          m={4}
+          m={3}
           _hover={{
             transition: "all .25s",
             transform: "auto",
@@ -97,30 +99,36 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
                       color="teal.500"
                       m={2}
                     />
-                    {row.name}
+                    <Text fontSize='sm'>{row.name}</Text>
                   </Flex>
                 </Box>
-                <Box>{row.data}</Box>
+                <Box><Text fontSize='sm'>{row.data}</Text></Box>
               </Flex>
               <Divider mt={1} />
             </ListItem>
           ))}
 
           <ListItem>
-            <Flex justify="flex-end">
+            
+            <Flex justify="space-between" align={"center"}>
+            <Box><Text color="gray.500" fontSize='sm'>{format(parseISO(date),'EEEE, yyyy-MM-dd')}</Text></Box>
+            <Box>
               {entryButtons.map((button) => (
+                
                 <Button
                   onClick={button.functionality}
                   variant="solid"
                   colorScheme="teal"
-                  size={"sm"}
+                  size={"xs"}
                   ml={2}
                   mt={3}
                   // className={classes.button}
                 >
                   {button.name}
                 </Button>
+                
               ))}
+              </Box>
             </Flex>
           </ListItem>
         </Box>

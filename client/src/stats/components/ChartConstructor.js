@@ -172,7 +172,7 @@ const ChartConstructor = ({
     {/* This is the container for the chart */}
       <Flex
       
-      width={"90%"}
+      width={"100%"}
         boxShadow="md"
         bg="white"
         p={1}

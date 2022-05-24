@@ -57,7 +57,7 @@ const EntryLog = ({ numResults, dateRange }) => {
         {entriesToDisplay.length > 0 ? (
           <Flex justifyContent={"center"}>
           <List
-            flexBasis={"90%"}
+            flexBasis={"100%"}
             //   maxW=" 500px"
             //   maxW="36rem"
           >
