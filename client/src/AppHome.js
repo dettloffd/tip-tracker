@@ -1,7 +1,8 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Container, Flex } from "@chakra-ui/react";
 import React, { useState } from "react";
 import EntryInputForm from "./entries/components/EntryInputForm";
 import EntryLog from "./entries/components/EntryLog";
+import HeatMap from "./entries/components/HeatMap";
 import StatsDisplay from "./stats/pages/StatsDisplay";
 import SideBar from "./UIElements/SideBar";
 
@@ -13,54 +14,43 @@ const AppHome = () => {
   return (
     <Flex
       flexDir="row"
-      // h={"100vh"}
-      // overflow={"hidden"}
       maxWidth={"155rem"}
-      // bg="gray.100"
     >
       {/* col1 */}
-      <Box backgroundColor="#252627" w="10%" pos="relative">Something
-      {/* <Box bg="gray.100" w="10%" pos="relative"> */}
-
-      <Flex
-        
-        pos="fixed"
-        // w="10%"
-        flexDir={"column"}
-        alignItems="center"
-        // border="1px solid red"
-      >
-        Scrolly!
-        
-        
-        
-        {/* <SideBar></SideBar> */}
-      </Flex>
+      <Box backgroundColor="#252627" w="10%" pos="relative">
+        Something
+        <Flex
+          pos="fixed"
+          // w="10%"
+          flexDir={"column"}
+          alignItems="center"
+        >
+          Scrolly!
+          {/* <SideBar></SideBar> */}
+        </Flex>
       </Box>
 
       {/* col2 */}
-      <Flex
-        w="35%"
-        p="1.25%"
-        flexDir="column"
-        // border="1px solid purple"
-        // overflow="auto"
-        bg="gray.100"
-      >
+      <Flex w="35%" p="1.25%" flexDir="column" bg="gray.100">
         <EntryInputForm />
         <EntryLog numResults={10} dateRange={{ startDate: "", endDate: "" }} />
       </Flex>
 
       {/* col3 */}
-      <Flex
-        flexDir="column"
-        // overflow="auto"
-        minH="100vh"
-        p="1% 2% 1% 1%"
-        w="55%"
-        // border="1px solid blue"
-        bg="gray.100"
-      >
+      <Flex flexDir="column" minH="100vh" p="1% 2% 1% 1%" w="55%" bg="gray.100">
+        {/* <Container h="auto" w="auto"><HeatMap></HeatMap></Container> */}
+        <Flex
+          p={5}
+          w="100%"
+          minH="50vh"
+          justifyContent={"center"}
+          alignItems="center"
+          bgColor={"white"}
+          flexDir="column"
+        >
+          <HeatMap numDays={100}></HeatMap>
+        </Flex>
+
         <DateRangeSelector setDateRange={setDateRange} />
         <StatsDisplay dateRange={dateRange} />
       </Flex>
