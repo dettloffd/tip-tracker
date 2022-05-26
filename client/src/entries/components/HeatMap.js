@@ -1,6 +1,7 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import { format, parseISO } from "date-fns";
 import { useQuery } from "react-query";
+import { BasicTooltip } from '@nivo/tooltip';
 
 import { ResponsiveTimeRange } from "@nivo/calendar";
 import { getAllEntriesBetweenDates } from "../api/entriesApi";
@@ -26,12 +27,34 @@ export default function HeatMap({ numDays }) {
     getAllEntriesBetweenDates
   );
 
+  
+
+  const entryTooltip = ({day, tipsTotal, numTransactions}) => {
+    return(
+      <Box fontWeight={"bold"} opacity={".9"} bgColor="gray.300" p={5}>
+        <Text >Date: {day}</Text>
+        <Text>Total tips: {tipsTotal}</Text>
+        <Text>Number of transactions: {numTransactions}</Text>
+        <Text >Average Tip: {(tipsTotal/numTransactions).toFixed(2)}</Text>
+      </Box>
+    )
+
+  }
+//   <Box bgColor="gray.100" p={3}>
+//   <h1>{day}</h1>
+//   <h1>Total tips: {tipsTotal}</h1>
+//   <h1>avg: {(tipsTotal/numTransactions).toFixed(2)}</h1>
+// </Box>
+
+
+
   let heatmapValues = [];
   if (data) {
     let returnEntries = data.data.entries;
+    // console.log(returnEntries);
     // Timerange is expecting "Day" and "value" fields
     returnEntries.forEach((entry) =>
-      heatmapValues.push({ day: entry.date, value: 1 })
+      heatmapValues.push({ day: entry.date, value: 1, tipsTotal: entry.tipsTotal, numTransactions: entry.numTransactions })
     );
   }
 
@@ -46,15 +69,16 @@ export default function HeatMap({ numDays }) {
         emptyColor="#eeeeee"
         // colors={[ '#61cdbb', '#97e3d5', '#e8c1a0', '#f47560' ]}
         colors={["#319795", "#319795", "#319795", "#319795"]}
-        margin={{ top: 40, right: 40, bottom: 0, left: 40 }}
+        margin={{ top: 20, right: 20, bottom: 0, left: 20 }}
         // margin={{ top: 60, right: 10, bottom: 0, left: 10 }}
         dayBorderWidth={2}
         dayBorderColor="#ffffff"
-        weekdayLegendOffset={50}
+        weekdayLegendOffset={60}
         dayRadius={3}
+        tooltip={entryTooltip}
       />
-      <h1>yoo</h1>
-      <h1>ayyye</h1>
+      
+      
     </>
   );
 }

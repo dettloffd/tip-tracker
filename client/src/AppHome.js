@@ -1,4 +1,4 @@
-import { Box, Container, Flex } from "@chakra-ui/react";
+import { Box, Container, Flex, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import EntryInputForm from "./entries/components/EntryInputForm";
 import EntryLog from "./entries/components/EntryLog";
@@ -21,7 +21,6 @@ const AppHome = () => {
         Something
         <Flex
           pos="fixed"
-          // w="10%"
           flexDir={"column"}
           alignItems="center"
         >
@@ -32,6 +31,7 @@ const AppHome = () => {
 
       {/* col2 */}
       <Flex w="35%" p="1.25%" flexDir="column" bg="gray.100">
+        
         <EntryInputForm />
         <EntryLog numResults={10} dateRange={{ startDate: "", endDate: "" }} />
       </Flex>
@@ -41,14 +41,22 @@ const AppHome = () => {
         {/* <Container h="auto" w="auto"><HeatMap></HeatMap></Container> */}
         <Flex
           p={5}
-          w="100%"
-          minH="50vh"
+          // w="100%"
+          // h="20rem"
+          // minH="50vh"
           justifyContent={"center"}
           alignItems="center"
           bgColor={"white"}
           flexDir="column"
+          boxShadow="md"
+          borderRadius={"lg"}
         >
-          <HeatMap numDays={100}></HeatMap>
+          {/* <HeatMap numDays={100}></HeatMap> */}
+          <Box w="85%" h="20rem" ><HeatMap numDays={100}></HeatMap></Box>
+          <Text p={2} color="gray.500">{"( Previous 100 days )"}</Text>
+          
+
+         
         </Flex>
 
         <DateRangeSelector setDateRange={setDateRange} />
