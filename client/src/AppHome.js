@@ -23,16 +23,16 @@ const AppHome = () => {
       </Box>
 
       {/* col2 */}
-      <Flex w="35%" p="1.25%" flexDir="column" bg="gray.100" mt={"10rem"}>
+      <Flex w="35%" p="1.25%" flexDir="column" bg="gray.100" mt={"3rem"}>
         <EntryInputForm />
 
+        {/*This box contains the recent entries and header/link for seeing all entries  */}
         <Box bg={"white"} m={3} boxShadow="lg" p={4} borderRadius="lg">
           <Flex justifyContent={"space-between"} p={3} mt={3} mb={1} bg="white">
             <Text fontSize={"xl"}>Recent Entries</Text>{" "}
             <Text fontWeight={"bold"} color="teal.500">
               See All
             </Text>
-            
           </Flex>
           <Divider mb={5} />
           <EntryLog
@@ -43,7 +43,14 @@ const AppHome = () => {
       </Flex>
 
       {/* col3 */}
-      <Flex flexDir="column" minH="100vh" p="1% 2% 1% 1%" w="55%" bg="gray.100">
+      <Flex
+        flexDir="column"
+        minH="100vh"
+        p="1% 2% 1% 1%"
+        w="55%"
+        bg="gray.100"
+        mt={"3rem"}
+      >
         <Flex
           p={5}
           justifyContent={"center"}
@@ -63,7 +70,21 @@ const AppHome = () => {
           </Text>
         </Flex>
 
-        <DateRangeSelector setDateRange={setDateRange} />
+        {/* Container for header and datepicker  */}
+        <Flex
+          bg="white"
+          boxShadow="lg"
+          borderRadius={"lg"}
+          direction={"column"}
+          alignItems="center"
+          m={2}
+        >
+          <DateRangeSelector
+            setDateRange={setDateRange}
+            dateRange={dateRange}
+          />
+        </Flex>
+
         <StatsDisplay dateRange={dateRange} />
       </Flex>
     </Flex>
