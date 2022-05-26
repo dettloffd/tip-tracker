@@ -37,7 +37,6 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
 
 
   const dataRows = [
-    // mapEntryData("Date", format(parseISO(date),'EEEE, yyyy-MM-dd')),
     mapEntryData("Number of Transactions", numTransactions),
     mapEntryData("Tips Total", tipsTotal),
     mapEntryData("Average Tip", (tipsTotal / numTransactions).toFixed(2)),
@@ -72,12 +71,11 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
       )}
 
         <Box
-          boxShadow="md"
+          boxShadow="lg"
           bg="white"
           p={3}
-        //   w={"lg"}
           borderRadius="lg"
-          m={3}
+          mb={5}
           _hover={{
             transition: "all .25s",
             transform: "auto",

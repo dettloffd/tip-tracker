@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Text } from "@chakra-ui/react";
+import { Box, Container, Divider, Flex, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import EntryInputForm from "./entries/components/EntryInputForm";
 import EntryLog from "./entries/components/EntryLog";
@@ -12,18 +12,11 @@ const AppHome = () => {
   const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
 
   return (
-    <Flex
-      flexDir="row"
-      maxWidth={"155rem"}
-    >
+    <Flex flexDir="row" maxWidth={"155rem"}>
       {/* col1 */}
       <Box backgroundColor="#252627" w="10%" pos="relative">
         Something
-        <Flex
-          pos="fixed"
-          flexDir={"column"}
-          alignItems="center"
-        >
+        <Flex pos="fixed" flexDir={"column"} alignItems="center">
           Scrolly!
           {/* <SideBar></SideBar> */}
         </Flex>
@@ -31,19 +24,28 @@ const AppHome = () => {
 
       {/* col2 */}
       <Flex w="35%" p="1.25%" flexDir="column" bg="gray.100">
-        
         <EntryInputForm />
-        <EntryLog numResults={10} dateRange={{ startDate: "", endDate: "" }} />
+
+        <Box bg={"white"} m={3} boxShadow="lg" p={4} borderRadius="lg">
+          <Flex justifyContent={"space-between"} p={3} mt={3} mb={1} bg="white">
+            <Text fontSize={"xl"}>Recent Entries</Text>{" "}
+            <Text fontWeight={"bold"} color="teal.500">
+              See All
+            </Text>
+            
+          </Flex>
+          <Divider mb={5} />
+          <EntryLog
+            numResults={10}
+            dateRange={{ startDate: "", endDate: "" }}
+          />
+        </Box>
       </Flex>
 
       {/* col3 */}
       <Flex flexDir="column" minH="100vh" p="1% 2% 1% 1%" w="55%" bg="gray.100">
-        {/* <Container h="auto" w="auto"><HeatMap></HeatMap></Container> */}
         <Flex
           p={5}
-          // w="100%"
-          // h="20rem"
-          // minH="50vh"
           justifyContent={"center"}
           alignItems="center"
           bgColor={"white"}
@@ -51,57 +53,20 @@ const AppHome = () => {
           boxShadow="md"
           borderRadius={"lg"}
         >
-          {/* <HeatMap numDays={100}></HeatMap> */}
-          <Box w="85%" h="20rem" ><HeatMap numDays={100}></HeatMap></Box>
-          <Text p={2} color="gray.500">{"( Previous 100 days )"}</Text>
-          
-
-         
+          {/* Box holds the heatmap so it can be centered */}
+          {/* Change width % based on viewport size for responsiveness  */}
+          <Box w="82%" h="20rem">
+            <HeatMap numDays={100}></HeatMap>
+          </Box>
+          <Text p={2} color="gray.500">
+            {"( Previous 100 days )"}
+          </Text>
         </Flex>
 
         <DateRangeSelector setDateRange={setDateRange} />
         <StatsDisplay dateRange={dateRange} />
       </Flex>
     </Flex>
-    // <Flex width="100%" bg="gray.100" height={"100%"} >
-    // <SideBar/>
-
-    // <Flex
-    //   // bg="gray.100"
-    //   align="center"
-    //   justify="center"
-    //   direction="column"
-    //   // border={"1px solid black"}
-    //   width="100%"
-    // >
-
-    //   {/* <DateRangePicker></DateRangePicker> */}
-
-    //   {/* <Flex width={"50%"}>
-    //   <EntryLog numResults={20}/>
-    //   </Flex> */}
-
-    //   <h1>App Homeeeee</h1>
-    //   <Flex justify="center" maxW={"80rem"}>
-    //     <Flex p={4} m={4} width={"30vw"}>
-    //     <EntryInputForm />
-    //     </Flex>
-    //     {/* <Flex direction={"column"} width="40vw">
-    //       <h1>placeholder</h1>
-    //     </Flex> */}
-    //   </Flex>
-
-    //   <Box p={6}><DateRangeSelector setDateRange={setDateRange} /></Box>
-    //   <Flex justify="center" maxW={"80rem"}>
-    //     <Flex direction={"column"} width={"40vw"}>
-    //       <EntryLog numResults={10} dateRange={{startDate: "", endDate: ""}} />
-    //     </Flex>
-    //     <Flex direction={"column"} width="50vw">
-    //       <StatsDisplay dateRange={dateRange} />
-    //     </Flex>
-    //   </Flex>
-    // </Flex>
-    // </Flex>
   );
 };
 
