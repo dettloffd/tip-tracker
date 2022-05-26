@@ -3,7 +3,6 @@ import { DateRangePicker } from "react-date-range";
 import format from "date-fns/format";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import { addDays, subDays } from "date-fns";
 import {
   Box,
   Button,
@@ -15,10 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { MdCalendarToday } from "react-icons/md";
 
-const DateRangeSelector = ({ setDateRange, dateRange }) => {
-  // inputValueField : used for showing the user what selected date range is being used on charts below
-  const [inputValueField, setInputValueField] = useState("");
-
+const DateRangeSelector = ({ setDateRange }) => {
   // controls the date range being used in the date picker
   const [range, setRange] = useState([
     {
@@ -51,8 +47,6 @@ const DateRangeSelector = ({ setDateRange, dateRange }) => {
     }
   };
 
-  console.log(range[0]['startDate']);
-
   return (
     <Flex
       bgColor={"white"}
@@ -78,8 +72,8 @@ const DateRangeSelector = ({ setDateRange, dateRange }) => {
           // If there's a value selected by the user, display that value
           // otherwise, make an empty string so that the user sees the placeholder
           value={
-            inputValueField.start && inputValueField.end
-              ? `${inputValueField.start} - ${inputValueField.end}  `
+            range[0].startDate !== null && range[0].endDate !== null
+              ? ` ${format(range[0].startDate, "yyyy/MM/dd" )} to ${format(range[0].endDate, "yyyy/MM/dd" )}`
               : ""
           }
           className="inputBox"
@@ -90,7 +84,14 @@ const DateRangeSelector = ({ setDateRange, dateRange }) => {
         {open && (
           <DateRangePicker
             rangeColors={["#38B2AC"]}
-            onChange={(item) => setRange([item.selection])}
+            onChange={(item) => {
+              setRange([item.selection]);
+              // This setDateRange will set the date range and refresh the graphs when the range of datepicker is changed
+              setDateRange({
+                startDate: format(item.selection.startDate, "yyyy-MM-dd"),
+                endDate: format(item.selection.endDate, "yyyy-MM-dd"),
+              });
+            }}
             editableDateInputs={true}
             moveRangeOnFirstSelection={false}
             ranges={range}
@@ -105,44 +106,36 @@ const DateRangeSelector = ({ setDateRange, dateRange }) => {
           variant="solid"
           colorScheme="teal"
           size="sm"
-          isDisabled={(range[0]['startDate'] && range[0]['endDate']) == null}
-
-          // Sets the date range in parent element to trickle down to charts
-          // also sets the inputValueFields to display this date in the input for the user
+          isDisabled={(range[0]["startDate"] && range[0]["endDate"]) == null}
+          // Sets the date range manually in parent element to trickle down to charts 
+          // unnecessary maybe since refactored to change on click? 
           onClick={() => {
             setDateRange({
-
-              
               startDate: format(range[0].startDate, "yyyy-MM-dd"),
               endDate: format(range[0].endDate, "yyyy-MM-dd"),
             });
-            setInputValueField({
-              start: format(range[0].startDate, "yy/MM/dd"),
-              end: format(range[0].endDate, "yy/MM/dd"),
-            });
           }}
         >
-          Set Date Range
+          Confirm Date Range
         </Button>
         {/* This resets the parent element (so charts will cover all time) and the input fields */}
         {/* Also resets the range in the datepicker */}
         <Button
           size="sm"
           onClick={() => {
-            // reset input fields
-            setInputValueField("");
             // reset daterange in parent element
             setDateRange({
               startDate: "",
               endDate: "",
             });
             // reset datepicker ranges previously selected
-            setRange([{
-              startDate: null,
-              endDate: null,
-              key: "selection",
-
-            }])
+            setRange([
+              {
+                startDate: null,
+                endDate: null,
+                key: "selection",
+              },
+            ]);
           }}
         >
           Reset
