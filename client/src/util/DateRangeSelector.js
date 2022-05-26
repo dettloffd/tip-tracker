@@ -51,6 +51,8 @@ const DateRangeSelector = ({ setDateRange, dateRange }) => {
     }
   };
 
+  console.log(range[0]['startDate']);
+
   return (
     <Flex
       bgColor={"white"}
@@ -103,10 +105,14 @@ const DateRangeSelector = ({ setDateRange, dateRange }) => {
           variant="solid"
           colorScheme="teal"
           size="sm"
+          isDisabled={(range[0]['startDate'] && range[0]['endDate']) == null}
+
           // Sets the date range in parent element to trickle down to charts
           // also sets the inputValueFields to display this date in the input for the user
           onClick={() => {
             setDateRange({
+
+              
               startDate: format(range[0].startDate, "yyyy-MM-dd"),
               endDate: format(range[0].endDate, "yyyy-MM-dd"),
             });
