@@ -23,7 +23,7 @@ const AppHome = () => {
       </Box>
 
       {/* col2 */}
-      <Flex w="35%" p="1.25%" flexDir="column" bg="gray.100">
+      <Flex w="35%" p="1.25%" flexDir="column" bg="gray.100" mt={"10rem"}>
         <EntryInputForm />
 
         <Box bg={"white"} m={3} boxShadow="lg" p={4} borderRadius="lg">

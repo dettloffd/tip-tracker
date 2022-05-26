@@ -1,7 +1,7 @@
 import './App.css';
 import AppHome from './AppHome';
 import { React } from "react";
-import {ChakraProvider} from '@chakra-ui/react';
+import {Box, ChakraProvider} from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
 
@@ -13,13 +13,13 @@ function App() {
     <ChakraProvider>
       <QueryClientProvider client={queryClient}>
         
-    <div className="App">
+    <Box className="App" bgColor={"gray.100"}>
       <AppHome>
         
         
       </AppHome>
 
-    </div>
+    </Box>
     <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
     </ChakraProvider>
