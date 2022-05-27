@@ -34,9 +34,36 @@ export const chartFieldsArray = [
     },
     {
       chartTitle: "Average Number of Transactions per Weekday",
-      chartType: "bar",
+      chartType: "line",
       url: "avg/numTransactions/day",
       xKey: "day",
+      yKey: "numTransactions",
+    },
+
+
+
+    {
+      chartTitle: "Average Number of Transactions per Month",
+      chartType: "bar",
+      url: "avg/numTransactions/day",
+      xKey: "month",
+      yKey: "numTransactions",
+    },
+
+
+    {
+      chartTitle: "Average Total Tips per Month",
+      chartType: "line",
+      url: "avg/numTransactions/day",
+      xKey: "month",
+      yKey: "tipsTotal",
+    },
+
+    {
+      chartTitle: "Average Number of Transactions per Year",
+      chartType: "bar",
+      url: "avg/numTransactions/day",
+      xKey: "year",
       yKey: "numTransactions",
     },
   ];
