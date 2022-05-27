@@ -3,7 +3,7 @@ import EntryLog from "../components/EntryLog";
 import { useQuery } from "react-query";
 import { getAllEntries, getEntriesByUserId } from "../api/entriesApi";
 
-const UserEntries = () => {
+const UserEntries = ({ numResults, dateRange }) => {
   let userId = "5f0aa38f2a9f992d74ff4533";
   /////testing purposes
 
@@ -39,7 +39,7 @@ const UserEntries = () => {
 
     return (
       <>
-        <EntryLog entries={testEntries}></EntryLog>
+        <EntryLog numResults={numResults} dateRange={dateRange} />
         {/* <EntryLog entries={data.data.entries}></EntryLog> */}
       </>
     );

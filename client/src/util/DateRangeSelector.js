@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { MdCalendarToday } from "react-icons/md";
 
-const DateRangeSelector = ({ setDateRange }) => {
+const DateRangeSelector = ({ setDateRange, placeholderMessage }) => {
   // controls the date range being used in the date picker
   const [range, setRange] = useState([
     {
@@ -68,7 +68,7 @@ const DateRangeSelector = ({ setDateRange }) => {
           width={"100%"}
           textAlign="center"
           onClick={() => setOpen((open) => !open)}
-          placeholder="Set Custom Date Range for Charts"
+          placeholder={placeholderMessage ? placeholderMessage : "Set Custom Date Range for Charts"}
           // If there's a value selected by the user, display that value
           // otherwise, make an empty string so that the user sees the placeholder
           value={
@@ -84,13 +84,14 @@ const DateRangeSelector = ({ setDateRange }) => {
         {open && (
           <DateRangePicker
             rangeColors={["#38B2AC"]}
+            // when dates picked in the datepicker, change the range being held in state
             onChange={(item) => {
               setRange([item.selection]);
               // This setDateRange will set the date range and refresh the graphs when the range of datepicker is changed
-              setDateRange({
-                startDate: format(item.selection.startDate, "yyyy-MM-dd"),
-                endDate: format(item.selection.endDate, "yyyy-MM-dd"),
-              });
+              // setDateRange({
+              //   startDate: format(item.selection.startDate, "yyyy-MM-dd"),
+              //   endDate: format(item.selection.endDate, "yyyy-MM-dd"),
+              // });
             }}
             editableDateInputs={true}
             moveRangeOnFirstSelection={false}

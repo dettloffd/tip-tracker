@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { getAllEntries, getEntriesByUserId } from "../api/entriesApi";
-import { List } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import EntryItem from "../components/EntryItem";
+import EntryLog from "../components/EntryLog";
+import HeatMap from "../components/HeatMap";
+import DateRangeSelector from "../../util/DateRangeSelector";
 
-const EntryPage = () => {
+const EntryPage = ({ numResults, dateRange, setDateRange }) => {
   let userId = "5f0aa38f2a9f992d74ff4533";
+  // const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
   /////testing purposes
-
   // const { data, error, isLoading, isError } = useQuery(
   //   ["userEntries", {userId}],
   //   (userId) => getEntriesByUserId(userId)
@@ -20,47 +23,46 @@ const EntryPage = () => {
   // );
   //////https://www.sitepoint.com/react-query-fetch-manage-data/
 
-  const { data, error, isLoading, isError } = useQuery(
-    "userEntries",
-    getAllEntries
-  );
+
   //////////////for testing; gets every entry in database
 
-  if (isLoading) {
-    return <p>hold on</p>;
-  }
 
-  if (isError) {
-    // console.log(error);
-    return <p>errorrrrrr</p>;
-  }
-
-  if (data) {
-    let testEntries = data.data.entries.slice(0, 10);
-    console.log(testEntries);
+    // let testEntries = data.data.entries.slice(0, 10);
+    // console.log(testEntries);
 
     return (
-        <>
-          <List
-            width={"100%"}
-            //   maxW=" 500px"
-            //   maxW="36rem"
+      <>
+      {/* Container for the remaining page aside from the sidebar */}
+      <Flex w="100%" justifyContent={"center"} bg="white">
+        {/* Container of all content */}
+        <Flex
+          w="80%"
+          justifyContent={"center"}
+          flexDir="column"
+          alignItems={"center"}
+          bg="white"
+          mt={"3rem"}
+        >
+          <HeatMap numDays={365} mapwidth="100%" mapheight="15rem" />
+          {/* Container for entries  */}
+          <Box
+            w="80%"
+            bg={"white"}
+            m={3}
+            boxShadow="lg"
+            p={4}
+            borderRadius="lg"
           >
-            {testEntries.map((entry) => (
-              <>
-                <EntryItem
-                  {...entry}
-                  /////THIS ALLOWS FOR just this instead of below... basically just passing the whole entry object in
-                  // date={entry.date}
-                  // numDelivs={entry.numDelivs}
-                  // tipsTotal={entry.tipsTotal}
-                />
-              </>
-            ))}
-          </List>
-        </>
-      );
-  }
+              
+              <Flex justifyContent={"center"} p={5}><DateRangeSelector setDateRange={setDateRange} placeholderMessage={"Select Date Range to Filter"} /></Flex>
+              {/* dateRange prop is initially set to empty strings; only if selected on daterangepicker will it rerender */}
+            <EntryLog numResults={numResults} dateRange={dateRange} />
+          </Box>
+        </Flex>
+        </Flex>
+      </>
+    );
+  
 };
 
 export default EntryPage;

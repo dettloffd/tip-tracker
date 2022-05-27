@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import EntryInputForm from "./entries/components/EntryInputForm";
 import EntryLog from "./entries/components/EntryLog";
 import HeatMap from "./entries/components/HeatMap";
+import EntryPage from "./entries/pages/EntryPage";
+import UserEntries from "./entries/pages/UserEntries";
 import StatsDisplay from "./stats/pages/StatsDisplay";
 import SideBar from "./UIElements/SideBar";
 
@@ -12,7 +14,9 @@ const AppHome = () => {
   const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
 
   return (
-    <Flex flexDir="row" maxWidth={"155rem"}>
+    <Flex flexDir="row" maxWidth={"155rem"} minH="100vh">
+
+
       {/* col1 */}
       <Box backgroundColor="#252627" w="10%" pos="relative">
         Something
@@ -22,11 +26,15 @@ const AppHome = () => {
         </Flex>
       </Box>
 
-      {/* col2 */}
-      <Flex w="35%" p="1.25%" flexDir="column" bg="gray.100" mt={"3rem"}>
+      {/* <EntryPage numResults={30} dateRange={dateRange} setDateRange={setDateRange} /> */}
+
+
+       {/* col2 */}
+
+       <Flex w="35%" p="1.25%" flexDir="column" bg="gray.100" mt={"3rem"}>
         <EntryInputForm />
 
-        {/*This box contains the recent entries and header/link for seeing all entries  */}
+        {/* This box contains the recent entries and header/link for seeing all entries  */}
         <Box bg={"white"} m={3} boxShadow="lg" p={4} borderRadius="lg">
           <Flex justifyContent={"space-between"} p={3} mt={3} mb={1} bg="white">
             <Text fontSize={"xl"}>Recent Entries</Text>{" "}
@@ -35,10 +43,8 @@ const AppHome = () => {
             </Text>
           </Flex>
           <Divider mb={5} />
-          <EntryLog
-            numResults={10}
-            dateRange={{ startDate: "", endDate: "" }}
-          />
+           {/* Daterange as empty strings ensures all entries are fetched */}
+          <EntryLog numResults={10} dateRange={{startDate: "", endDate: ""}} />
         </Box>
       </Flex>
 
@@ -60,14 +66,9 @@ const AppHome = () => {
           boxShadow="md"
           borderRadius={"lg"}
         >
-          {/* Box holds the heatmap so it can be centered */}
           {/* Change width % based on viewport size for responsiveness  */}
-          <Box w="82%" h="20rem">
-            <HeatMap numDays={100}></HeatMap>
-          </Box>
-          <Text p={2} color="gray.500">
-            {"( Previous 100 days )"}
-          </Text>
+          {/* Box holds the heatmap so it can be centered */}
+          <HeatMap mapwidth="82%" mapheight="20rem" numDays={100}></HeatMap>
         </Flex>
 
         {/* Container for header and datepicker  */}
@@ -87,6 +88,13 @@ const AppHome = () => {
 
         <StatsDisplay dateRange={dateRange} />
       </Flex>
+
+     
+
+
+
+
+
     </Flex>
   );
 };
