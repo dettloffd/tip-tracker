@@ -6,6 +6,7 @@ import HeatMap from "./entries/components/HeatMap";
 import EntryPage from "./entries/pages/EntryPage";
 import UserEntries from "./entries/pages/UserEntries";
 import StatsDisplay from "./stats/pages/StatsDisplay";
+import NavBar from "./UIElements/NavBar";
 import SideBar from "./UIElements/SideBar";
 
 import DateRangeSelector from "./util/DateRangeSelector";
@@ -18,13 +19,13 @@ const AppHome = () => {
 
 
       {/* col1 */}
-      <Box backgroundColor="#252627" w="10%" pos="relative">
+      <Flex backgroundColor="#252627" w="15%" pos="relative" justifyContent={"center"}>
         Something
         <Flex pos="fixed" flexDir={"column"} alignItems="center">
           Scrolly!
-          {/* <SideBar></SideBar> */}
+          <NavBar></NavBar>
         </Flex>
-      </Box>
+      </Flex>
 
       {/* <EntryPage numResults={30} dateRange={dateRange} setDateRange={setDateRange} /> */}
 
