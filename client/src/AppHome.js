@@ -32,7 +32,7 @@ const AppHome = () => {
 
        {/* col2 */}
 
-       <Flex w="35%" p="1.25%" flexDir="column" bg="gray.100" mt={"3rem"}>
+       <Flex w="35%" p="1.25%" flexDir="column" bg="gray.100" mt={"5rem"}>
         <EntryInputForm />
 
         {/* This box contains the recent entries and header/link for seeing all entries  */}
@@ -56,7 +56,7 @@ const AppHome = () => {
         p="1% 2% 1% 1%"
         w="55%"
         bg="gray.100"
-        mt={"3rem"}
+        mt={"5rem"}
       >
         <Flex
           p={5}
