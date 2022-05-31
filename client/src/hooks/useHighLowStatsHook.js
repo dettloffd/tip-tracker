@@ -8,7 +8,6 @@ const useHighLowStatsHook = (xKey, yKey) => {
       (a, b) => a[yKey] - b[yKey]
     );
 
-    // console.log(chartResponse);
     // use spread operator in order to not mutate array
 
     let low = toBeSorted[0];

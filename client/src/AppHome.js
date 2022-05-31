@@ -1,13 +1,11 @@
-import { Box, Container, Divider, Flex, Text } from "@chakra-ui/react";
+import { Box, Divider, Flex, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import EntryInputForm from "./entries/components/EntryInputForm";
 import EntryLog from "./entries/components/EntryLog";
 import HeatMap from "./entries/components/HeatMap";
 import EntryPage from "./entries/pages/EntryPage";
-import UserEntries from "./entries/pages/UserEntries";
 import StatsDisplay from "./stats/pages/StatsDisplay";
 import NavBar from "./UIElements/NavBar";
-import SideBar from "./UIElements/SideBar";
 
 import DateRangeSelector from "./util/DateRangeSelector";
 
