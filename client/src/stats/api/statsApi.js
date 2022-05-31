@@ -2,7 +2,6 @@ import axios from "axios";
 
 export const fetchChartDataBetweenDates = async ({ queryKey }) => {
   const [_key, { startDate, endDate, statVar, timeVar }] = queryKey;
-//   console.log(queryKey);
   try {
     const response = await axios({
       reqMethod: "GET",
