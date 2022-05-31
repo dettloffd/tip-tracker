@@ -19,9 +19,9 @@ const AppHome = () => {
 
 
       {/* col1 */}
-      <Flex backgroundColor="#252627" w="15%" pos="relative" justifyContent={"center"}>
+      <Flex backgroundColor="#252627" w="10%" pos="relative" justifyContent={"center"} className="navbar-container">
         Something
-        <Flex pos="fixed" flexDir={"column"} alignItems="center">
+        <Flex pos="fixed" flexDir={"column"} alignItems="center" className="sticky-navbar-component" >
           Scrolly!
           <NavBar></NavBar>
         </Flex>
