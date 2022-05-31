@@ -29,7 +29,7 @@ export default function HeatMap({ numDays, mapwidth, mapheight }) {
 
   const entryTooltip = ({ day, tipsTotal, numTransactions }) => {
     return (
-      <Box fontWeight={"bold"} opacity={".9"} bgColor="gray.300" p={5}>
+      <Box fontWeight={"bold"} opacity={".9"} color="teal.500" bgColor="gray.900" p={5}>
         <Text>Date: {day}</Text>
         <Text>Total tips: {tipsTotal}</Text>
         <Text>Number of transactions: {numTransactions}</Text>
