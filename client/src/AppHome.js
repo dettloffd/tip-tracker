@@ -13,13 +13,24 @@ const AppHome = () => {
   const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
 
   return (
-    <Flex flexDir="row" maxWidth={"155rem"} minH="100vh">
-
-
+    <Flex flexDir={["column", "column", "row"]} maxWidth={"155rem"} minH="100vh">
       {/* col1 */}
-      <Flex backgroundColor="#252627" w="10%" pos="relative" justifyContent={"center"} className="navbar-container">
+      <Flex
+        backgroundColor="#252627"
+        w={["100%", "100%", "10%", "10%", "10%"]}
+        pos="relative"
+        justifyContent={"center"}
+        
+        className="navbar-container"
+      >
         Something
-        <Flex pos="fixed" flexDir={"column"} alignItems="center" className="sticky-navbar-component" >
+        <Flex
+          pos={[null, null, "fixed", "fixed", "fixed"]}
+          flexDir={"column"}
+          alignItems="center"
+          className="sticky-navbar-component"
+          w={["100%", "100%", "10%", "10%", "10%"]}
+        >
           Scrolly!
           <NavBar></NavBar>
         </Flex>
@@ -27,10 +38,9 @@ const AppHome = () => {
 
       {/* <EntryPage numResults={30} dateRange={dateRange} setDateRange={setDateRange} /> */}
 
+      {/* col2 */}
 
-       {/* col2 */}
-
-       <Flex w="35%" p="1.25%" flexDir="column" bg="gray.100" mt={"5rem"}>
+      <Flex w={"35%"} p="1.25%" flexDir="column" bg="gray.100" mt={"5rem"}>
         <EntryInputForm />
 
         {/* This box contains the recent entries and header/link for seeing all entries  */}
@@ -42,8 +52,11 @@ const AppHome = () => {
             </Text>
           </Flex>
           <Divider mb={5} />
-           {/* Daterange as empty strings ensures all entries are fetched */}
-          <EntryLog numResults={10} dateRange={{startDate: "", endDate: ""}} />
+          {/* Daterange as empty strings ensures all entries are fetched */}
+          <EntryLog
+            numResults={10}
+            dateRange={{ startDate: "", endDate: "" }}
+          />
         </Box>
       </Flex>
 
@@ -87,13 +100,6 @@ const AppHome = () => {
 
         <StatsDisplay dateRange={dateRange} />
       </Flex>
-
-     
-
-
-
-
-
     </Flex>
   );
 };

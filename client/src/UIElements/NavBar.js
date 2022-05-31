@@ -20,7 +20,7 @@ export default function NavBar() {
     <Flex
     className="papapa"
     //   pos="sticky"
-      flexDir="column"
+      flexDir={["row", "row", "column", "column",  "column"]}
       justifyContent={"space-between"}
       color="#fff"
     >
@@ -40,8 +40,9 @@ export default function NavBar() {
           Yo
         </Heading>
         <Flex className="navbar-items-container"
-          flexDir={"column"}
-          alignItems="flex-start"
+        // Puts nav items in a row when small size, column on large
+          flexDir={["row", "row", "column", "column",  "column"]} 
+          alignItems={["flex-start", "flex-start", "center", "flex-start", "flex-start"]}
           justifyContent={"center"}
         >
           {/* {navItems.map((item, index) => (
