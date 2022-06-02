@@ -23,7 +23,6 @@ const AppHome = () => {
         
         className="navbar-container"
       >
-        Something
         <Flex
           pos={[null, null, "fixed", "fixed", "fixed"]}
           flexDir={"column"}
