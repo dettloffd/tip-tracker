@@ -12,6 +12,7 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  Text,
   FormHelperText,
 } from "@chakra-ui/react";
 
@@ -88,7 +89,7 @@ const EntryInputForm = (props) => {
               <Field name="tipsTotal">
                 {({ field, form, meta }) => (
                   <FormControl id="tipsTotal" pb={3}>
-                    <FormLabel htmlFor="tipsTotal">
+                    <FormLabel fontSize={["sm", "sm", "md", "md", "md"]} htmlFor="tipsTotal">
                       Total Tips Received
                     </FormLabel>
                     <NumberInput
@@ -105,7 +106,7 @@ const EntryInputForm = (props) => {
                       </NumberInputStepper>
                     </NumberInput>
 
-                    <FormHelperText>
+                    <FormHelperText fontSize={["sm", "sm", "md", "md", "md"]}>
                       Enter the value of all tips received for this shift.
                     </FormHelperText>
 
@@ -118,7 +119,7 @@ const EntryInputForm = (props) => {
               <Field name="numTransactions">
                 {({ field, form, meta }) => (
                   <FormControl id="numTransactions">
-                    <FormLabel htmlFor="numTransactions">
+                    <FormLabel fontSize={["sm", "sm", "md", "md", "md"]} htmlFor="numTransactions">
                       Total Transactions
                     </FormLabel>
                     <NumberInput
@@ -134,7 +135,7 @@ const EntryInputForm = (props) => {
                         <NumberDecrementStepper />
                       </NumberInputStepper>
                     </NumberInput>
-                    <FormHelperText>
+                    <FormHelperText fontSize={["sm", "sm", "md", "md", "md"]}>
                       Enter the total number of transactions for this shift.
                     </FormHelperText>
                   </FormControl>
@@ -148,12 +149,13 @@ const EntryInputForm = (props) => {
                 type="submit"
                 variant="solid"
                 color="white"
-                width="50%"
+                // width="50%"
                 alignSelf="center"
                 mt={4}
                 
               >
-                Submit New Entry
+                <Text fontSize={[ "sm", "sm", "md"]}>Submit Entry</Text>
+                
               </Button>
               
               </Flex>

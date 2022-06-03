@@ -57,18 +57,19 @@ const DateRangeSelector = ({ setDateRange, placeholderMessage }) => {
       className="calendarWrap"
       w="80%"
     >
-      <InputGroup size="md">
+      <InputGroup size={['sm']}>
         <InputLeftElement
           pointerEvents="none"
           children={<MdCalendarToday />}
         ></InputLeftElement>
         <Input
           mb={1}
+          
           focusBorderColor="teal.400"
           width={"100%"}
           textAlign="center"
           onClick={() => setOpen((open) => !open)}
-          placeholder={placeholderMessage ? placeholderMessage : "Set Custom Date Range for Charts"}
+          placeholder={placeholderMessage ? placeholderMessage : "Set Chart Date Range"}
           // If there's a value selected by the user, display that value
           // otherwise, make an empty string so that the user sees the placeholder
           value={
@@ -97,7 +98,9 @@ const DateRangeSelector = ({ setDateRange, placeholderMessage }) => {
             moveRangeOnFirstSelection={false}
             ranges={range}
             months={1}
-            direction="horizontal"
+            direction="vertical"
+            display='none'
+            
             className="calendarElement"
           />
         )}

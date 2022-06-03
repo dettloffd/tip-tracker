@@ -39,14 +39,14 @@ const AppHome = () => {
 
       {/* col2 */}
 
-      <Flex w={"35%"} p="1.25%" flexDir="column" bg="gray.100" mt={"5rem"}>
+      <Flex w={["80%", "80%", "35%", "35%", "35%"]} p="1.25%" flexDir="column" bg="gray.100" mt={"5rem"} alignSelf={["center", "center", "flex-start"]}>
         <EntryInputForm />
 
         {/* This box contains the recent entries and header/link for seeing all entries  */}
-        <Box bg={"white"} m={3} boxShadow="lg" p={4} borderRadius="lg">
-          <Flex justifyContent={"space-between"} p={3} mt={3} mb={1} bg="white">
-            <Text fontSize={"xl"}>Recent Entries</Text>{" "}
-            <Text fontWeight={"bold"} color="teal.500">
+        <Box bg={"white"} m={3} boxShadow="lg" p={4} borderRadius="lg" fontSize={["md", "md", "xl"]}>
+          <Flex  justifyContent={"space-between"} p={3} mt={3} mb={1} bg="white">
+            <Text fontSize={["md", "md", "xl"]}>Recent Entries</Text>{" "}
+            <Text fontSize={["md", "md", "lg"]} fontWeight={"bold"} color="teal.500">
               See All
             </Text>
           </Flex>
@@ -64,9 +64,11 @@ const AppHome = () => {
         flexDir="column"
         minH="100vh"
         p="1% 2% 1% 1%"
-        w="55%"
+        // w="55%"
+        w={["90%", "90%", "55%", "55%", "55%"]}
         bg="gray.100"
         mt={"5rem"}
+        alignSelf={["center", "center", "flex-start"]}
       >
         <Flex
           p={5}

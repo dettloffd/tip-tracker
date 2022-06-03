@@ -27,6 +27,12 @@
   z-index: 999;
 }
 
+@media only screen and (max-width: 500px){
+  .calendarElement{
+    transform: translateX(-50%) scale(0.70);
+  }
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

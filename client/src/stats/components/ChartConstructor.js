@@ -196,11 +196,13 @@ const ChartConstructor = ({
           width={"100%"}
           maxW={"30rem"}
           justify={"space-between"}
+          fontSize={["xs", "sm", "sm", "md", "md"]}
+          // flexDir={["column", "column", "row", "row", "row"]}
         >
           <Flex align={"center"}>
             <Icon as={MdOutlineTrendingUp} w={6} h={6} color="teal.500" m={2} />
-            <Text>Highest</Text> {" ~ "}
-            <Text>
+            <Text>High </Text> {"  "}
+            <Text >
               {highAndLowValues.topValue.x}: {highAndLowValues.topValue.y}
             </Text>
           </Flex>
@@ -213,7 +215,7 @@ const ChartConstructor = ({
               color="teal.500"
               m={2}
             />
-            <Text>Lowest~</Text>
+            <Text>Low: </Text>
             {highAndLowValues.bottomValue.x}: {highAndLowValues.bottomValue.y}
           </Flex>
         </Flex>
