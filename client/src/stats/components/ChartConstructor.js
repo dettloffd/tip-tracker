@@ -192,22 +192,25 @@ const ChartConstructor = ({
 
         <Flex
           p={1}
-          alignSelf={"center"}
+          // alignSelf={"center"}
           width={"100%"}
           maxW={"30rem"}
           justify={"space-between"}
           fontSize={["xs", "sm", "sm", "md", "md"]}
           // flexDir={["column", "column", "row", "row", "row"]}
         >
-          <Flex align={"center"}>
+          <Flex alignItems={"center"} justifyContent="space-between" >
+            <Flex align={"center"} mr={2} >
             <Icon as={MdOutlineTrendingUp} w={6} h={6} color="teal.500" m={2} />
-            <Text>High </Text> {"  "}
+            <Text>High Value: </Text>
+            </Flex>
             <Text >
               {highAndLowValues.topValue.x}: {highAndLowValues.topValue.y}
             </Text>
           </Flex>
 
-          <Flex align={"center"}>
+          <Flex alignItems={"center"} justifyContent="space-between" >
+          <Flex align={"center"} mr={2} >
             <Icon
               as={MdOutlineTrendingDown}
               w={6}
@@ -215,8 +218,10 @@ const ChartConstructor = ({
               color="teal.500"
               m={2}
             />
-            <Text>Low: </Text>
-            {highAndLowValues.bottomValue.x}: {highAndLowValues.bottomValue.y}
+            <Text>Low Value: </Text>
+            </Flex>
+            <Text >{highAndLowValues.bottomValue.x}: {highAndLowValues.bottomValue.y}</Text>
+            
           </Flex>
         </Flex>
 
