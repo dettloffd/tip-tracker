@@ -192,7 +192,7 @@ const ChartConstructor = ({
 
         <Flex
           p={1}
-          // alignSelf={"center"}
+          alignSelf={"center"}
           width={"100%"}
           maxW={"30rem"}
           justify={"space-between"}

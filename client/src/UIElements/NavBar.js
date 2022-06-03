@@ -37,7 +37,7 @@ export default function NavBar() {
           alignSelf="center"
           letterSpacing={"tight"}
         >
-          Yo
+          <Text color={"teal.500"}>$</Text>
         </Heading>
         <Flex className="navbar-items-container"
         // Puts nav items in a row when small size, column on large

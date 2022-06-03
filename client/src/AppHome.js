@@ -30,7 +30,6 @@ const AppHome = () => {
           className="sticky-navbar-component"
           w={["100%", "100%", "10%", "10%", "10%"]}
         >
-          Scrolly!
           <NavBar></NavBar>
         </Flex>
       </Flex>
