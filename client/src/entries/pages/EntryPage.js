@@ -7,8 +7,9 @@ import EntryLog from "../components/EntryLog";
 import HeatMap from "../components/HeatMap";
 import DateRangeSelector from "../../util/DateRangeSelector";
 
-const EntryPage = ({ numResults, dateRange, setDateRange }) => {
+const EntryPage = ({ numResults }) => {
   let userId = "5f0aa38f2a9f992d74ff4533";
+  const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
   // const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
   /////testing purposes
   // const { data, error, isLoading, isError } = useQuery(

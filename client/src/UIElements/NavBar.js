@@ -12,9 +12,9 @@ export default function NavBar() {
   };
 
   let navItems = [
-    { navSize: navSize, icon: MdHome, title: "Dashboard" },
-    { navSize: navSize, icon: MdDocumentScanner, title: "Entries" },
-    { navSize: navSize, icon: MdHome, title: "Otherstuff" },
+    { navSize: navSize, icon: MdHome, title: "Dashboard", routerLink: "/" },
+    { navSize: navSize, icon: MdDocumentScanner, title: "Entries", routerLink: "/entries" },
+    { navSize: navSize, icon: MdHome, title: "Otherstuff", routerLink: "/" },
   ];
   return (
     <Flex
@@ -64,10 +64,10 @@ export default function NavBar() {
             <NavBarItem
               active={index === activeItem ? true : false}
               title={item.title}
-              
               icon={item.icon}
               handleClick={handleClick}
               index={index}
+              routerLink={item.routerLink}
             >
 
             </NavBarItem>
