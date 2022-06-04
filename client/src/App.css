@@ -48,12 +48,25 @@
   color: #61dafb;
 }
 
+/* NAVBAR STYLING */
+
 .navbar-item:hover{
   color: white;
 }
 
 .navbar-item:hover .navbar-item__icon {
   color: #38B2AC;
+}
+
+/* Used with router to add styles to active navlink */
+
+.active-Navlink .navbar-item__icon{
+  color: #38B2AC ;
+}
+
+.active-Navlink .navbar-item{
+  color: white;
+
 }
 
 

@@ -39,8 +39,6 @@ const AppHome = () => {
           </Flex>
         </Flex>
 
-        {/* <EntryPage numResults={30} dateRange={dateRange} setDateRange={setDateRange} /> */}
-
         {/* col2 */}
 
         <Routes>
@@ -141,8 +139,8 @@ const AppHome = () => {
               <Flex w="90%">
               <EntryPage
                 numResults={30}
-                dateRange={dateRange}
-                setDateRange={setDateRange}
+                // dateRange={dateRange}
+                // setDateRange={setDateRange}
               />
               </Flex>
             }
