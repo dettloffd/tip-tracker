@@ -138,6 +138,7 @@ const AppHome = () => {
             element={
               <Flex w="90%">
               <EntryPage
+              
                 numResults={30}
                 // dateRange={dateRange}
                 // setDateRange={setDateRange}

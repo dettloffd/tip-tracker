@@ -44,7 +44,9 @@ const EntryPage = ({ numResults }) => {
           bg="white"
           mt={"3rem"}
         >
-          <HeatMap numDays={365} mapwidth="100%" mapheight="15rem" />
+          
+          <HeatMap numDays={365} mapwidth="100%" mapheight="15rem"  />
+          
           {/* Container for entries  */}
           <Box
             w="80%"

@@ -69,6 +69,10 @@
 
 }
 
+.heatmap-parent-box{
+  width: 50%;
+}
+
 
 
 @keyframes App-logo-spin {

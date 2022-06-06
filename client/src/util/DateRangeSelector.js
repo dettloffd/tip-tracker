@@ -11,6 +11,7 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightElement,
+  Text
 } from "@chakra-ui/react";
 import { MdCalendarToday } from "react-icons/md";
 
@@ -66,6 +67,7 @@ const DateRangeSelector = ({ setDateRange, placeholderMessage }) => {
           mb={1}
           
           focusBorderColor="teal.400"
+          fontSize={["xs", "xs", "sm"]}
           width={"100%"}
           textAlign="center"
           onClick={() => setOpen((open) => !open)}
@@ -105,8 +107,9 @@ const DateRangeSelector = ({ setDateRange, placeholderMessage }) => {
           />
         )}
       </div>
-      <Flex justifyContent={"center"} alignItems="center" width={"100%"}>
+      <Flex justifyContent={["center"]} alignItems="center" width={"100%"} flexDir={["column", "column", "row", "row", "row"]}>
         <Button
+        m={[0,0,2]}
           variant="solid"
           colorScheme="teal"
           size="sm"
@@ -120,11 +123,13 @@ const DateRangeSelector = ({ setDateRange, placeholderMessage }) => {
             });
           }}
         >
-          Confirm Date Range
+          <Text fontSize={[ "xs", "sm", "sm"]}>Confirm Date Range</Text>
+          
         </Button>
         {/* This resets the parent element (so charts will cover all time) and the input fields */}
         {/* Also resets the range in the datepicker */}
         <Button
+        m={[0,0,2]}
           size="sm"
           onClick={() => {
             // reset daterange in parent element
@@ -142,7 +147,7 @@ const DateRangeSelector = ({ setDateRange, placeholderMessage }) => {
             ]);
           }}
         >
-          Reset
+          <Text fontSize={[ "xs", "sm", "sm"]}>Reset</Text>
         </Button>
       </Flex>
     </Flex>

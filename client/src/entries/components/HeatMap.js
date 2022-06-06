@@ -56,7 +56,7 @@ export default function HeatMap({ numDays, mapwidth, mapheight }) {
     <>
       {/* Change width % based on viewport size for responsiveness  */}
       {/* Box holds the heatmap so it can be centered - added inside component to allow for adding numdays text easer */}
-      <Box w={mapwidth} h={mapheight}>
+      <Box w={mapwidth} h={mapheight} className="heatmap-parent-box" >
         {" "}
         <ResponsiveTimeRange
           data={heatmapValues}
