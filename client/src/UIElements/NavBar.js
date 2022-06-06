@@ -7,7 +7,7 @@ export default function NavBar() {
   let navItems = [
     { icon: MdHome, title: "Dashboard", routerLink: "/" },
     { icon: MdDocumentScanner, title: "Entries", routerLink: "/entries" },
-    { icon: MdHome, title: "Otherstuff", routerLink: "/" },
+    { icon: MdHome, title: "Stats", routerLink: "/statspage" },
   ];
 
   return (

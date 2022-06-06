@@ -1,10 +1,11 @@
-import { Box, Divider, Flex, Text } from "@chakra-ui/react";
+import { Box, Divider, Flex, Link, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import EntryInputForm from "./entries/components/EntryInputForm";
 import EntryLog from "./entries/components/EntryLog";
 import HeatMap from "./entries/components/HeatMap";
 import EntryPage from "./entries/pages/EntryPage";
 import StatsDisplay from "./stats/pages/StatsDisplay";
+import StatsPage from "./stats/pages/StatsPage";
 import NavBar from "./UIElements/NavBar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -72,13 +73,14 @@ const AppHome = () => {
                       bg="white"
                     >
                       <Text fontSize={["md", "md", "xl"]}>Recent Entries</Text>{" "}
-                      <Text
+                      <a href="/entries"><Text
                         fontSize={["md", "md", "lg"]}
                         fontWeight={"bold"}
                         color="teal.500"
                       >
                         See All
                       </Text>
+                      </a>
                     </Flex>
                     <Divider mb={5} />
                     <EntryLog
@@ -138,12 +140,22 @@ const AppHome = () => {
             element={
               <Flex w={["100%", "100%", "90%"]}>
                 {/* If page is in vertical mode, take up 100% of width */}
-              <EntryPage
-              
-                numResults={30}
-                // dateRange={dateRange}
-                // setDateRange={setDateRange}
-              />
+                <EntryPage
+                  numResults={30}
+                  // dateRange={dateRange}
+                  // setDateRange={setDateRange}
+                />
+              </Flex>
+            }
+          />
+
+          <Route
+            path="/statspage"
+            element={
+              <Flex w={["100%", "100%", "90%"]}>
+                {/* If page is in vertical mode, take up 100% of width */}
+                <StatsPage
+                />
               </Flex>
             }
           />

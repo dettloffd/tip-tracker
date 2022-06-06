@@ -3,8 +3,6 @@ export const chartFieldsArray = [
       chartTitle: "Average Tip by Weekday",
       chartType: "line",
       url: "avg/avgTip/day/",
-      //url: "avgByWeekday/tips",
-      //xKey: "weekDay",
       xKey: "day",
       yKey: "avgTip",
     },
@@ -16,21 +14,11 @@ export const chartFieldsArray = [
       yKey: "avgTip",
     },
     {
-      chartTitle: "Average Tip by Year",
-      chartType: "bar",
-      url: "avg/avgTip/year",
-      xKey: "year",
-      yKey: "avgTip",
-    },
-    {
       chartTitle: "Average Total Tips by Weekday",
       chartType: "bar",
       url: "avg/tipsTotal/day",
-      //url: "avgByWeekday/tipsTotal",
       xKey: "day",
       yKey: "tipsTotal",
-      //high={"Highest Average Total Tips by Weekday "},
-      //low={"Lowest Average Total Tips by Weekday "},
     },
     {
       chartTitle: "Average Number of Transactions per Weekday",
@@ -39,9 +27,6 @@ export const chartFieldsArray = [
       xKey: "day",
       yKey: "numTransactions",
     },
-
-
-
     {
       chartTitle: "Average Number of Transactions per Month",
       chartType: "bar",
@@ -49,8 +34,6 @@ export const chartFieldsArray = [
       xKey: "month",
       yKey: "numTransactions",
     },
-
-
     {
       chartTitle: "Average Total Tips per Month",
       chartType: "line",
@@ -65,6 +48,13 @@ export const chartFieldsArray = [
       url: "avg/numTransactions/day",
       xKey: "year",
       yKey: "numTransactions",
+    },
+    {
+      chartTitle: "Average Tip by Year",
+      chartType: "bar",
+      url: "avg/avgTip/year",
+      xKey: "year",
+      yKey: "avgTip",
     },
   ];
 
