@@ -6,10 +6,14 @@ import EntryItem from "../components/EntryItem";
 import EntryLog from "../components/EntryLog";
 import HeatMap from "../components/HeatMap";
 import DateRangeSelector from "../../util/DateRangeSelector";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 const EntryPage = ({ numResults }) => {
   let userId = "5f0aa38f2a9f992d74ff4533";
   const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
+  const { height, width } = useWindowDimensions();
+
+  
   // const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
   /////testing purposes
   // const { data, error, isLoading, isError } = useQuery(
@@ -45,7 +49,7 @@ const EntryPage = ({ numResults }) => {
           mt={"3rem"}
         >
           
-          <HeatMap numDays={365} mapwidth="100%" mapheight="15rem"  />
+          <HeatMap numDays={width < 760 ? 150 : 365} mapwidth="100%" mapheight="15rem"  />
           
           {/* Container for entries  */}
           <Box

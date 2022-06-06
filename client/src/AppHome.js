@@ -136,7 +136,8 @@ const AppHome = () => {
           <Route
             path="/entries"
             element={
-              <Flex w="90%">
+              <Flex w={["100%", "100%", "90%"]}>
+                {/* If page is in vertical mode, take up 100% of width */}
               <EntryPage
               
                 numResults={30}
