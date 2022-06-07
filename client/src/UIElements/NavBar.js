@@ -1,12 +1,10 @@
-import { Flex, Heading, Icon, Link, Text } from "@chakra-ui/react";
+import { Button, Flex, Heading, Icon, Link, Text } from "@chakra-ui/react";
 import { MdHome, MdDocumentScanner } from "react-icons/md";
 import NavBarItem from "./NavBarItem";
 import { AuthContext } from "../auth/AuthContext";
 import { useContext } from "react";
 
-
 export default function NavBar() {
-
   const auth = useContext(AuthContext);
 
   let navItems = [
@@ -15,10 +13,7 @@ export default function NavBar() {
     { icon: MdHome, title: "Stats", routerLink: "/statspage" },
   ];
 
-  let navItemsLogin = [
-    { icon: MdHome, title: "Dashboard", routerLink: "/" },
-
-  ];
+  let navItemsLogin = [{ icon: MdHome, title: "Dashboard", routerLink: "/" }];
 
   return (
     <Flex
@@ -50,28 +45,29 @@ export default function NavBar() {
           ]}
           justifyContent={"center"}
         >
-          {auth.isLoggedIn ?  navItems.map((item) => (
-            <NavBarItem
-              title={item.title}
-              icon={item.icon}
-              routerLink={item.routerLink}
-            ></NavBarItem>
-          )
-          )
-          : navItemsLogin.map((item) => (
-            <NavBarItem
-              title={item.title}
-              icon={item.icon}
-              routerLink={item.routerLink}
-            ></NavBarItem>
-          )
-          )
-        
-        }
+          {auth.isLoggedIn
+            ? navItems.map((item) => (
+                <NavBarItem
+                  title={item.title}
+                  icon={item.icon}
+                  routerLink={item.routerLink}
+                ></NavBarItem>
+              ))
+            : navItemsLogin.map((item) => (
+                <NavBarItem
+                  title={item.title}
+                  icon={item.icon}
+                  routerLink={item.routerLink}
+                ></NavBarItem>
+              ))}
         </Flex>
+        
+        
       </Flex>
+      
+      
 
-      <Flex></Flex>
     </Flex>
+    
   );
 }
