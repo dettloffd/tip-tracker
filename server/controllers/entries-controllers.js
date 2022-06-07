@@ -96,17 +96,21 @@ const getAllEntriesBetweenDates = async (req, res, next) => {
 
 
 
-const getEntriesByUserId = async (req, res, next) => {
+const getEntriesByUserIdBetweenDates = async (req, res, next) => {
+  const queryString = req.query;
+  //const userId = req.params.uid;
+
+  let startDate = queryString.startDate;
+  let endDate = queryString.endDate;
   //const userId = req.params.uid;
 
   let entries;
 
   try {
-    const ObjectId = mongoose.Types.ObjectId;
+    // const ObjectId = mongoose.Types.ObjectId;
     //const userId = req.params.uid;
     //
     const userId = "5f0aa38f2a9f992d74ff4533";
-    console.log(userId);
     //In the document, the userId is saved as an ObjectId, not simply a string..
     //Must cast to ObjectId in order to match
 
@@ -114,8 +118,84 @@ const getEntriesByUserId = async (req, res, next) => {
     //Same as above
 
     entries = await Entry.aggregate([
-      //{ $match: { creator: "5f0aa38f2a9f992d74ff4533" } },
-      { $match: { creator: ObjectId(userId) } },
+      { $match: { creator: "5f0aa38f2a9f992d74ff4533" } },
+      // { $match: { creator: ObjectId(userId) } },
+      {
+        $project: {
+          date: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+          numTransactions: 1,
+          tipsTotal: 1,
+          creator: 1,
+        },
+      },
+      {
+        $match: {
+          date: {
+            $gte: startDate,
+            $lte: endDate,
+          },
+        },
+      },
+      { $sort: { date: -1 } },
+    ]);
+  } catch (err) {
+    // const error = new HttpError(
+    //   "Something went wrong; unable to locate data with provided arguments",
+    //   500
+    // );
+    // return next(error);
+
+    console.log(err);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong; unable to locate data with provided arguments",
+    });
+  }
+
+  if (!entries || entries.length === 0) {
+    
+    // return res.status(404).json({
+    //   success: false,
+    //   message: "No entries exist with provided user ID",
+    // });
+
+    return res.json({
+      success: false,
+      message: `No entries exist between ${startDate} and ${endDate} with provided user ID`,
+    });
+    
+    // return next(new HttpError("No entries exist with provided user ID", 404));
+  }
+
+  return res.json({
+    success: true,
+    count: entries.length,
+    message: `Retrieval successful. [${entries.length}] entries located with provided user ID.`,
+    entries: entries,
+  });
+};
+
+
+const getEntriesByUserId = async (req, res, next) => {
+  //const userId = req.params.uid;
+
+  let entries;
+
+  try {
+    // const ObjectId = mongoose.Types.ObjectId;
+    //const userId = req.params.uid;
+    //
+    const userId = "5f0aa38f2a9f992d74ff4533";
+    // console.log(userId);
+    //In the document, the userId is saved as an ObjectId, not simply a string..
+    //Must cast to ObjectId in order to match
+
+    //entries = await Entry.find({ creator: userId });
+    //Same as above
+
+    entries = await Entry.aggregate([
+      { $match: { creator: "5f0aa38f2a9f992d74ff4533" } },
+      // { $match: { creator: ObjectId(userId) } },
       {
         $project: {
           date: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
@@ -141,11 +221,10 @@ const getEntriesByUserId = async (req, res, next) => {
   }
 
   if (!entries || entries.length === 0) {
-    // return res.status(404).json({
-    //   success: false,
-    //   message: "No entries exist with provided user ID",
-    // });
-    return next(new HttpError("No entries exist with provided user ID", 404));
+    return res.json({
+      success: false,
+      message: `No entries exist between ${startDate} and ${endDate} with provided user ID`,
+    });
   }
 
   return res.json({
@@ -158,13 +237,14 @@ const getEntriesByUserId = async (req, res, next) => {
 
 const createEntry = async (req, res, next) => {
   const { date, numTransactions, tipsTotal } = req.body;
-  //const { date, numTransactions, tipsTotal, creator } = req.body;
+  // const { date, numTransactions, tipsTotal, creator } = req.body;
+  // console.log(req.body);
 
   const newEntry = await Entry.create({
     date: date,
     numTransactions: numTransactions,
     tipsTotal: tipsTotal,
-    //creator: creator,
+    // creator: creator,
   });
   //res.json({ success: true });
 
@@ -307,6 +387,67 @@ const deleteEntry = async (req, res, next) => {
 exports.getAll = getAll;
 exports.getAllEntriesBetweenDates = getAllEntriesBetweenDates;
 exports.getEntriesByUserId = getEntriesByUserId;
+exports.getEntriesByUserIdBetweenDates = getEntriesByUserIdBetweenDates;
 exports.createEntry = createEntry;
 exports.editEntry = editEntry;
 exports.deleteEntry = deleteEntry;
+
+// const getEntriesByUserId = async (req, res, next) => {
+//   //const userId = req.params.uid;
+
+//   let entries;
+
+//   try {
+//     const ObjectId = mongoose.Types.ObjectId;
+//     //const userId = req.params.uid;
+//     //
+//     const userId = "5f0aa38f2a9f992d74ff4533";
+//     console.log(userId);
+//     //In the document, the userId is saved as an ObjectId, not simply a string..
+//     //Must cast to ObjectId in order to match
+
+//     //entries = await Entry.find({ creator: userId });
+//     //Same as above
+
+//     entries = await Entry.aggregate([
+//       //{ $match: { creator: "5f0aa38f2a9f992d74ff4533" } },
+//       { $match: { creator: ObjectId(userId) } },
+//       {
+//         $project: {
+//           date: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+//           numTransactions: 1,
+//           tipsTotal: 1,
+//           creator: 1,
+//         },
+//       },
+//       { $sort: { date: -1 } },
+//     ]);
+//   } catch (err) {
+//     const error = new HttpError(
+//       "Something went wrong; unable to locate data with provided arguments",
+//       500
+//     );
+//     return next(error);
+
+//     // console.log(err);
+//     // return res.status(500).json({
+//     //   success: false,
+//     //   message: "Something went wrong; unable to locate data with provided arguments",
+//     // });
+//   }
+
+//   if (!entries || entries.length === 0) {
+//     // return res.status(404).json({
+//     //   success: false,
+//     //   message: "No entries exist with provided user ID",
+//     // });
+//     return next(new HttpError("No entries exist with provided user ID", 404));
+//   }
+
+//   return res.json({
+//     success: true,
+//     count: entries.length,
+//     message: `Retrieval successful. [${entries.length}] entries located with provided user ID.`,
+//     entries: entries,
+//   });
+// };

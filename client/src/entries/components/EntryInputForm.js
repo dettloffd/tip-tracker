@@ -55,7 +55,7 @@ const EntryInputForm = (props) => {
       date: values.date,
       // date: values.date,
       numTransactions: values.numTransactions,
-      creator: 1337,
+      creator: `5f0aa38f2a9f992d74ff4533`,
       _id: props.__id,
     };
     mutate(newEntry);

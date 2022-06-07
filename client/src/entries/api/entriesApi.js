@@ -28,6 +28,43 @@ export const getAllEntriesBetweenDates = async ({queryKey}) => {
   } catch (err) {}
 };
 
+export const getAllEntriesByUserId = async ({queryKey}) => {
+  // console.log(queryKey);
+  // console.log({userId});
+  const [_key, {userId}] = queryKey;
+  
+  try {
+    const response = await axios({
+      reqMethod: "GET",
+      //url: `http://localhost:5000/api/entries/user/5f0aa38f2a9f992d74ff4533`,
+      url: `http://localhost:5000/api/entries/user/${userId}`,
+      data: null,
+      headers: {},
+    });
+    return response;
+  } catch (err) {}
+};
+// router.get("between/user/:uid", entriesControllers.getEntriesByUserIdBetweenDates);
+
+export const getAllEntriesByUserIdBetweenDates = async ({queryKey}) => {
+  // console.log(queryKey);
+  // console.log({userId});
+  console.log(queryKey);
+  const [_key, {userId}, {startDate, endDate}] = queryKey;
+  console.log(userId);
+  
+  try {
+    const response = await axios({
+      reqMethod: "GET",
+      //url: `http://localhost:5000/api/entries/user/5f0aa38f2a9f992d74ff4533`,
+      url: `http://localhost:5000/api/entries/user/${userId}/between/?startDate=${startDate}&endDate=${endDate}`,
+      data: null,
+      headers: {},
+    });
+    return response;
+  } catch (err) {}
+};
+
 // export const getEntriesByUserId = async (userId) => {
 //   console.log(userId.queryKey[1].userId);
 //   try {
@@ -43,20 +80,20 @@ export const getAllEntriesBetweenDates = async ({queryKey}) => {
 //   } catch (err) {}
 // };
 
-export const getEntriesByUserId = async ({queryKey}) => {
-  //console.log(queryKey);
-  const [_key, {userId}] = queryKey;
-  try {
-    const response = await axios({
-      reqMethod: "GET",
-      //url: `http://localhost:5000/api/entries/user/5f0aa38f2a9f992d74ff4533`,
-      url: `http://localhost:5000/api/entries/user/${userId}`,
-      data: null,
-      headers: {},
-    });
-    return response;
-  } catch (err) {}
-};
+// export const getEntriesByUserId = async ({queryKey}) => {
+//   //console.log(queryKey);
+//   const [_key, {userId}] = queryKey;
+//   try {
+//     const response = await axios({
+//       reqMethod: "GET",
+//       //url: `http://localhost:5000/api/entries/user/5f0aa38f2a9f992d74ff4533`,
+//       url: `http://localhost:5000/api/entries/user/${userId}`,
+//       data: null,
+//       headers: {},
+//     });
+//     return response;
+//   } catch (err) {}
+// };
 
 export const editEntry = async (editedEntry) => {
   //console.log(editedEntry._id);

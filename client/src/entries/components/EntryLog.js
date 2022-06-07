@@ -2,7 +2,7 @@ import React from "react";
 import EntryItem from "./EntryItem";
 import { Container, Flex, List, Text } from "@chakra-ui/react";
 import { useQuery } from "react-query";
-import { getAllEntries, getAllEntriesBetweenDates } from "../api/entriesApi";
+import { getAllEntries, getAllEntriesBetweenDates, getAllEntriesByUserId, getAllEntriesByUserIdBetweenDates } from "../api/entriesApi";
 import MoonLoader from "react-spinners/MoonLoader";
 
 const EntryLog = ({ numResults, dateRange }) => {
@@ -26,15 +26,26 @@ const EntryLog = ({ numResults, dateRange }) => {
   let theQueryKey;
   let theQueryFn;
 
-  if (dateRangeProvided) {
-    theQueryKey = ["userEntriesBetweenDates", { startDate, endDate }];
-    theQueryFn = getAllEntriesBetweenDates;
+  // if (dateRangeProvided) {
+  //   theQueryKey = ["userEntriesBetweenDates", { startDate, endDate }];
+  //   theQueryFn = getAllEntriesBetweenDates;
+  // } else {
+  //   theQueryKey = "userEntries";
+  //   theQueryFn = getAllEntries;
+  // }
+
+    if (dateRangeProvided) {
+    theQueryKey = ["getAllEntriesByUserIdBetweenDates", {userId}, { startDate, endDate }];
+    theQueryFn = getAllEntriesByUserIdBetweenDates;
   } else {
-    theQueryKey = "userEntries";
-    theQueryFn = getAllEntries;
+    theQueryKey = ["getAllEntriesByUserId", {userId}];
+    theQueryFn = getAllEntriesByUserId;
   }
 
+  
+
   const { data, error, isLoading, isError } = useQuery(theQueryKey, theQueryFn);
+  console.log(data);
 
   if (isLoading) {
     return (
@@ -45,10 +56,11 @@ const EntryLog = ({ numResults, dateRange }) => {
   }
 
   if (isError) {
-    return <p>errorrrrrr</p>;
+    return <Text>Error has occurred</Text>;
   }
 
-  if (data) {
+  if (data.data.entries) {
+    
     let entriesToDisplay = data.data.entries.slice(0, numResults);
 
     return (
@@ -73,6 +85,10 @@ const EntryLog = ({ numResults, dateRange }) => {
         )}
       </>
     );
+  } else {
+    return (
+      <Text textAlign={"center"}>No entries exist for this time period</Text>
+    )
   }
 };
 
