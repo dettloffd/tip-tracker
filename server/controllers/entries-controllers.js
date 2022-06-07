@@ -236,15 +236,15 @@ const getEntriesByUserId = async (req, res, next) => {
 };
 
 const createEntry = async (req, res, next) => {
-  const { date, numTransactions, tipsTotal } = req.body;
-  // const { date, numTransactions, tipsTotal, creator } = req.body;
+  // const { date, numTransactions, tipsTotal } = req.body;
+  const { date, numTransactions, tipsTotal, creator } = req.body;
   // console.log(req.body);
 
   const newEntry = await Entry.create({
     date: date,
     numTransactions: numTransactions,
     tipsTotal: tipsTotal,
-    // creator: creator,
+    creator: creator,
   });
   //res.json({ success: true });
 
