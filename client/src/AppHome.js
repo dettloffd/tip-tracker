@@ -30,6 +30,8 @@ const AppHome = () => {
     setIsLoggedIn(false);
   }, []);
 
+  const [userId, setUserId] = useState("5f0aa38f2a9f992d74ff4533");
+
   let routes;
 
   if (isLoggedIn) {
@@ -79,6 +81,7 @@ const AppHome = () => {
                   <EntryLog
                     numResults={10}
                     dateRange={{ startDate: "", endDate: "" }}
+                   
                   />
                 </Box>
               </Flex>
@@ -173,7 +176,7 @@ const AppHome = () => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout, userId: userId }}
     >
       <BrowserRouter>
         <Flex
@@ -201,17 +204,9 @@ const AppHome = () => {
               // Height controls how far down the page the logout button goes
             >
               <NavBar />
-              <Button onClick={logout} mb={2} size={"xs"}>Logout</Button>
-              
-              
-              
-             
+              <Button onClick={logout} mb={2} size={"xs"}>Logout</Button>         
             </Flex>
-            
-            
           </Flex>
-
-          
           {routes}
         </Flex>
       </BrowserRouter>

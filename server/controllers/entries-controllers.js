@@ -98,11 +98,10 @@ const getAllEntriesBetweenDates = async (req, res, next) => {
 
 const getEntriesByUserIdBetweenDates = async (req, res, next) => {
   const queryString = req.query;
-  //const userId = req.params.uid;
 
   let startDate = queryString.startDate;
   let endDate = queryString.endDate;
-  //const userId = req.params.uid;
+  const userId = req.params.uid;
 
   let entries;
 
@@ -110,7 +109,7 @@ const getEntriesByUserIdBetweenDates = async (req, res, next) => {
     // const ObjectId = mongoose.Types.ObjectId;
     //const userId = req.params.uid;
     //
-    const userId = "5f0aa38f2a9f992d74ff4533";
+    // const userId = "5f0aa38f2a9f992d74ff4533";
     //In the document, the userId is saved as an ObjectId, not simply a string..
     //Must cast to ObjectId in order to match
 
@@ -118,7 +117,7 @@ const getEntriesByUserIdBetweenDates = async (req, res, next) => {
     //Same as above
 
     entries = await Entry.aggregate([
-      { $match: { creator: "5f0aa38f2a9f992d74ff4533" } },
+      { $match: { creator: userId } },
       // { $match: { creator: ObjectId(userId) } },
       {
         $project: {
@@ -177,8 +176,7 @@ const getEntriesByUserIdBetweenDates = async (req, res, next) => {
 
 
 const getEntriesByUserId = async (req, res, next) => {
-  //const userId = req.params.uid;
-
+  const userId = req.params.uid;
   let entries;
 
   try {
@@ -194,7 +192,7 @@ const getEntriesByUserId = async (req, res, next) => {
     //Same as above
 
     entries = await Entry.aggregate([
-      { $match: { creator: "5f0aa38f2a9f992d74ff4533" } },
+      { $match: { creator: userId } },
       // { $match: { creator: ObjectId(userId) } },
       {
         $project: {

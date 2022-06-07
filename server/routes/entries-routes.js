@@ -18,7 +18,7 @@ router.get("/between", entriesControllers.getAllEntriesBetweenDates)
 
 router.get("/user/:uid", entriesControllers.getEntriesByUserId);
 
-router.get("between/user/:uid", entriesControllers.getEntriesByUserId);
+// router.get("between/user/:uid", entriesControllers.getEntriesByUserId);
 
 
 //router.post("/", entriesControllers.createEntry);

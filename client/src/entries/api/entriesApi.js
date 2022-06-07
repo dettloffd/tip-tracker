@@ -95,6 +95,17 @@ export const getAllEntriesByUserIdBetweenDates = async ({queryKey}) => {
 //   } catch (err) {}
 // };
 
+export const addEntry = async (newEntry) => {
+  try {
+    const response = await axios({
+      url: "http://localhost:5000/api/entries",
+      method: "POST",
+      data: newEntry,
+    });
+    console.log(response);
+  } catch (err) {}
+};
+
 export const editEntry = async (editedEntry) => {
   //console.log(editedEntry._id);
   try {
@@ -105,17 +116,6 @@ export const editEntry = async (editedEntry) => {
       //url: `http://localhost:5000/api/entries/123`,
       data: editedEntry,
       headers: {},
-    });
-    console.log(response);
-  } catch (err) {}
-};
-
-export const addEntry = async (newEntry) => {
-  try {
-    const response = await axios({
-      url: "http://localhost:5000/api/entries",
-      method: "POST",
-      data: newEntry,
     });
     console.log(response);
   } catch (err) {}

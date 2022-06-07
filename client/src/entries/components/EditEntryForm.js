@@ -27,7 +27,7 @@ const EditEntryInputForm = (props) => {
 
   const { isLoading, isSuccess, mutate } = useMutation(editEntry, {
     onSuccess: () => {
-      queryClient.invalidateQueries("userEntries");
+      queryClient.invalidateQueries();
     },
   });
 
@@ -42,7 +42,6 @@ const EditEntryInputForm = (props) => {
       tipsTotal: values.tipsTotal,
       date: values.date,
       numTransactions: values.numTransactions,
-      creator: 1337,
       _id: props._id,
     };
     mutate(editedEntry);
@@ -108,7 +107,6 @@ const EditEntryInputForm = (props) => {
                       </FormHelperText>
 
                       <FormErrorMessage>Email is required.</FormErrorMessage>
-                      {/* <FormHelperText>Yooo</FormHelperText> */}
                     </FormControl>
                   )}
                 </Field>

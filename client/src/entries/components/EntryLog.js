@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import EntryItem from "./EntryItem";
+import {  AuthContext } from "../../auth/AuthContext";
 import { Container, Flex, List, Text } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { getAllEntries, getAllEntriesBetweenDates, getAllEntriesByUserId, getAllEntriesByUserIdBetweenDates } from "../api/entriesApi";
@@ -7,7 +8,12 @@ import MoonLoader from "react-spinners/MoonLoader";
 
 const EntryLog = ({ numResults, dateRange }) => {
   const { startDate, endDate } = dateRange;
-  let userId = "5f0aa38f2a9f992d74ff4533";
+  // const authContext = useContext(AuthContext);
+  // let userId = authcontext.userid
+  // ^^^ more explicit, but.. 
+  const {userId} = useContext(AuthContext);
+
+
   /////testing purposes
 
   // const { data, error, isLoading, isError } = useQuery(

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Formik, Form, Field } from "formik";
 import {
   Box,
@@ -13,8 +13,10 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Text,
-  FormHelperText,
+    FormHelperText,
 } from "@chakra-ui/react";
+
+import {  AuthContext } from "../../auth/AuthContext";
 
 import { useQueryClient } from "react-query";
 import { useMutation } from "react-query";
@@ -24,27 +26,20 @@ import { addEntry } from "../api/entriesApi";
 import { format, parseISO } from "date-fns";
 
 const EntryInputForm = (props) => {
+  const {userId} = useContext(AuthContext);
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation(addEntry, {
     onSuccess: () => {
-      queryClient.invalidateQueries("userEntries");
+      queryClient.invalidateQueries();
     },
   });
 
-//   let todaysDate = new Date().toISOString();
-//   console.log(todaysDate);
-//  let notToIso = format(new Date(), "yyyy-MM-dd");
-//  console.log(notToIso);
-//  let possible = format(parseISO(new Date().toISOString()), "yyyy-MM-dd");
-//  console.log(possible);
 
-// test for differences
 
   const initialFormState = {
     // date: new Date().toISOString(),
     date: format(parseISO(new Date().toISOString()), "yyyy-MM-dd"),
-    // date: formatToday(),
     tipsTotal: 0,
     numTransactions: 0,
   };
@@ -55,7 +50,7 @@ const EntryInputForm = (props) => {
       date: values.date,
       // date: values.date,
       numTransactions: values.numTransactions,
-      creator: `5f0aa38f2a9f992d74ff4533`,
+      creator: userId,
       _id: props.__id,
     };
     mutate(newEntry);

@@ -4,11 +4,13 @@ const Entry = require("../models/Entry");
 
 const avgVarByTimeBetweenDates = async (req, res, next) => {
   const { startDate, endDate, statVar, timeVar } = req.query;
+  const userId = req.params.uid;
 
   let results;
 
   try {
     results = await Entry.aggregate([
+      { $match: { creator: userId } },
       {
         $project: {
           formattedDate: {
@@ -63,11 +65,13 @@ const avgVarByTimeBetweenDates = async (req, res, next) => {
 
 const avgVarByTimeGetAll = async (req, res, next) => {
   const { statVar, timeVar } = req.query;
+  const userId = req.params.uid;
 
   let results;
 
   try {
     results = await Entry.aggregate([
+      { $match: { creator: userId } },
       {
         $project: {
           formattedDate: {

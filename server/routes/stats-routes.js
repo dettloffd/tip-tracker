@@ -5,13 +5,14 @@ const router = express.Router();
 const statsControllers = require("../controllers/stats-controllers");
 
 
-router.get("/", statsControllers.testing);
-router.get("/avgBetweenDates", statsControllers.avgVarByTimeBetweenDates);
+// router.get("/", statsControllers.testing);
+router.get("/user/:uid/avgBetweenDates", statsControllers.avgVarByTimeBetweenDates);
 // router.get("/avg/:statVar/:timeVar", statsControllers.avgVarByTimeGetAll);
 
-router.get("/avg", statsControllers.avgVarByTimeGetAll);
+router.get("/user/:uid/avg", statsControllers.avgVarByTimeGetAll);
 
 
+// router.get("/user/:uid/between", entriesControllers.getEntriesByUserIdBetweenDates);
 
 
 

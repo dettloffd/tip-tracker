@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import NoDataToDisplay from "highcharts/modules/no-data-to-display";
@@ -16,6 +16,7 @@ import {
   fetchChartDataBetweenDates,
   fetchChartDataNoDates,
 } from "../api/statsApi";
+import { AuthContext } from "../../auth/AuthContext";
 const ChartConstructor = ({
   dateRange: { startDate, endDate },
   yKey,
@@ -38,6 +39,7 @@ const ChartConstructor = ({
   // necessary import in order for noData module to work correctly
   NoDataToDisplay(Highcharts);
 
+  const {userId} = useContext(AuthContext);
   const dateRangeProvided = startDate !== "";
   let theQueryKey;
   let theQueryFn;
@@ -45,12 +47,14 @@ const ChartConstructor = ({
   if (dateRangeProvided) {
     theQueryKey = [
       `fetchChartDataBetweenDates_${xKey}_${yKey}`,
+      {userId},
       { startDate, endDate, statVar: yKey, timeVar: xKey },
     ];
     theQueryFn = fetchChartDataBetweenDates;
   } else {
     theQueryKey = [
       `fetchChartDataNoDates_${xKey}_${yKey}`,
+      {userId},
       { statVar: yKey, timeVar: xKey },
     ];
     theQueryFn = fetchChartDataNoDates;
