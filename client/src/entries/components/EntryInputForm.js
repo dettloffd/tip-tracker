@@ -30,7 +30,7 @@ const EntryInputForm = (props) => {
   console.log(userId);
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation(addEntry, {
+  const { mutate, isError } = useMutation(addEntry, {
     onSuccess: () => {
       queryClient.invalidateQueries();
     },
@@ -55,8 +55,12 @@ const EntryInputForm = (props) => {
       // _id: props.__id,
     };
     mutate(newEntry);
-    resetForm();
+    // resetForm();
   };
+
+  if (isError){
+    return <h1>NO BUENOOOO</h1>
+  }
 
   return (
     <>

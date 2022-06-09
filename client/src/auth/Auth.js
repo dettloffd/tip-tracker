@@ -15,12 +15,19 @@ import {
   FormLabel,
   Input,
   Text,
+  useQuery,
 } from "@chakra-ui/react";
-
+import { useQueryClient, useMutation } from "react-query";
 
 const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const auth = useContext(AuthContext);
+  const queryClient = useQueryClient();
+  const { mutate , isError } = useMutation(authSubmitHandler, {
+    onSuccess: () => {
+      queryClient.invalidateQueries();
+    },
+  });
 
   const onAuthSubmit = (values, { resetForm }) => {
     const userData = {
@@ -29,9 +36,9 @@ const Auth = () => {
       username: values.username
 
     };
-    authSubmitHandler(userData, isLoginMode);
-    resetForm();
+    mutate({userData: userData, isLoginMode: isLoginMode})
     auth.login();
+    resetForm();
   };
 
   const switchModeHandler = () => {
@@ -43,6 +50,15 @@ const Auth = () => {
     email: "",
     password: "",
   };
+
+  if (isError){
+
+    return (<>
+    <Container>
+      <h1>Error has occurred. Please reload and try again.</h1>
+    </Container>
+    </>)
+  }
 
   return (
     <>

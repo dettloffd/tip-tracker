@@ -103,7 +103,9 @@ export const addEntry = async (newEntry) => {
       data: newEntry,
     });
     console.log(response);
-  } catch (err) {}
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const editEntry = async (editedEntry) => {

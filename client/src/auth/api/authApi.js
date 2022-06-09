@@ -1,7 +1,8 @@
 import axios from "axios";
 
-export const authSubmitHandler = async (userData, isLoginMode) => {
-    // const {isLoginMode} = useContext(AuthContext);
+export const authSubmitHandler = async (authData) => {
+  const {userData, isLoginMode} = authData;
+    
     if (isLoginMode) {
       try {
         const response = await axios({
@@ -17,7 +18,7 @@ export const authSubmitHandler = async (userData, isLoginMode) => {
         //only call login if attempt to send request is successful
         //response user ID send from backend; see users
       } catch (err) {
-        //Error handled by hook; nothing further needed to be done here
+        console.log(err);
       }
     } else {
       try {
@@ -31,46 +32,8 @@ export const authSubmitHandler = async (userData, isLoginMode) => {
           },
         });
         console.log(response);
-        // auth.login(response.data.user.id);
       } catch (err) {
-        //Error handled by hook; nothing further needed to be done here
+        console.log(err);
       }
     }
   };
-
-//   export const authSubmitHandler = async (datas) => {
-//     // event.preventDefault();
-//     if (isLoginMode) {
-//       try {
-//         const response = await axios({
-//           url: "http://localhost:5000/api/user/login",
-//           reqMethod: "POST",
-//           data: {
-//             email: datas.email,
-//             password: datas.password,
-//           }
-//         });
-//         // console.log()
-//         // auth.login(response.data.user.id);
-//         //only call login if attempt to send request is successful
-//         //response user ID send from backend; see users
-//       } catch (err) {
-//         //Error handled by hook; nothing further needed to be done here
-//       }
-//     } else {
-//       try {
-//         const response = await sendRequest({
-//           url: "http://localhost:5000/api/user/signup",
-//           reqMethod: "POST",
-//           data: {
-//             name: formState.inputs.name.value,
-//             email: formState.inputs.email.value,
-//             password: formState.inputs.password.value,
-//           },
-//         });
-//         auth.login(response.data.user.id);
-//       } catch (err) {
-//         //Error handled by hook; nothing further needed to be done here
-//       }
-//     }
-//   };
