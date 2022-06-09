@@ -8,10 +8,9 @@ import { getAllEntriesByUserIdBetweenDates } from "../api/entriesApi";
 import { AuthContext } from "../../auth/AuthContext";
 import MoonLoader from "react-spinners/MoonLoader";
 
-
 export default function HeatMap({ numDays, mapwidth, mapheight }) {
   const today = new Date();
-  const {userId} = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
 
   function shiftDate(date, numDays) {
     const newDate = new Date(date);
@@ -28,17 +27,24 @@ export default function HeatMap({ numDays, mapwidth, mapheight }) {
   // Shifting date by + 1 will ensure today's date is shown on the heatmap
   // due to the way mongoDb interprets to and from dates
   let endDate = format(
-    parseISO(shiftDate(today, + 1).toISOString()),
-    "yyyy-MM-dd");
+    parseISO(shiftDate(today, +1).toISOString()),
+    "yyyy-MM-dd"
+  );
 
   const { data, error, isLoading, isError } = useQuery(
-    ["heatMapDates", {userId}, { startDate, endDate }],
+    ["heatMapDates", { userId }, { startDate, endDate }],
     getAllEntriesByUserIdBetweenDates
   );
 
   const entryTooltip = ({ day, tipsTotal, numTransactions }) => {
     return (
-      <Box fontWeight={"bold"} opacity={".9"} color="teal.500" bgColor="gray.900" p={5}>
+      <Box
+        fontWeight={"bold"}
+        opacity={".9"}
+        color="teal.500"
+        bgColor="gray.900"
+        p={5}
+      >
         <Text>Date: {day}</Text>
         <Text>Total tips: {tipsTotal}</Text>
         <Text>Number of transactions: {numTransactions}</Text>
@@ -48,17 +54,21 @@ export default function HeatMap({ numDays, mapwidth, mapheight }) {
   };
 
   let heatmapValues = [];
+
   if (data) {
-    let returnEntries = data.data.entries;
-    // Timerange is expecting "Day" and "value" fields
-    returnEntries.forEach((entry) =>
-      heatmapValues.push({
-        day: entry.date,
-        value: 1,
-        tipsTotal: entry.tipsTotal,
-        numTransactions: entry.numTransactions,
-      })
-    );
+
+    if (data.data.entries) {
+      let returnEntries = data.data.entries;
+      // Timerange is expecting "Day" and "value" fields
+      returnEntries.forEach((entry) =>
+        heatmapValues.push({
+          day: entry.date,
+          value: 1,
+          tipsTotal: entry.tipsTotal,
+          numTransactions: entry.numTransactions,
+        })
+      );
+    } 
   }
 
   if (isLoading) {
@@ -73,10 +83,8 @@ export default function HeatMap({ numDays, mapwidth, mapheight }) {
     <>
       {/* Change width % based on viewport size for responsiveness  */}
       {/* Box holds the heatmap so it can be centered - added inside component to allow for adding numdays text easer */}
-      <Box w={mapwidth} h={mapheight} className="heatmap-parent-box" >
+      <Box w={mapwidth} h={mapheight} className="heatmap-parent-box">
         {" "}
-
-        
         <ResponsiveTimeRange
           data={heatmapValues}
           // height={350}
