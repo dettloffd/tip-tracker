@@ -2,11 +2,11 @@ import { useContext } from "react";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { format, parseISO } from "date-fns";
 import { useQuery } from "react-query";
-import { BasicTooltip } from "@nivo/tooltip";
 
 import { ResponsiveTimeRange } from "@nivo/calendar";
-import { getAllEntriesBetweenDates, getAllEntriesByUserIdBetweenDates } from "../api/entriesApi";
+import { getAllEntriesByUserIdBetweenDates } from "../api/entriesApi";
 import { AuthContext } from "../../auth/AuthContext";
+import MoonLoader from "react-spinners/MoonLoader";
 
 
 export default function HeatMap({ numDays, mapwidth, mapheight }) {
@@ -61,12 +61,22 @@ export default function HeatMap({ numDays, mapwidth, mapheight }) {
     );
   }
 
+  if (isLoading) {
+    return (
+      <Flex width="100%" justify={"center"} p={6}>
+        <MoonLoader size={200} color={"#4FD1C5"} loading={true} />
+      </Flex>
+    );
+  }
+
   return (
     <>
       {/* Change width % based on viewport size for responsiveness  */}
       {/* Box holds the heatmap so it can be centered - added inside component to allow for adding numdays text easer */}
       <Box w={mapwidth} h={mapheight} className="heatmap-parent-box" >
         {" "}
+
+        
         <ResponsiveTimeRange
           data={heatmapValues}
           // height={350}
