@@ -54,12 +54,13 @@ const EntryInputForm = (props) => {
       creator: userId,
       // _id: props.__id,
     };
+    console.log(newEntry);
     mutate(newEntry);
     // resetForm();
   };
 
   if (isError){
-    return <h1>NO BUENOOOO</h1>
+    return <h1>Error</h1>
   }
 
   return (

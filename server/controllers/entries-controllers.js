@@ -27,6 +27,9 @@ const getAll = async (req, res, next) => {
       //{ $project: { day: 1, AvgTips: { $round: ["$Avg", 2] } } },
       { $sort: { date: -1 } },
     ]);
+
+    // let id = mongoose.Types.ObjectId("62a27d91edd5427ca690330c");
+    // entries = await Entry.updateMany({ creator: id });
   } catch (err) {
     // const error = new HttpError('Blah blah blah', 404, 404);
     // return next(error);
@@ -234,8 +237,6 @@ const getEntriesByUserId = async (req, res, next) => {
 const createEntry = async (req, res, next) => {
   // const { date, numTransactions, tipsTotal } = req.body;
   const { date, numTransactions, tipsTotal, creator } = req.body;
-  // console.log(req.body);
-
   // const newEntry = await Entry.create({
   //   date: date,
   //   numTransactions: numTransactions,
@@ -386,13 +387,40 @@ const deleteEntry = async (req, res, next) => {
   res.json({ success: true });
 };
 
+
+
+
+
+
+
+
+const testing = async (req, res, next) => {
+  
+  //  Apply creator objectId to all entries
+  try {
+    userIdString = "62a27d91edd5427ca690330c";
+
+    let id = mongoose.Types.ObjectId("62a27d91edd5427ca690330c");
+    entries = await Entry.updateMany({ $match: { creator: (userIdString) } }, { creator: id });
+  } catch (err) {
+
+
+    return res.json({ message: err });
+  }
+
+  res.json({ count: entries.length, entries: entries });
+
+};
+
+exports.createEntry = createEntry;
+exports.editEntry = editEntry;
+exports.deleteEntry = deleteEntry;
 exports.getAll = getAll;
 exports.getAllEntriesBetweenDates = getAllEntriesBetweenDates;
 exports.getEntriesByUserId = getEntriesByUserId;
 exports.getEntriesByUserIdBetweenDates = getEntriesByUserIdBetweenDates;
-exports.createEntry = createEntry;
-exports.editEntry = editEntry;
-exports.deleteEntry = deleteEntry;
+exports.testing = testing;
+
 
 // const getEntriesByUserId = async (req, res, next) => {
 //   //const userId = req.params.uid;

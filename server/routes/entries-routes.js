@@ -7,7 +7,7 @@ const {check} = require('express-validator');
 
 const entriesControllers = require("../controllers/entries-controllers");
 
-router.get("/", entriesControllers.getAll);
+router.get("/", entriesControllers.testing);
 
 router.get("/user/:uid/between", entriesControllers.getEntriesByUserIdBetweenDates);
 // url: `http://localhost:5000/api/entries/user/${userId}/between/?startDate=${startDate}&endDate=${endDate}`,
