@@ -1,13 +1,17 @@
+import { useContext } from "react";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { format, parseISO } from "date-fns";
 import { useQuery } from "react-query";
 import { BasicTooltip } from "@nivo/tooltip";
 
 import { ResponsiveTimeRange } from "@nivo/calendar";
-import { getAllEntriesBetweenDates } from "../api/entriesApi";
+import { getAllEntriesBetweenDates, getAllEntriesByUserIdBetweenDates } from "../api/entriesApi";
+import { AuthContext } from "../../auth/AuthContext";
+
 
 export default function HeatMap({ numDays, mapwidth, mapheight }) {
   const today = new Date();
+  const {userId} = useContext(AuthContext);
 
   function shiftDate(date, numDays) {
     const newDate = new Date(date);
@@ -20,11 +24,16 @@ export default function HeatMap({ numDays, mapwidth, mapheight }) {
     parseISO(shiftDate(today, -numDays).toISOString()),
     "yyyy-MM-dd"
   );
-  let endDate = format(parseISO(today.toISOString()), "yyyy-MM-dd");
+
+  // Shifting date by + 1 will ensure today's date is shown on the heatmap
+  // due to the way mongoDb interprets to and from dates
+  let endDate = format(
+    parseISO(shiftDate(today, + 1).toISOString()),
+    "yyyy-MM-dd");
 
   const { data, error, isLoading, isError } = useQuery(
-    ["heatMapDates", { startDate: startDate, endDate: endDate }],
-    getAllEntriesBetweenDates
+    ["heatMapDates", {userId}, { startDate, endDate }],
+    getAllEntriesByUserIdBetweenDates
   );
 
   const entryTooltip = ({ day, tipsTotal, numTransactions }) => {
