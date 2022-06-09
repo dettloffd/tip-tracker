@@ -13,16 +13,16 @@ const entrySchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  "creator": {
-    type: String,
-    required: true,
-  },
-
   // "creator": {
-  //   type: mongoose.Types.ObjectId,
+  //   type: String,
   //   required: true,
-  //   ref: 'User'
-  // }
+  // },
+
+  "creator": {
+    type: mongoose.Types.ObjectId,
+    required: true,
+    ref: 'User'
+  }
 });
 
 module.exports = mongoose.model('Entry', entrySchema);

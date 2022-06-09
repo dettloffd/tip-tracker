@@ -1,6 +1,10 @@
 const Entry = require("../models/Entry");
 // const { validationResult } = require("express-validator");
 // const { json } = require("express");
+const mongoose = require("mongoose");
+
+// Cast creator string to mongodb objectId type
+const ObjectId = mongoose.Types.ObjectId;
 
 const avgVarByTimeBetweenDates = async (req, res, next) => {
   const { startDate, endDate, statVar, timeVar } = req.query;
@@ -10,7 +14,7 @@ const avgVarByTimeBetweenDates = async (req, res, next) => {
 
   try {
     results = await Entry.aggregate([
-      { $match: { creator: userId } },
+      { $match: { creator: ObjectId(userId) } },
       {
         $project: {
           formattedDate: {
@@ -71,7 +75,7 @@ const avgVarByTimeGetAll = async (req, res, next) => {
 
   try {
     results = await Entry.aggregate([
-      { $match: { creator: userId } },
+      { $match: { creator: ObjectId(userId) } },
       {
         $project: {
           formattedDate: {

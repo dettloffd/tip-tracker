@@ -27,6 +27,7 @@ import { format, parseISO } from "date-fns";
 
 const EntryInputForm = (props) => {
   const {userId} = useContext(AuthContext);
+  console.log(userId);
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation(addEntry, {
@@ -51,7 +52,7 @@ const EntryInputForm = (props) => {
       // date: values.date,
       numTransactions: values.numTransactions,
       creator: userId,
-      _id: props.__id,
+      // _id: props.__id,
     };
     mutate(newEntry);
     resetForm();

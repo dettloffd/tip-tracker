@@ -4,36 +4,39 @@ import { AuthContext } from "./AuthContext";
 import { Formik, Form, Field } from "formik";
 import { userValidationSchemas } from "./userValidationSchema";
 import { authInputTextFields } from "./authInputTextFields";
+import { authSubmitHandler } from "./api/authApi";
 
 import {
   Box,
   Button,
   Container,
   FormControl,
-  FormErrorMessage,
   FormHelperText,
   FormLabel,
   Input,
   Text,
 } from "@chakra-ui/react";
 
+
 const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const auth = useContext(AuthContext);
 
-  const onAuthSubmit = () => {
+  const onAuthSubmit = (values, { resetForm }) => {
+    const userData = {
+      email: values.email,
+      password: values.password,
+      username: values.username
+
+    };
+    authSubmitHandler(userData, isLoginMode);
+    resetForm();
     auth.login();
   };
 
   const switchModeHandler = () => {
     setIsLoginMode((currentMode) => !currentMode);
   };
-
-  // const initialFormState = {
-  //   [isLoginMode ? "username" : null]: "",
-  //   email: "",
-  //   password: "",
-  // };
 
   const initialFormState = {
     username: "",
@@ -65,47 +68,6 @@ const Auth = () => {
         >
           {(props) => (
             <Form>
-              {/* {inputFields.map((inputField) => (
-                <TextFieldWrapper
-                  name={inputField.id}
-                  label={inputField.label}
-                  type={inputField.type}
-                  className={classes.userInputFields}
-                />
-              ))} */}
-
-              {/* {authInputTextFields[
-                isLoginMode ? "authLogin" : "authSignup"
-              ].map((inputField) => (
-                <Input
-                  name={inputField.id}
-                  label={inputField.label}
-                  type={inputField.type}
-                />
-              ))} */}
-
-              {/* <Field>
-                  <FormControl>
-                      <FormLabel></FormLabel>
-                      <Input>
-                      </Input>
-                      <FormHelperText></FormHelperText>
-                  </FormControl>
-
-              </Field> */}
-
-              {/* <Field name={inputField.name}>
-              {({ field, form, meta }) => (
-                  <FormControl>
-                      <FormLabel></FormLabel>
-                      <Input name={inputField.id} label={inputField.label} type={inputField.type} isInvalid={meta.touched && meta.error}>
-                      {...field}
-                      </Input>
-                      <FormHelperText></FormHelperText>
-                  </FormControl>
-                  )}
-              </Field> */}
-
               {authInputTextFields[
                 isLoginMode ? "authLogin" : "authSignup"
               ].map((inputField) => (
@@ -157,7 +119,6 @@ const Auth = () => {
           {isLoginMode ? "LoginMode" : "!LoginMode"}
         </Button>
       </Container>
-      {/* <Button onClick={() => setIsLoginMode((currentMode) => !currentMode)}> */}
     </>
   );
 };

@@ -6,6 +6,9 @@ const { validationResult } = require("express-validator");
 const User = require("../models/User");
 const { json } = require("express");
 
+// Cast creator string to mongodb objectId type
+const ObjectId = mongoose.Types.ObjectId;
+
 const getAll = async (req, res, next) => {
   try {
     entries = await Entry.aggregate([
@@ -106,10 +109,6 @@ const getEntriesByUserIdBetweenDates = async (req, res, next) => {
   let entries;
 
   try {
-    // const ObjectId = mongoose.Types.ObjectId;
-    //const userId = req.params.uid;
-    //
-    // const userId = "5f0aa38f2a9f992d74ff4533";
     //In the document, the userId is saved as an ObjectId, not simply a string..
     //Must cast to ObjectId in order to match
 
@@ -117,8 +116,8 @@ const getEntriesByUserIdBetweenDates = async (req, res, next) => {
     //Same as above
 
     entries = await Entry.aggregate([
-      { $match: { creator: userId } },
-      // { $match: { creator: ObjectId(userId) } },
+      // { $match: { creator: userId } },
+      { $match: { creator: ObjectId(userId) } },
       {
         $project: {
           date: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
@@ -180,10 +179,9 @@ const getEntriesByUserId = async (req, res, next) => {
   let entries;
 
   try {
-    // const ObjectId = mongoose.Types.ObjectId;
-    //const userId = req.params.uid;
-    //
-    const userId = "5f0aa38f2a9f992d74ff4533";
+    // const userId = req.params.uid;
+    //Request URL: http://localhost:5000/api/stats/user/62a02323161e5509490875a4/avg/?statVar=numTransactions&timeVar=day
+    // const userId = "5f0aa38f2a9f992d74ff4533";
     // console.log(userId);
     //In the document, the userId is saved as an ObjectId, not simply a string..
     //Must cast to ObjectId in order to match
@@ -192,8 +190,8 @@ const getEntriesByUserId = async (req, res, next) => {
     //Same as above
 
     entries = await Entry.aggregate([
-      { $match: { creator: userId } },
-      // { $match: { creator: ObjectId(userId) } },
+      // { $match: { creator: userId } },
+      { $match: { creator: ObjectId(userId) } },
       {
         $project: {
           date: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
@@ -221,7 +219,7 @@ const getEntriesByUserId = async (req, res, next) => {
   if (!entries || entries.length === 0) {
     return res.json({
       success: false,
-      message: `No entries exist between ${startDate} and ${endDate} with provided user ID`,
+      message: `No entries exist with provided user ID`,
     });
   }
 
@@ -238,74 +236,80 @@ const createEntry = async (req, res, next) => {
   const { date, numTransactions, tipsTotal, creator } = req.body;
   // console.log(req.body);
 
-  const newEntry = await Entry.create({
+  // const newEntry = await Entry.create({
+  //   date: date,
+  //   numTransactions: numTransactions,
+  //   tipsTotal: tipsTotal,
+  //   creator: creator,
+  // });
+
+
+  const newEntry = new Entry({
     date: date,
     numTransactions: numTransactions,
     tipsTotal: tipsTotal,
     creator: creator,
   });
-  //res.json({ success: true });
-
 
   ///////////////////////////////*****FROM HERE DOWN... all involve user */
-  // let user;
+  let user;
 
-  // try {
-  //   user = await User.findById(creator);
-  //   //Check if ID of logged in user exists juuust to make sure
-  // } catch (err) {
-  //   return res.status(500).json({
-  //     //general error
-  //     success: false,
-  //     message: "Entry creation failed (server error)",
-  //   });
-  // }
+  try {
+    user = await User.findById(creator);
+    //Check if ID of logged in user exists juuust to make sure
+  } catch (err) {
+    return res.status(500).json({
+      //general error
+      success: false,
+      message: "Entry creation failed (server error)",
+    });
+  }
 
-  // if (!user) {
-  //   return res.status(404).json({
-  //     success: false,
-  //     message: "User for provided ID not found",
-  //   });
-  // }
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "User for provided ID not found",
+    });
+  }
 
-  // try {
-  //   //await newEntry.save();
+  try {
+    //await newEntry.save();
 
-  //   const sess = await mongoose.startSession();
-  //   sess.startTransaction();
-  //   await newEntry.save({ session: sess });
-  //   //stores
-  //   user.entries.push(newEntry);
-  //   //MONGOOSE push, not regular JS push.. establishes connection between two models (user and entry)
-  //   //mongo takes newEntry id and adds to entries field of user
-  //   await user.save({ session: sess });
-  //   await sess.commitTransaction();
-  //   // ONLY at this point do changes take place in database
-  //   //***BOTH collections (entries and users) must ALREADY exist for this to work; wont auto create collections */
-  // } catch (err) {
-  //   console.log(err);
-  //   if (err.name === "ValidationError") {
-  //     // const messages = Object.values(err.errors).map((val) => val.message);
-  //     // return res.status(422).json({
-  //     //   success: false,
-  //     //   message: messages,
-  //     // });
-  //     //TRAVERSY METHOD; returns just the error text
-  //     const messages = Object.values(err.errors).map((val) => val.message);
-  //     return res.status(422).json({
-  //       success: false,
-  //       message: "Creation failed; required parameters missing",
-  //       messages: messages,
-  //     });
-  //   } else {
-  //     return res.status(500).json({
-  //       success: false,
-  //       message: "Server error",
-  //     });
-  //   }
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await newEntry.save({ session: sess });
+    //stores
+    user.entries.push(newEntry);
+    //MONGOOSE push, not regular JS push.. establishes connection between two models (user and entry)
+    //mongo takes newEntry id and adds to entries field of user
+    await user.save({ session: sess });
+    await sess.commitTransaction();
+    // ONLY at this point do changes take place in database
+    //***BOTH collections (entries and users) must ALREADY exist for this to work; wont auto create collections */
+  } catch (err) {
+    console.log(err);
+    if (err.name === "ValidationError") {
+      // const messages = Object.values(err.errors).map((val) => val.message);
+      // return res.status(422).json({
+      //   success: false,
+      //   message: messages,
+      // });
+      //TRAVERSY METHOD; returns just the error text
+      const messages = Object.values(err.errors).map((val) => val.message);
+      return res.status(422).json({
+        success: false,
+        message: "Creation failed; required parameters missing",
+        messages: messages,
+      });
+    } else {
+      return res.status(500).json({
+        success: false,
+        message: "Server error",
+      });
+    }
 
-  //   //return res.json({ message: err });
-  // }
+    //return res.json({ message: err });
+  }
 
    ///////////////////////////////*****FROM HERE UP... all involve user */
 

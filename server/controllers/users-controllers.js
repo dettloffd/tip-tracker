@@ -14,7 +14,9 @@ const signup = async (req, res, next) => {
     });
   }
 
+  
   const { username, email, password } = req.body;
+ 
 
   let existingUser;
   try {
@@ -73,21 +75,17 @@ const login = async (req, res, next) => {
 
   if (!existingUser || existingUser.password !== password) {
 
-
     return res.status(401).json({
       success: false,
       message: "Invalid credentials",
     });
     //return next(new HttpError('Credentials invalid', 401));
-
-
-
-
-
   }
   return res.json({
     success: true,
     message: "Logged in!",
+    // user: existingUser.toObject(),
+
     user: existingUser.toObject({ getters: true }),
     
   });
