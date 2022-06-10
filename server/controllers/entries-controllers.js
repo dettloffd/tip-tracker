@@ -387,13 +387,6 @@ const deleteEntry = async (req, res, next) => {
   res.json({ success: true });
 };
 
-
-
-
-
-
-
-
 const testing = async (req, res, next) => {
   
   //  Apply creator objectId to all entries

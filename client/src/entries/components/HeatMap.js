@@ -69,6 +69,7 @@ export default function HeatMap({ numDays, mapwidth, mapheight }) {
         })
       );
     } 
+    //  if no entries, leave heatmapValus as empty array
   }
 
   if (isLoading) {
