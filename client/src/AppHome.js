@@ -20,23 +20,25 @@ import Auth from "./auth/Auth";
 
 const AppHome = () => {
   const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [token, setToken] = useState(null);
+  const [userId, setUserId] = useState("62a27d91edd5427ca690330c");
 
-  const login = useCallback(() => {
-    setIsLoggedIn(true);
+  const login = useCallback((uid, token) => {
+    setToken(token);
+    setUserId(uid);
   }, []);
 
   const logout = useCallback(() => {
-    setIsLoggedIn(false);
+    setToken(null);
+    setUserId(null);
   }, []);
-
-  const [userId, setUserId] = useState("62a27d91edd5427ca690330c");
+  
   // 62a02323161e5509490875a4
   // 5f0aa38f2a9f992d74ff4533
 
   let routes;
 
-  if (isLoggedIn) {
+  if (token) {
     routes = (
       <Routes>
         <Route
@@ -178,7 +180,7 @@ const AppHome = () => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout, userId: userId }}
+      value={{ isLoggedIn: !!token, token: token, login: login, logout: logout, userId: userId }}
     >
       <BrowserRouter>
         <Flex

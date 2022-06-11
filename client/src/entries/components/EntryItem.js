@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Box,
   Button,
@@ -23,10 +23,13 @@ import EditEntryInputForm from "./EditEntryForm";
 import DeleteEntryForm from "./DeleteEntryForm";
 //
 import { format, parseISO } from "date-fns";
+import { AuthContext } from "../../auth/AuthContext";
 
 const entryIcons = [MdToday, MdReceipt, MdAttachMoney, MdOutlinePriceCheck];
 
 const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
+  const { token } = useContext(AuthContext);
+  
   const [isEditing, toggleEditing] = useToggleStateHook(false);
   const [isDeleting, toggleDeleting] = useToggleStateHook(false);
 
@@ -55,6 +58,7 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
               numTransactions={numTransactions}
               tipsTotal={tipsTotal}
               _id={_id}
+              token={token}
             />
           }
           toggleMutationState={toggleEditing}
@@ -63,7 +67,7 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
 
       {isDeleting && (
         <GeneralModal
-          modalContent={<DeleteEntryForm _id={_id} />}
+          modalContent={<DeleteEntryForm _id={_id} token={token} />}
           toggleMutationState={toggleDeleting}
         />
       )}

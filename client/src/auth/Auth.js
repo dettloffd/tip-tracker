@@ -23,11 +23,28 @@ const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const auth = useContext(AuthContext);
   const queryClient = useQueryClient();
-  const { mutate , isError } = useMutation(authSubmitHandler, {
-    onSuccess: () => {
-      queryClient.invalidateQueries();
+  // const { mutate , isError, isLoading } = useMutation(authSubmitHandler, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries();
+      
+  //   },
+  // });
+
+  const { isLoading, isSuccess, mutate, isError } = useMutation(
+    async (authData) => {
+      const response = await authSubmitHandler(authData);
+      return response;
     },
-  });
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries();
+        // console.log(data);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    }
+  );
 
   const onAuthSubmit = (values, { resetForm }) => {
     const userData = {
@@ -36,8 +53,8 @@ const Auth = () => {
       username: values.username
 
     };
-    mutate({userData: userData, isLoginMode: isLoginMode})
-    auth.login();
+    mutate({userData: userData, isLoginMode: isLoginMode, authLogin: auth.login})
+    // auth.login();
     resetForm();
   };
 

@@ -2,6 +2,8 @@
 const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
 const User = require("../models/User");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const signup = async (req, res, next) => {
   const errors = validationResult(req);
@@ -14,9 +16,7 @@ const signup = async (req, res, next) => {
     });
   }
 
-  
   const { username, email, password } = req.body;
- 
 
   let existingUser;
   try {
@@ -38,10 +38,22 @@ const signup = async (req, res, next) => {
     });
   }
 
+  let hashedPassword;
+
+  try{
+    hashedPassword = await bcrypt.hash(password, 12);
+
+  } catch (err){
+    res.status(500).json({
+      success: false,
+      message: "Could not create user; please try again later",
+    });
+  }
+
   const createdUser = new User({
     username,
     email,
-    password,
+    password: hashedPassword,
     entries: [],
   });
 
@@ -56,7 +68,19 @@ const signup = async (req, res, next) => {
     });
   }
 
-  res.status(201).json({ success: true, user: createdUser });
+  let token;
+  try{
+    token = jwt.sign({userId: createdUser.id, email: createdUser.email}, 'super_secret_key', {expiresIn: "1h"});
+    // "id" provided by mongoose for every document created..
+  } catch (err){
+    return res.status(500).json({
+      success: false,
+      message: "User creation failed due to server issue; please try later",
+    });
+  }
+
+
+  res.status(201).json({success: true, createdUser, token: token  });
 };
 
 const login = async (req, res, next) => {
@@ -73,7 +97,7 @@ const login = async (req, res, next) => {
     });
   }
 
-  if (!existingUser || existingUser.password !== password) {
+  if (!existingUser) {
 
     return res.status(401).json({
       success: false,
@@ -81,13 +105,50 @@ const login = async (req, res, next) => {
     });
     //return next(new HttpError('Credentials invalid', 401));
   }
+
+  let isValidPassword = false;
+
+  try{
+    isValidPassword = await bcrypt.compare(password, existingUser.password);
+    // returns a boolean
+
+  } catch (err){
+    return res.status(500).json({
+      // Serverside error: will only return error in case of server error
+      success: false,
+      message: "Could not log you in.. please check credentials and try again",
+    });
+
+  }
+
+  if (!isValidPassword){
+    return res.status(401).json({
+      // Credentials error: will only return error in case of incorrect credentials/password
+      success: false,
+      message: "Invalid credentials! Please check password and try again",
+    });
+
+  }
+
+  let token;
+  try{
+    token = jwt.sign({userId: existingUser.id, email: existingUser.email}, 'super_secret_key', {expiresIn: "1h"});
+    // "id" provided by mongoose for every document created..
+  } catch (err){
+    return res.status(500).json({
+      success: false,
+      message: "Logging in failed due to server issue; please try later",
+    });
+  }
+
   return res.json({
     success: true,
     message: "Logged in!",
+    existingUser,
     // user: existingUser.toObject(),
-
-    user: existingUser.toObject({ getters: true }),
-    
+    // userId: existingUser.id,
+    // email: existingUser.email,
+    token: token
   });
 };
 

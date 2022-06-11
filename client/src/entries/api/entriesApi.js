@@ -1,5 +1,14 @@
 import axios from "axios";
 
+function myValidateStatus(status) {
+  return status >= 200 && status < 300; // default
+}
+
+// validateStatus - essential axios option to ensure react query throws an error AND
+// we get the proper response object containing error codes/information back from server
+// without it, react query would handle the error but we wouldn't get the object containing
+// the error code and error message that was set up on the server 
+
 export const getAllEntries = async () => {
   try {
     const response = await axios({
@@ -12,10 +21,8 @@ export const getAllEntries = async () => {
   } catch (err) {}
 };
 
-// "/between/:startDate/:endDate" 
-
-export const getAllEntriesBetweenDates = async ({queryKey}) => {
-  const [_key, {startDate, endDate}] = queryKey;
+export const getAllEntriesBetweenDates = async ({ queryKey }) => {
+  const [_key, { startDate, endDate }] = queryKey;
 
   try {
     const response = await axios({
@@ -28,11 +35,9 @@ export const getAllEntriesBetweenDates = async ({queryKey}) => {
   } catch (err) {}
 };
 
-export const getAllEntriesByUserId = async ({queryKey}) => {
-  // console.log(queryKey);
-  // console.log({userId});
-  const [_key, {userId}] = queryKey;
-  
+export const getAllEntriesByUserId = async ({ queryKey }) => {
+  const [_key, { userId }] = queryKey;
+
   try {
     const response = await axios({
       reqMethod: "GET",
@@ -44,15 +49,9 @@ export const getAllEntriesByUserId = async ({queryKey}) => {
     return response;
   } catch (err) {}
 };
-// router.get("between/user/:uid", entriesControllers.getEntriesByUserIdBetweenDates);
 
-export const getAllEntriesByUserIdBetweenDates = async ({queryKey}) => {
-  // console.log(queryKey);
-  // console.log({userId});
-  console.log(queryKey);
-  const [_key, {userId}, {startDate, endDate}] = queryKey;
-  console.log(userId);
-  
+export const getAllEntriesByUserIdBetweenDates = async ({ queryKey }) => {
+  const [_key, { userId }, { startDate, endDate }] = queryKey;
   try {
     const response = await axios({
       reqMethod: "GET",
@@ -65,74 +64,56 @@ export const getAllEntriesByUserIdBetweenDates = async ({queryKey}) => {
   } catch (err) {}
 };
 
-// export const getEntriesByUserId = async (userId) => {
-//   console.log(userId.queryKey[1].userId);
+export const addEntry = (newEntryData) => {
+  const {newEntry, token} = newEntryData;
+  const response = axios({
+    url: "http://localhost:5000/api/entries",
+    method: "POST",
+    data: newEntry,
+    validateStatus: myValidateStatus,
+    headers: { Authorization: "Bearer " + token },
+  });
+  return response;
+};
+
+export const editEntry = (editData) => {
+  const {editedEntry, token} = editData;
+  const response = axios({
+    method: "PATCH",
+    url: `http://localhost:5000/api/entries/${editedEntry._id}`,
+    data: editedEntry,
+    validateStatus: myValidateStatus,
+
+    headers: { Authorization: "Bearer " + token },
+  });
+  return response;
+};
+
+export const deleteEntry = (deletionData) => {
+  const {_id, token} = deletionData;
+  const response = axios({
+    url: `http://localhost:5000/api/entries/${_id}`,
+    method: "DELETE",
+    data: null,
+    validateStatus: myValidateStatus,
+    headers: { Authorization: "Bearer " + token },
+  });
+  return response;
+};
+
+// export const deleteEntry = async (deletedEntry) => {
 //   try {
 //     const response = await axios({
-//       reqMethod: "GET",
-//       //url: `http://localhost:5000/api/entries/user/5f0aa38f2a9f992d74ff4533`,
-//       url: `http://localhost:5000/api/entries/user/${userId}`,
+//       url: `http://localhost:5000/api/entries/${deletedEntry}`,
+//       method: "DELETE",
 //       data: null,
-//       headers: {},
 //     });
-
-//     return response;
-//   } catch (err) {}
+//     return (response);
+//   } catch (err) {
+//     console.log(err);
+//     return err.message;
+//   }
 // };
-
-// export const getEntriesByUserId = async ({queryKey}) => {
-//   //console.log(queryKey);
-//   const [_key, {userId}] = queryKey;
-//   try {
-//     const response = await axios({
-//       reqMethod: "GET",
-//       //url: `http://localhost:5000/api/entries/user/5f0aa38f2a9f992d74ff4533`,
-//       url: `http://localhost:5000/api/entries/user/${userId}`,
-//       data: null,
-//       headers: {},
-//     });
-//     return response;
-//   } catch (err) {}
-// };
-
-export const addEntry = async (newEntry) => {
-  try {
-    const response = await axios({
-      url: "http://localhost:5000/api/entries",
-      method: "POST",
-      data: newEntry,
-    });
-    console.log(response);
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-export const editEntry = async (editedEntry) => {
-  //console.log(editedEntry._id);
-  try {
-    const response = await axios({
-      method: "PATCH",
-      url: `http://localhost:5000/api/entries/${editedEntry._id}`,
-      //url: `http://localhost:5000/api/entries/${editedEntry._id}`,
-      //url: `http://localhost:5000/api/entries/123`,
-      data: editedEntry,
-      headers: {},
-    });
-    console.log(response);
-  } catch (err) {}
-};
-
-export const deleteEntry = async (deletedEntry) => {
-  try {
-    const response = await axios({
-      url: `http://localhost:5000/api/entries/${deletedEntry}`,
-      method: "DELETE",
-      data: null,
-    });
-    console.log(response);
-  } catch (err) {}
-};
 
 // const handleDelete = async () => {
 //   try {
@@ -157,25 +138,30 @@ export const deleteEntry = async (deletedEntry) => {
 //   }
 // };
 
-// const onSubmit = (values) => {
-//   const newEntry = {
-//     tipsTotal: values.tipsTotal,
-//     date: values.date,
-//     numTransactions: values.numTransactions,
-//     creator: 1337,
-//     //_id: uuid(),
-//   };
+// export const addEntry = async (newEntry) => {
+//   try {
+//     const response = await axios({
+//       url: "http://localhost:5000/api/entries",
+//       method: "POST",
+//       data: newEntry,
+//     });
+//     console.log(response);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
-//   const addEntry = async () => {
-//     try {
-//       const response = await axios({
-//         url: "http://localhost:5000/api/entries",
-//         method: "POST",
-//         data: newEntry,
-//       });
-//       console.log(response);
-//     } catch (err) {
-//     }
-//   };
-//   addEntry();
+// export const editEntry = async (editedEntry) => {
+//   //console.log(editedEntry._id);
+//   try {
+//     const response = await axios({
+//       method: "PATCH",
+//       url: `http://localhost:5000/api/entries/${editedEntry._id}`,
+//       //url: `http://localhost:5000/api/entries/${editedEntry._id}`,
+//       //url: `http://localhost:5000/api/entries/123`,
+//       data: editedEntry,
+//       headers: {},
+//     });
+//     console.log(response);
+//   } catch (err) {}
 // };

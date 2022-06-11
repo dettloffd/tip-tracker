@@ -8,7 +8,7 @@ import MoonLoader from "react-spinners/MoonLoader";
 
 const EntryLog = ({ numResults, dateRange }) => {
   const { startDate, endDate } = dateRange;
-  const {userId} = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
   /////testing purposes
 
   // const { data, error, isLoading, isError } = useQuery(

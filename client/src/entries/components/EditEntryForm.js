@@ -25,11 +25,28 @@ import { editEntry } from "../api/entriesApi";
 const EditEntryInputForm = (props) => {
   const queryClient = useQueryClient();
 
-  const { isLoading, isSuccess, mutate } = useMutation(editEntry, {
-    onSuccess: () => {
-      queryClient.invalidateQueries();
+  // const { isLoading, isSuccess, mutate } = useMutation(editEntry, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries();
+  //   },
+  // });
+
+  const { isLoading, isSuccess, mutate, isError } = useMutation(
+    async (editData) => {
+      // editData comes from input to mutate function
+      const response = await editEntry(editData);
+      return response;
     },
-  });
+    {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries();
+        console.log(data);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    }
+  );
 
   const initialFormState = {
     date: props.date,
@@ -43,8 +60,12 @@ const EditEntryInputForm = (props) => {
       date: values.date,
       numTransactions: values.numTransactions,
       _id: props._id,
+      
     };
-    mutate(editedEntry);
+    const token = props.token;
+    // editedentry and token passed to editEntry api function as object to unpack in api
+    mutate({editedEntry, token});
+    
     resetForm();
   };
 
@@ -54,6 +75,10 @@ const EditEntryInputForm = (props) => {
 
   if (isSuccess) {
     return <Box>Entry edited successfully!</Box>;
+  }
+
+  if (isError){
+    return <Box>Error editing entry</Box>; 
   }
 
   return (
