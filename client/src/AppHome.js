@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Flex, Link, Text } from "@chakra-ui/react";
+import { Box, Button, Divider, Flex, Text } from "@chakra-ui/react";
 import React, { useState, useCallback } from "react";
 import { AuthContext } from "./auth/AuthContext";
 import EntryInputForm from "./entries/components/EntryInputForm";
@@ -10,6 +10,7 @@ import StatsPage from "./stats/pages/StatsPage";
 import NavBar from "./UIElements/NavBar";
 import {
   BrowserRouter,
+  Link,
   Navigate,
   Route,
   Routes,
@@ -71,7 +72,7 @@ const AppHome = () => {
                     bg="white"
                   >
                     <Text fontSize={["md", "md", "xl"]}>Recent Entries</Text>{" "}
-                    <a href="/entries">
+                    <Link to="/entries">
                       <Text
                         fontSize={["md", "md", "lg"]}
                         fontWeight={"bold"}
@@ -79,7 +80,7 @@ const AppHome = () => {
                       >
                         See All
                       </Text>
-                    </a>
+                    </Link>
                   </Flex>
                   <Divider mb={5} />
                   <EntryLog
