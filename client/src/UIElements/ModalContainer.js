@@ -12,7 +12,7 @@ import {
 
 export const ModalContainer = (props) => {
     const handleClose = () => {
-        props.toggleMutationState();
+        props.toggleOpenState();
       };
     return (
       <>

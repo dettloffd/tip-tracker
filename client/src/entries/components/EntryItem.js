@@ -59,7 +59,7 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
           modalContent={<DeleteEntryForm _id={_id} token={token} />}
           isOpen={isDeleting}
           onClose={onClose}
-          toggleMutationState={toggleDeleting}
+          toggleOpenState={toggleDeleting}
           title={"Delete Entry"}
         />
       )}
@@ -77,7 +77,7 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
             />
           }
           onClose={onClose}
-          toggleMutationState={toggleEditing}
+          toggleOpenState={toggleEditing}
           title={"Edit Entry"}
         />
       )}

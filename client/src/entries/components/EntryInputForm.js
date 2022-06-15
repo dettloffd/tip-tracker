@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Formik, Form, Field } from "formik";
 import {
   Box,
@@ -6,6 +6,7 @@ import {
   Flex,
   FormControl,
   FormLabel,
+  Icon,
   Input,
   NumberInput,
   NumberInputField,
@@ -15,9 +16,8 @@ import {
   Text,
   FormHelperText,
   useToast,
-  Toast,
+  useDisclosure,
 } from "@chakra-ui/react";
-
 import { AuthContext } from "../../auth/AuthContext";
 
 import { useQueryClient } from "react-query";
@@ -26,11 +26,18 @@ import { useMutation } from "react-query";
 import entryValidationSchema from "../../util/entryValidationSchema";
 import { addEntry } from "../api/entriesApi";
 import { format, parseISO } from "date-fns";
+import useToggleStateHook from "../../hooks/useToggleStateHook";
+import { ModalContainer } from "../../UIElements/ModalContainer";
+import { MdClose } from "react-icons/md";
 
 const EntryInputForm = (props) => {
-  const { userId, token } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
   const queryClient = useQueryClient();
   const toast = useToast();
+
+  const [isAlert, toggleIsAlert] = useToggleStateHook(false);
+  const [returnedError, setReturnedError] = useState(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { isLoading, mutate, isError } = useMutation(
     async (newEntryData) => {
@@ -41,21 +48,26 @@ const EntryInputForm = (props) => {
       onSuccess: (data) => {
         queryClient.invalidateQueries();
         let d = new Date(data.data.entry.date);
-        let formattedDate = ( format((new Date( d.getTime() + Math.abs(d.getTimezoneOffset()*60000) )), "EEEE, yyyy-MM-dd"));
+        let formattedDate = format(
+          new Date(d.getTime() + Math.abs(d.getTimezoneOffset() * 60000)),
+          "EEEE, yyyy-MM-dd"
+        );
         // Since I store date as zeroed ("2022-06-15T00:00:00.000Z"), timezone offset is showing previous day without this
         // https://stackoverflow.com/questions/7556591/is-the-javascript-date-object-always-one-day-off
 
         toast({
-          title: 'New entry',
+          title: "Success!",
           description: `New entry has been created for ${formattedDate} ! `,
-          status: 'success',
+          status: "success",
           duration: 3000,
           isClosable: true,
-          position: 'bottom'
+          position: "bottom",
         });
       },
       onError: (error) => {
-        // console.log(error);
+        // console.log(error.response.data.message);
+        setReturnedError(error.response.data.message);
+        toggleIsAlert();
       },
     }
   );
@@ -67,27 +79,42 @@ const EntryInputForm = (props) => {
   };
 
   const onSubmit = (values, { resetForm }) => {
-    console.log(values);
     const newEntry = {
       tipsTotal: values.tipsTotal,
       date: values.date,
       numTransactions: values.numTransactions,
       //creator: userId,
       // creator no longer necessary - userId extracted/set in check-auth
-
     };
-    mutate({newEntry, token});
+    mutate({ newEntry, token });
     resetForm();
   };
 
-  if (isError) {
-    console.log("error...");
-  }
-
-  
-
   return (
     <>
+      {isAlert && (
+        <ModalContainer
+          isOpen={isAlert}
+          modalContent={
+            <Box p={3} textAlign="center">
+              <Flex alignItems={"center"} justifyContent={"center"} pb={5}>
+                <Icon
+                  w={12}
+                  h={12}
+                  paddingRight={3}
+                  as={MdClose}
+                  color="red.500"
+                />
+                <Text fontSize="lg" >{returnedError}</Text>
+              </Flex>
+            </Box>
+          }
+          onClose={onClose}
+          toggleOpenState={toggleIsAlert}
+          title={"Error Submitting Entry"}
+        />
+      )}
+
       <Box
         bg="white"
         p={6}
@@ -143,11 +170,9 @@ const EntryInputForm = (props) => {
                       <FormHelperText fontSize={["sm", "sm", "md", "md", "md"]}>
                         Enter the value of all tips received for this shift.
                       </FormHelperText>
-
                     </FormControl>
                   )}
                 </Field>
-
                 <Field name="numTransactions">
                   {({ field, form, meta }) => (
                     <FormControl id="numTransactions">
