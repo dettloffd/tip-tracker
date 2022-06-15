@@ -367,7 +367,8 @@ const deleteEntry = async (req, res, next) => {
 
   let entry;
   try {
-    entry = await Entry.findById(entryId);
+    entry = await Entry.findById(entryId).populate('creator');
+    // populate allows working with document in another collection
   } catch (err) {
     return res.status(500).json({
       success: false,
@@ -375,16 +376,33 @@ const deleteEntry = async (req, res, next) => {
     });
   }
 
+  if (!entry){
+    return res.status(404).json({
+      success: false,
+      message: "Could not find entry with provided ID!",
+    });
+  }
+
   try {
-    entry.remove();
+    //await entry.remove();
+
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await entry.remove({session: sess});
+    entry.creator.entries.pull(entry);
+    //MONGOOSE pull, not regular JS push.. establishes connection between two models (user and entry)
+    await entry.creator.save({ session: sess });
+    await sess.commitTransaction();
+
   } catch (err) {
+
     res.status(500).json({
       success: false,
       message: "Something went wrong; cannot delete entry",
     });
   }
 
-  res.json({ success: true });
+  res.json({ success: true, message: "Entry deleted" });
 };
 
 const testing = async (req, res, next) => {
