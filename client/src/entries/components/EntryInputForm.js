@@ -29,15 +29,20 @@ import { format, parseISO } from "date-fns";
 import useToggleStateHook from "../../hooks/useToggleStateHook";
 import { ModalContainer } from "../../UIElements/ModalContainer";
 import { MdClose } from "react-icons/md";
+import { useModalHook } from "../../hooks/useModalHook";
 
 const EntryInputForm = (props) => {
   const { token } = useContext(AuthContext);
   const queryClient = useQueryClient();
   const toast = useToast();
 
-  const [errorAlert, toggleErrorAlert] = useToggleStateHook(false);
-  const [returnedError, setReturnedError] = useState(null);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    onClose,
+    errorAlert,
+    toggleErrorAlert,
+    returnedError,
+    setReturnedError,
+  } = useModalHook();
 
   const { isLoading, mutate, isError } = useMutation(
     async (newEntryData) => {
@@ -105,7 +110,7 @@ const EntryInputForm = (props) => {
                   as={MdClose}
                   color="red.500"
                 />
-                <Text fontSize="lg" >{returnedError}</Text>
+                <Text fontSize="lg">{returnedError}</Text>
               </Flex>
             </Box>
           }
