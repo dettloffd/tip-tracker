@@ -1,12 +1,10 @@
 import React from "react";
 import { useQueryClient, useMutation } from "react-query";
 import { deleteEntry } from "../api/entriesApi";
-import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
-import axios from "axios";
+import { Box, Button, Flex, Heading, Text, useDisclosure } from "@chakra-ui/react";
 
 const DeleteEntryForm = ({ _id , token}) => {
   const queryClient = useQueryClient();
-
   const { isLoading, isSuccess, mutate, isError } = useMutation(
     async (deletionData) => {
       // deletionData comes from input to mutate function
@@ -104,7 +102,7 @@ const DeleteEntryForm = ({ _id , token}) => {
     return (
       <Box p={3} textAlign="center">
         <Text pb={6} fontSize="xl">
-          Entry deleted!
+          Entry has been deleted successfully!
         </Text>
       </Box>
     );
@@ -123,9 +121,9 @@ const DeleteEntryForm = ({ _id , token}) => {
     
       <Box p={4}>
         <Flex direction={"column"}>
-          <Heading pb={6} as="h4" size="md">
+          {/* <Heading pb={6} as="h4" size="md">
             Delete Entry
-          </Heading>
+          </Heading> */}
           <Text pb={6} fontSize="lg">
             Are you sure? You cannot undo this action once completed.
           </Text>

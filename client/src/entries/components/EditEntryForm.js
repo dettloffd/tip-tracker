@@ -13,7 +13,10 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  Text,
   FormHelperText,
+  Heading,
+  Icon,
 } from "@chakra-ui/react";
 //
 import { useQueryClient } from "react-query";
@@ -21,15 +24,11 @@ import { useMutation } from "react-query";
 //
 import entryValidationSchema from "../../util/entryValidationSchema";
 import { editEntry } from "../api/entriesApi";
+import { MdCheckCircleOutline } from "react-icons/md";
 
 const EditEntryInputForm = (props) => {
   const queryClient = useQueryClient();
-
-  // const { isLoading, isSuccess, mutate } = useMutation(editEntry, {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries();
-  //   },
-  // });
+  
 
   const { isLoading, isSuccess, mutate, isError } = useMutation(
     async (editData) => {
@@ -60,12 +59,11 @@ const EditEntryInputForm = (props) => {
       date: values.date,
       numTransactions: values.numTransactions,
       _id: props._id,
-      
     };
     const token = props.token;
     // editedentry and token passed to editEntry api function as object to unpack in api
-    mutate({editedEntry, token});
-    
+    mutate({ editedEntry, token });
+
     resetForm();
   };
 
@@ -74,11 +72,19 @@ const EditEntryInputForm = (props) => {
   }
 
   if (isSuccess) {
-    return <Box>Entry edited successfully!</Box>;
+    return (
+      <Box p={2} textAlign="center">
+        
+        
+        <Text pb={6} fontSize="2xl">
+        <Icon as={MdCheckCircleOutline} color="teal.500"  /> Entry has been edited successfully!
+        </Text>
+      </Box>
+    );
   }
 
-  if (isError){
-    return <Box>Error editing entry</Box>; 
+  if (isError) {
+    return <Box>Error editing entry</Box>;
   }
 
   return (

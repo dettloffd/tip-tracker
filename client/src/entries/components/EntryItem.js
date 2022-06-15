@@ -7,6 +7,7 @@ import {
   Icon,
   ListItem,
   Text,
+  useDisclosure
 } from "@chakra-ui/react";
 import {
   MdAttachMoney,
@@ -24,11 +25,14 @@ import DeleteEntryForm from "./DeleteEntryForm";
 //
 import { format, parseISO } from "date-fns";
 import { AuthContext } from "../../auth/AuthContext";
+import { ModalContainer } from "../../UIElements/ModalContainer";
 
 const entryIcons = [MdToday, MdReceipt, MdAttachMoney, MdOutlinePriceCheck];
 
 const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
   const { token } = useContext(AuthContext);
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
   
   const [isEditing, toggleEditing] = useToggleStateHook(false);
   const [isDeleting, toggleDeleting] = useToggleStateHook(false);
@@ -51,7 +55,8 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
   return (
     <>
       {isEditing && (
-        <GeneralModal
+        <ModalContainer
+        isOpen={isEditing}
           modalContent={
             <EditEntryInputForm
               date={date}
@@ -61,14 +66,19 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
               token={token}
             />
           }
+          onClose={onClose}
           toggleMutationState={toggleEditing}
+          title={"Edit Entry"}
         />
       )}
 
       {isDeleting && (
-        <GeneralModal
+        <ModalContainer
           modalContent={<DeleteEntryForm _id={_id} token={token} />}
+          isOpen={isDeleting}
+          onClose={onClose}
           toggleMutationState={toggleDeleting}
+          title={"Delete Entry"}
         />
       )}
 
