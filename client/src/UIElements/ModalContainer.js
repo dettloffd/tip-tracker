@@ -11,17 +11,13 @@ import {
   } from '@chakra-ui/react'
 
 export const ModalContainer = (props) => {
-    // const { isOpen, onOpen, onClose } = useDisclosure()
-    // console.log(props);
     const handleClose = () => {
-        // props.isOpen(false);
-        props.onClose();
         props.toggleMutationState();
       };
     return (
       <>
   
-        <Modal isOpen={props.isOpen} onClose={props.onClose}>
+        <Modal isOpen={props.isOpen} onClose={handleClose}>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>{props.title}</ModalHeader>

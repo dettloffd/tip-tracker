@@ -73,13 +73,14 @@ const EditEntryInputForm = (props) => {
 
   if (isSuccess) {
     return (
-      <Box p={2} textAlign="center">
-        
-        
-        <Text pb={6} fontSize="2xl">
-        <Icon as={MdCheckCircleOutline} color="teal.500"  /> Entry has been edited successfully!
+      <Box p={3} textAlign="center">
+        <Flex alignItems={"center"} justifyContent={"center"} pb={5}>
+        <Icon w={12} h={12} as={MdCheckCircleOutline} color="teal.500"  />
+        <Text fontSize="2xl">
+         Entry has been edited successfully!
         </Text>
-      </Box>
+        </Flex>
+      </Box >
     );
   }
 

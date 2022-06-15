@@ -1,7 +1,8 @@
 import React from "react";
 import { useQueryClient, useMutation } from "react-query";
 import { deleteEntry } from "../api/entriesApi";
-import { Box, Button, Flex, Heading, Text, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Flex, Icon, Text, useDisclosure } from "@chakra-ui/react";
+import { MdCheckCircleOutline } from "react-icons/md";
 
 const DeleteEntryForm = ({ _id , token}) => {
   const queryClient = useQueryClient();
@@ -101,10 +102,13 @@ const DeleteEntryForm = ({ _id , token}) => {
   if (isSuccess) {
     return (
       <Box p={3} textAlign="center">
-        <Text pb={6} fontSize="xl">
-          Entry has been deleted successfully!
+        <Flex alignItems={"center"} justifyContent={"center"} pb={5}>
+        <Icon w={12} h={12} as={MdCheckCircleOutline} color="teal.500"  />
+        <Text fontSize="2xl">
+         Entry has been deleted successfully!
         </Text>
-      </Box>
+        </Flex>
+      </Box >
     );
   }
 

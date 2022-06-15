@@ -7,7 +7,7 @@ import {
   Icon,
   ListItem,
   Text,
-  useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
 import {
   MdAttachMoney,
@@ -32,8 +32,8 @@ const entryIcons = [MdToday, MdReceipt, MdAttachMoney, MdOutlinePriceCheck];
 const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
   const { token } = useContext(AuthContext);
 
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const [isEditing, toggleEditing] = useToggleStateHook(false);
   const [isDeleting, toggleDeleting] = useToggleStateHook(false);
 
@@ -54,9 +54,19 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
 
   return (
     <>
+      {isDeleting && (
+        <ModalContainer
+          modalContent={<DeleteEntryForm _id={_id} token={token} />}
+          isOpen={isDeleting}
+          onClose={onClose}
+          toggleMutationState={toggleDeleting}
+          title={"Delete Entry"}
+        />
+      )}
+
       {isEditing && (
         <ModalContainer
-        isOpen={isEditing}
+          isOpen={isEditing}
           modalContent={
             <EditEntryInputForm
               date={date}
@@ -72,7 +82,7 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
         />
       )}
 
-      {isDeleting && (
+      {/* {isDeleting && (
         <ModalContainer
           modalContent={<DeleteEntryForm _id={_id} token={token} />}
           isOpen={isDeleting}
@@ -80,7 +90,7 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
           toggleMutationState={toggleDeleting}
           title={"Delete Entry"}
         />
-      )}
+      )} */}
 
       <Box
         boxShadow="lg"
@@ -136,8 +146,13 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
                 ml={2}
                 mt={3}
               >
-                <Text display={['none', 'none', 'none', 'flex', 'flex']}>Edit</Text>
-                <Icon as={MdModeEditOutline} display={[ "md","md", "md", "none", "none"]} />
+                <Text display={["none", "none", "none", "flex", "flex"]}>
+                  Edit
+                </Text>
+                <Icon
+                  as={MdModeEditOutline}
+                  display={["md", "md", "md", "none", "none"]}
+                />
               </Button>
 
               <Button
@@ -148,11 +163,14 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
                 ml={2}
                 mt={3}
               >
-                <Text display={['none', 'none', 'none', 'flex', 'flex']}>Delete</Text>
-                <Icon as={MdDelete} display={[ "md","md", "md", "none", "none"]} />
+                <Text display={["none", "none", "none", "flex", "flex"]}>
+                  Delete
+                </Text>
+                <Icon
+                  as={MdDelete}
+                  display={["md", "md", "md", "none", "none"]}
+                />
               </Button>
-
-
 
               {/* {entryButtons.map((button) => (
                 <Button
