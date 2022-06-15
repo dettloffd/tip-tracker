@@ -5,8 +5,7 @@ import { Box, Button, Flex, Icon, Text, useDisclosure } from "@chakra-ui/react";
 import { MdCheckCircleOutline } from "react-icons/md";
 import SyncLoader from "react-spinners/SyncLoader";
 
-
-const DeleteEntryForm = ({ _id , token}) => {
+const DeleteEntryForm = ({ _id, token }) => {
   const queryClient = useQueryClient();
   const { isLoading, isSuccess, mutate, isError } = useMutation(
     async (deletionData) => {
@@ -19,14 +18,14 @@ const DeleteEntryForm = ({ _id , token}) => {
         queryClient.invalidateQueries();
         console.log(data);
       },
-      onError:  (error) => {
+      onError: (error) => {
         console.log(error);
       },
     }
   );
 
   const handleDelete = () => {
-    mutate({_id, token});
+    mutate({ _id, token });
     // id of deleted entry and token passed to deleteEntry api function as object to unpack in api
   };
 
@@ -42,26 +41,26 @@ const DeleteEntryForm = ({ _id , token}) => {
     return (
       <Box p={3} textAlign="center">
         <Flex alignItems={"center"} justifyContent={"center"} pb={5}>
-        <Icon w={12} h={12} as={MdCheckCircleOutline} color="teal.500"  />
-        <Text fontSize="2xl">
-         Entry has been deleted successfully!
-        </Text>
+          <Icon w={12} h={12} as={MdCheckCircleOutline} color="teal.500" />
+          <Text fontSize="2xl">Entry has been deleted successfully!</Text>
         </Flex>
-      </Box >
+      </Box>
     );
   }
 
   if (isError) {
-    return       <Box p={3} textAlign="center">
-    <Text pb={6} fontSize="xl">
-      Network Error - Please try again
-    </Text>
-  </Box>
+    return (
+      <Box p={3} textAlign="center">
+        <Flex alignItems={"center"} justifyContent={"center"} pb={5}>
+          <Icon w={12} h={12} as={MdCheckCircleOutline} color="teal.500" />
+          <Text fontSize="2xl">Entry has been deleted successfully!</Text>
+        </Flex>
+      </Box>
+    );
   }
 
   return (
     <>
-    
       <Box p={4}>
         <Flex direction={"column"}>
           {/* <Heading pb={6} as="h4" size="md">
