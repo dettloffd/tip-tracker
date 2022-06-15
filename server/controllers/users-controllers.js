@@ -99,11 +99,11 @@ const login = async (req, res, next) => {
 
   if (!existingUser) {
 
-    return res.status(401).json({
+    return res.status(403).json({
+      // 403 => invalid credentials
       success: false,
       message: "Invalid credentials",
     });
-    //return next(new HttpError('Credentials invalid', 401));
   }
 
   let isValidPassword = false;

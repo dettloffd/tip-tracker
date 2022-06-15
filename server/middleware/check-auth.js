@@ -26,7 +26,8 @@ module.exports = (req, res, next) => {
         // Must say next(), otherwise request will get stuck in this middleware
 
     } catch (err){
-        return res.status(401).json({
+        return res.status(403).json({
+            // 403 => invalid credentials
             success: false,
             message: "Authentication failed for this action!",
           });
