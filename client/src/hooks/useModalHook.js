@@ -6,12 +6,7 @@ export const useModalHook = () => {
     
     const [errorAlert, toggleErrorAlert] = useToggleStateHook(false);
     const [returnedError, setReturnedError] = useState(null);
-    const { isOpen, onOpen, onClose } = useDisclosure();
-
-
-
-
-
+    const { onClose } = useDisclosure();
 
     return {onClose, errorAlert, toggleErrorAlert, returnedError, setReturnedError};
 }
