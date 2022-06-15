@@ -13,7 +13,13 @@ import {
 export const ModalContainer = (props) => {
     const handleClose = () => {
         props.toggleOpenState();
+        if (props.setReturnedError){
+            props.setReturnedError(null);
+        }
+
       };
+
+
     return (
       <>
   
@@ -24,15 +30,7 @@ export const ModalContainer = (props) => {
             <ModalCloseButton onClick={handleClose} />
             <ModalBody>
               {props.modalContent}
-              {/* <Button colorScheme='blue' mr={3} onClick={handleClose}>
-                Close
-              </Button> */}
             </ModalBody>
-  
-            {/* <ModalFooter>
-
-              <Button variant='ghost'>Secondary Action</Button>
-            </ModalFooter> */}
           </ModalContent>
         </Modal>
       </>

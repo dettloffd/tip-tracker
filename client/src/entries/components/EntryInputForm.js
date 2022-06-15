@@ -35,7 +35,7 @@ const EntryInputForm = (props) => {
   const queryClient = useQueryClient();
   const toast = useToast();
 
-  const [isAlert, toggleIsAlert] = useToggleStateHook(false);
+  const [errorAlert, toggleErrorAlert] = useToggleStateHook(false);
   const [returnedError, setReturnedError] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -65,9 +65,8 @@ const EntryInputForm = (props) => {
         });
       },
       onError: (error) => {
-        // console.log(error.response.data.message);
         setReturnedError(error.response.data.message);
-        toggleIsAlert();
+        toggleErrorAlert();
       },
     }
   );
@@ -92,9 +91,10 @@ const EntryInputForm = (props) => {
 
   return (
     <>
-      {isAlert && (
+      {errorAlert && (
         <ModalContainer
-          isOpen={isAlert}
+          isOpen={errorAlert}
+          setReturnedError={setReturnedError}
           modalContent={
             <Box p={3} textAlign="center">
               <Flex alignItems={"center"} justifyContent={"center"} pb={5}>
@@ -110,7 +110,7 @@ const EntryInputForm = (props) => {
             </Box>
           }
           onClose={onClose}
-          toggleOpenState={toggleIsAlert}
+          toggleOpenState={toggleErrorAlert}
           title={"Error Submitting Entry"}
         />
       )}
