@@ -14,6 +14,8 @@ import {
   NumberDecrementStepper,
   Text,
   FormHelperText,
+  useToast,
+  Toast,
 } from "@chakra-ui/react";
 
 import { AuthContext } from "../../auth/AuthContext";
@@ -28,6 +30,7 @@ import { format, parseISO } from "date-fns";
 const EntryInputForm = (props) => {
   const { userId, token } = useContext(AuthContext);
   const queryClient = useQueryClient();
+  const toast = useToast();
 
   const { isLoading, isSuccess, mutate, isError } = useMutation(
     async (newEntryData) => {
@@ -37,10 +40,18 @@ const EntryInputForm = (props) => {
     {
       onSuccess: (data) => {
         queryClient.invalidateQueries();
-        console.log(data);
+        // console.log(data);
+        toast({
+          title: 'New entry',
+          description: "New entry has been added!",
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'bottom'
+        });
       },
       onError: (error) => {
-        console.log(error);
+        // console.log(error);
       },
     }
   );
@@ -67,6 +78,8 @@ const EntryInputForm = (props) => {
   if (isError) {
     console.log("error...");
   }
+
+  
 
   return (
     <>
