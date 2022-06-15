@@ -55,9 +55,10 @@ const EntryInputForm = (props) => {
     const newEntry = {
       tipsTotal: values.tipsTotal,
       date: values.date,
-      // date: values.date,
       numTransactions: values.numTransactions,
-      creator: userId,
+      //creator: userId,
+      // creator no longer necessary - userId extracted/set in check-auth
+
     };
     mutate({newEntry, token});
     resetForm();

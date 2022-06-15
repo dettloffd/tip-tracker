@@ -236,21 +236,20 @@ const getEntriesByUserId = async (req, res, next) => {
 };
 
 const createEntry = async (req, res, next) => {
-  // const { date, numTransactions, tipsTotal } = req.body;
-  const { date, numTransactions, tipsTotal, creator } = req.body;
-  // const newEntry = await Entry.create({
-  //   date: date,
-  //   numTransactions: numTransactions,
-  //   tipsTotal: tipsTotal,
-  //   creator: creator,
-  // });
+  //const { date, numTransactions, tipsTotal, creator } = req.body;
+  // ^ Before getting creator from token..
+  // Now creator comes along from check-auth
 
+  const { date, numTransactions, tipsTotal } = req.body;
+  const creator = req.userData.userId;
+  // req.userData.userId set in check-auth instead of on request body
 
   const newEntry = new Entry({
     date: date,
     numTransactions: numTransactions,
     tipsTotal: tipsTotal,
     creator: creator,
+    
   });
 
   ///////////////////////////////*****FROM HERE DOWN... all involve user */
