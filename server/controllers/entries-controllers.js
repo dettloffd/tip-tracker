@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const { validationResult } = require("express-validator");
 const User = require("../models/User");
 const { json } = require("express");
+const e = require("express");
 
 // Cast creator string to mongodb objectId type
 const ObjectId = mongoose.Types.ObjectId;
@@ -342,6 +343,15 @@ const editEntry = async (req, res, next) => {
       message: "something wrong with request",
     });
   }
+  if (entry.creator.toString() !== req.userData.userId){
+    // entry.creator is of type mongooseId in database; must be converted to string in order for comparison to work
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized attempt to edit data - you are not allowed to edit this entry"
+    })
+
+  }
+  // req.userData set in check-auth middleware; should match userId
 
   entry.date = date;
   entry.numTransactions = numTransactions;
@@ -383,9 +393,18 @@ const deleteEntry = async (req, res, next) => {
     });
   }
 
-  try {
-    //await entry.remove();
+  if (entry.creator.id !== req.userData.userId){
+    // entry.creator.id already populated as string from populate method above - 
+    // no need to set toString() like with the edit action
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized attempt to delete - you are not allowed to delete this entry"
+    })
 
+  }
+  // req.userData set in check-auth middleware; should match userId
+
+  try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
     await entry.remove({session: sess});
