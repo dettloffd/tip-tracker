@@ -3,6 +3,8 @@ import { useQueryClient, useMutation } from "react-query";
 import { deleteEntry } from "../api/entriesApi";
 import { Box, Button, Flex, Icon, Text, useDisclosure } from "@chakra-ui/react";
 import { MdCheckCircleOutline } from "react-icons/md";
+import SyncLoader from "react-spinners/SyncLoader";
+
 
 const DeleteEntryForm = ({ _id , token}) => {
   const queryClient = useQueryClient();
@@ -28,75 +30,12 @@ const DeleteEntryForm = ({ _id , token}) => {
     // id of deleted entry and token passed to deleteEntry api function as object to unpack in api
   };
 
-  // const { isLoading, isSuccess, mutate, isError } = useMutation(
-  //   async (_id) => {
-  //     const response = await deleteEntry(_id);
-  //     return response.data;
-  //   },
-  //   {
-  //     onSuccess: (data) => {
-  //       queryClient.invalidateQueries();
-  //       console.log(data);
-  //     },
-  //     onError: (error) => {
-  //       console.log(error);
-  //     },
-  //   }
-  // );
-
-
-  
-
-  // deleteEntry, {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries();
-  //   },
-  //   onError: (error) => {
-  //     console.log(error);
-  //   }
-  // });
-
-  // const { isLoading, isSuccess, mutate, isError, data } = useMutation(deleteEntry, {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries();
-  //     console.log(data);
-  //   },
-  //   onError: (error) => {
-  //     console.log(error);
-     
-  //   }
-  // });
-
-  // const { isLoading, isSuccess, mutate, isError } = useMutation(() => { deleteEntry(_id)}, {
-  //   onSuccess: () => {
-  //     console.log('success');
-  //     queryClient.invalidateQueries();
-  //   },
-  //   onError: (error) => {
-  //     console.log("got an error");
-  //   }
-  // });
-
-  // const mutation = useMutation(
-  //   () => {
-  //     return deleteEntry(_id)
-  //   },
-  //   {
-  //     onSuccess: () => {
-  //       console.log('success')
-  //     },
-  //     onError: () => {
-  //       console.log('error')
-  //     }
-  //   }
-  // )
-
-  // https://stackoverflow.com/questions/64787093/react-query-mutation-getting-the-response-from-the-server-with-onerror-callback
-
-  // https://stackoverflow.com/questions/67097382/how-to-use-the-response-of-usemutation-in-react-query-to-display-data
-
   if (isLoading) {
-    return <Box>hoooold on...</Box>;
+    return (
+      <Flex width="100%" justify={"center"} p={6}>
+        <SyncLoader size={15} color={"#4FD1C5"} loading={true} />
+      </Flex>
+    );
   }
 
   if (isSuccess) {

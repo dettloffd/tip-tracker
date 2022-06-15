@@ -25,6 +25,7 @@ import { useMutation } from "react-query";
 import entryValidationSchema from "../../util/entryValidationSchema";
 import { editEntry } from "../api/entriesApi";
 import { MdCheckCircleOutline } from "react-icons/md";
+import SyncLoader from "react-spinners/SyncLoader";
 
 const EditEntryInputForm = (props) => {
   const queryClient = useQueryClient();
@@ -68,7 +69,11 @@ const EditEntryInputForm = (props) => {
   };
 
   if (isLoading) {
-    return <Box>hoooold on...</Box>;
+    return (
+      <Flex width="100%" justify={"center"} p={6}>
+        <SyncLoader size={15} color={"#4FD1C5"} loading={true} />
+      </Flex>
+    );
   }
 
   if (isSuccess) {

@@ -32,7 +32,7 @@ const EntryInputForm = (props) => {
   const queryClient = useQueryClient();
   const toast = useToast();
 
-  const { isLoading, isSuccess, mutate, isError } = useMutation(
+  const { isLoading, mutate, isError } = useMutation(
     async (newEntryData) => {
       const response = await addEntry(newEntryData);
       return response;
@@ -40,10 +40,14 @@ const EntryInputForm = (props) => {
     {
       onSuccess: (data) => {
         queryClient.invalidateQueries();
-        // console.log(data);
+        let d = new Date(data.data.entry.date);
+        let formattedDate = ( format((new Date( d.getTime() + Math.abs(d.getTimezoneOffset()*60000) )), "EEEE, yyyy-MM-dd"));
+        // Since I store date as zeroed ("2022-06-15T00:00:00.000Z"), timezone offset is showing previous day without this
+        // https://stackoverflow.com/questions/7556591/is-the-javascript-date-object-always-one-day-off
+
         toast({
           title: 'New entry',
-          description: "New entry has been added!",
+          description: `New entry has been created for ${formattedDate} ! `,
           status: 'success',
           duration: 3000,
           isClosable: true,
@@ -63,6 +67,7 @@ const EntryInputForm = (props) => {
   };
 
   const onSubmit = (values, { resetForm }) => {
+    console.log(values);
     const newEntry = {
       tipsTotal: values.tipsTotal,
       date: values.date,
