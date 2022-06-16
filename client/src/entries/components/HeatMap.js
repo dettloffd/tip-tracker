@@ -47,7 +47,7 @@ export default function HeatMap({ numDays, mapwidth, mapheight }) {
         bgColor="gray.900"
         p={5}
       >
-        <Text>Date: {day}</Text>
+        <Text>Date: {format(parseISO (day),"EEEE, yyyy-MM-dd" )}</Text>
         <Text>Total tips: {tipsTotal}</Text>
         <Text>Number of transactions: {numTransactions}</Text>
         <Text>Average Tip: {(tipsTotal / numTransactions).toFixed(2)}</Text>
