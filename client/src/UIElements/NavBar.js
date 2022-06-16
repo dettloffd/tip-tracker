@@ -24,8 +24,9 @@ export default function NavBar() {
     >
       <Flex flexDir={"column"} as="nav">
         <Heading
-          mt={50}
-          mb={100}
+          mt={[5, 5, 50, 50, 50]}
+          mb={[5, 5, 100, 100, 100]}
+          // Space around logo/heading; need much more with long navbar
           fontSize={"4xl"}
           alignSelf="center"
           letterSpacing={"tight"}
@@ -61,13 +62,7 @@ export default function NavBar() {
                 ></NavBarItem>
               ))}
         </Flex>
-        
-        
       </Flex>
-      
-      
-
     </Flex>
-    
   );
 }
