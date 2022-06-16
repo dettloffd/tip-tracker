@@ -124,8 +124,6 @@ const AppHome = () => {
               {/* If page is in vertical mode, take up 100% of width */}
               <EntryPage
                 numResults={30}
-                // dateRange={dateRange}
-                // setDateRange={setDateRange}
               />
             </Flex>
           }
@@ -195,7 +193,8 @@ const AppHome = () => {
               // Height controls how far down the page the logout button goes
             >
               <NavBar />
-              <Button onClick={logout} mb={2} size={"xs"}>
+              <Button onClick={logout} mb={2} size={"xs"} display={token ? "inline-flex" : "none"} >
+               
                 Logout
               </Button>
             </Flex>
