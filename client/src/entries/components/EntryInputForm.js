@@ -41,7 +41,7 @@ const EntryInputForm = () => {
     setReturnedError,
   } = useModalHook();
 
-  const { isLoading, mutate, isError } = useMutation(
+  const { mutate } = useMutation(
     async (newEntryData) => {
       const response = await addEntry(newEntryData);
       return response;

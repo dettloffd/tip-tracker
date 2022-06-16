@@ -1,5 +1,5 @@
 import { useDisclosure } from "@chakra-ui/react";
-import { useState, useCallback, useEffect } from "react";
+import { useState } from "react";
 import useToggleStateHook from "./useToggleStateHook";
 
 export const useModalHook = () => {

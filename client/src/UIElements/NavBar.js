@@ -50,18 +50,20 @@ export default function NavBar() {
           justifyContent={"center"}
         >
           {auth.isLoggedIn
-            ? navItems.map((item) => (
+            ? navItems.map((item, index) => (
                 <NavBarItem
                   title={item.title}
                   icon={item.icon}
                   routerLink={item.routerLink}
+                  key={index}
                 ></NavBarItem>
               ))
-            : navItemsLogin.map((item) => (
+            : navItemsLogin.map((item, index) => (
                 <NavBarItem
                   title={item.title}
                   icon={item.icon}
                   routerLink={item.routerLink}
+                  key={index}
                 ></NavBarItem>
               ))}
         </Flex>

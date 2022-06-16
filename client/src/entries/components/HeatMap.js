@@ -33,7 +33,7 @@ export default function HeatMap({ numDays, mapwidth, mapheight }) {
     "yyyy-MM-dd"
   );
 
-  const { data, error, isLoading, isError } = useQuery(
+  const { data, isLoading } = useQuery(
     ["heatMapDates", { userId }, { startDate, endDate }],
     getAllEntriesByUserIdBetweenDates
   );

@@ -1,9 +1,11 @@
 import React from "react";
+//
 import { useQueryClient, useMutation } from "react-query";
-import { deleteEntry } from "../api/entriesApi";
-import { Box, Button, Flex, Icon, Text, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Flex, Icon, Text } from "@chakra-ui/react";
 import { MdCheckCircleOutline } from "react-icons/md";
 import SyncLoader from "react-spinners/SyncLoader";
+//
+import { deleteEntry } from "../api/entriesApi";
 
 const DeleteEntryForm = ({ _id, token }) => {
   const queryClient = useQueryClient();

@@ -1,4 +1,4 @@
-import {Link as RouterLink, NavLink} from 'react-router-dom';
+import { NavLink} from 'react-router-dom';
 import { Flex, Icon, Link, Text } from "@chakra-ui/react";
 
 export default function NavBarItem({

@@ -112,7 +112,7 @@ const ChartConstructor = ({
       // If no start / end date provided, don't show anything..
       // otherwise, formata and show the date range in the subtitle
       text:
-        startDate == ""
+        startDate === ""
           ? "Date Range: All Time"
           : "Date Range: " +
             format(parseISO(startDate), "yyyy/MM/dd") +
