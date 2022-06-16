@@ -6,8 +6,6 @@
     "@chakra-ui/react": "^2.0.0",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
-    "@mui/icons-material": "^5.6.2",
-    "@mui/material": "^5.7.0",
     "@nivo/calendar": "^0.79.1",
     "@nivo/colors": "^0.79.1",
     "@nivo/core": "^0.79.0",
