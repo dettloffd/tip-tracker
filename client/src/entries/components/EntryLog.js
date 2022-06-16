@@ -19,19 +19,31 @@ const EntryLog = ({ numResults, dateRange }) => {
   let theQueryKey;
   let theQueryFn;
 
+  // if (dateRangeProvided) {
+  //   theQueryKey = [
+  //     "getAllEntriesByUserIdBetweenDates",
+  //     { userId },
+  //     { startDate, endDate },
+  //   ];
+  //   theQueryFn = getAllEntriesByUserIdBetweenDates;
+  // } else {
+  //   theQueryKey = ["getAllEntriesByUserId", { userId }];
+  //   theQueryFn = getAllEntriesByUserId;
+  // }
+
   if (dateRangeProvided) {
     theQueryKey = [
       "getAllEntriesByUserIdBetweenDates",
-      { userId },
+      "12345",
       { startDate, endDate },
     ];
     theQueryFn = getAllEntriesByUserIdBetweenDates;
   } else {
-    theQueryKey = ["getAllEntriesByUserId", { userId }];
+    theQueryKey = ["getAllEntriesByUserId", "12345"];
     theQueryFn = getAllEntriesByUserId;
   }
 
-  const { data, isLoading, isError } = useQuery(theQueryKey, theQueryFn);
+  const { data, isLoading, isError, error } = useQuery(theQueryKey, theQueryFn);
 
   if (isLoading) {
     return (
@@ -42,7 +54,7 @@ const EntryLog = ({ numResults, dateRange }) => {
   }
 
   if (isError) {
-    return <Text>Error has occurred</Text>;
+    return <Text>{error.response.data.message}</Text>;
   }
 
   if (data.data.entries) {
@@ -52,13 +64,10 @@ const EntryLog = ({ numResults, dateRange }) => {
       <>
         {entriesToDisplay.length > 0 ? (
           <Flex justifyContent={"center"}>
-            <List
-              flexBasis={"100%"}
-
-            >
-              {entriesToDisplay.map((entry) => (
+            <List flexBasis={"100%"}>
+              {entriesToDisplay.map((entry, index) => (
                 <>
-                  <EntryItem {...entry} />
+                  <EntryItem {...entry} key={index} />
                 </>
               ))}
             </List>
@@ -72,7 +81,9 @@ const EntryLog = ({ numResults, dateRange }) => {
     );
   } else {
     return (
-      <Text textAlign={"center"}>No entries exist within time period provided</Text>
+      <Text textAlign={"center"}>
+        No entries exist within time period provided
+      </Text>
     );
   }
 };

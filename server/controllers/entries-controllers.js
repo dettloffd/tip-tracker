@@ -49,7 +49,7 @@ const getEntriesByUserIdBetweenDates = async (req, res, next) => {
     return res.status(500).json({
       success: false,
       message:
-        "Something went wrong; unable to locate data with provided arguments",
+        "Something went wrong! Unable to locate data with provided arguments",
     });
   }
 

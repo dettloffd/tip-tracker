@@ -21,45 +21,40 @@ export const getAllEntries = async () => {
   } catch (err) {}
 };
 
-export const getAllEntriesBetweenDates = async ({ queryKey }) => {
+export const getAllEntriesBetweenDates = ({ queryKey }) => {
   const [_key, { startDate, endDate }] = queryKey;
-
-  try {
-    const response = await axios({
+    const response =  axios({
       reqMethod: "GET",
       url: `http://localhost:5000/api/entries/between/?startDate=${startDate}&endDate=${endDate}`,
       data: null,
       headers: {},
     });
     return response;
-  } catch (err) {}
 };
 
-export const getAllEntriesByUserId = async ({ queryKey }) => {
+export const getAllEntriesByUserId = ({ queryKey }) => {
   const [_key, { userId }] = queryKey;
 
-  try {
-    const response = await axios({
+    const response = axios({
       reqMethod: "GET",
       url: `http://localhost:5000/api/entries/user/${userId}`,
       data: null,
       headers: {},
     });
     return response;
-  } catch (err) {}
 };
 
-export const getAllEntriesByUserIdBetweenDates = async ({ queryKey }) => {
+export const getAllEntriesByUserIdBetweenDates =  ({ queryKey }) => {
   const [_key, { userId }, { startDate, endDate }] = queryKey;
-  try {
-    const response = await axios({
+
+    const response = axios({
       reqMethod: "GET",
       url: `http://localhost:5000/api/entries/user/${userId}/between/?startDate=${startDate}&endDate=${endDate}`,
       data: null,
       headers: {},
     });
     return response;
-  } catch (err) {}
+
 };
 
 export const addEntry = (newEntryData) => {
