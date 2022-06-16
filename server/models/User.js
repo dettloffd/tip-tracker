@@ -6,15 +6,13 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     username: {type: String, required : true, minLength: 2},
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true, minlength: 8 },
-    //entries: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Entry' }],
+    password: { type: String, required: true, minlength: 6 },
     //Making entries an array allows for each user to have several entries
     entries: [{
         type: mongoose.Types.ObjectId,
         required: true,
         ref: 'Entry'
       }]
-
 })
 
 userSchema.plugin(uniqueValidator);

@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { Formik, Form, Field } from "formik";
+import React, { useContext } from "react";
+//
 import {
   Box,
   Button,
@@ -16,22 +16,19 @@ import {
   Text,
   FormHelperText,
   useToast,
-  useDisclosure,
 } from "@chakra-ui/react";
-import { AuthContext } from "../../auth/AuthContext";
-
-import { useQueryClient } from "react-query";
-import { useMutation } from "react-query";
-
-import entryValidationSchema from "../../util/entryValidationSchema";
-import { addEntry } from "../api/entriesApi";
+import { Formik, Form, Field } from "formik";
+import { useMutation, useQueryClient } from "react-query";
 import { format, parseISO } from "date-fns";
-import useToggleStateHook from "../../hooks/useToggleStateHook";
-import { ModalContainer } from "../../UIElements/ModalContainer";
 import { MdClose } from "react-icons/md";
+//
+import { AuthContext } from "../../auth/AuthContext";
+import { addEntry } from "../api/entriesApi";
+import { ModalContainer } from "../../UIElements/ModalContainer";
 import { useModalHook } from "../../hooks/useModalHook";
+import entryValidationSchema from "../../util/entryValidationSchema";
 
-const EntryInputForm = (props) => {
+const EntryInputForm = () => {
   const { token } = useContext(AuthContext);
   const queryClient = useQueryClient();
   const toast = useToast();

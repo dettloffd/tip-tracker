@@ -17,6 +17,7 @@ const entrySchema = new mongoose.Schema({
   //   type: String,
   //   required: true,
   // },
+  // ^ prior to adding user functionality
 
   "creator": {
     type: mongoose.Types.ObjectId,

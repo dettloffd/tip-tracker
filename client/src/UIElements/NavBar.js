@@ -1,8 +1,11 @@
-import { Button, Flex, Heading, Icon, Link, Text } from "@chakra-ui/react";
-import { MdHome, MdDocumentScanner } from "react-icons/md";
-import NavBarItem from "./NavBarItem";
-import { AuthContext } from "../auth/AuthContext";
 import { useContext } from "react";
+//
+import { Flex, Heading, Text } from "@chakra-ui/react";
+import { MdHome, MdDocumentScanner } from "react-icons/md";
+import { BiStats } from "react-icons/bi";
+//
+import { AuthContext } from "../auth/AuthContext";
+import NavBarItem from "./NavBarItem";
 
 export default function NavBar() {
   const auth = useContext(AuthContext);
@@ -10,7 +13,7 @@ export default function NavBar() {
   let navItems = [
     { icon: MdHome, title: "Dashboard", routerLink: "/" },
     { icon: MdDocumentScanner, title: "Entries", routerLink: "/entries" },
-    { icon: MdHome, title: "Stats", routerLink: "/statspage" },
+    { icon: BiStats, title: "Stats", routerLink: "/statspage" },
   ];
 
   let navItemsLogin = [{ icon: MdHome, title: "Dashboard", routerLink: "/" }];

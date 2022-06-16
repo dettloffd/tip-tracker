@@ -1,26 +1,20 @@
-import React, { useState } from "react";
-
-import { Box, Divider, Flex } from "@chakra-ui/react";
-
-import ChartConstructor from "../components/ChartConstructor";
+import { Flex } from "@chakra-ui/react";
+//
 import { chartFieldsArray } from "../chartFieldsArray";
+import ChartConstructor from "../components/ChartConstructor";
 
 const StatsEntries = ({ dateRange }) => {
   return (
     <>
-    {/* This is the container for the column of charts - child of this item is the container of the chart */}
+      {/* This is the container for the column of charts - child of this item is the container of the chart */}
       <Flex direction={"column"} align={"center"}>
         {chartFieldsArray.map((chart) => (
-          // <Box flexBasis={"90%"}>
-            <ChartConstructor
-              key={chart.chartTitle}
-              {...chart}
-              dateRange={dateRange}
-            />
-          // </Box>
+          <ChartConstructor
+            key={chart.chartTitle}
+            {...chart}
+            dateRange={dateRange}
+          />
         ))}
-
-        {/* <Divider /> */}
       </Flex>
     </>
   );

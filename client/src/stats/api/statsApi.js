@@ -13,11 +13,9 @@ export const fetchChartDataBetweenDates = async ({ queryKey }) => {
     return response;
   } catch (err) {}
 };
-// router.get("/user/:uid/avgBetweenDates", statsControllers.avgVarByTimeBetweenDates);
 
 export const fetchChartDataNoDates = async ({ queryKey }) => {
   const [_key, {userId}, { statVar, timeVar }] = queryKey;
-//   console.log(queryKey);
   try {
     const response = await axios({
       reqMethod: "GET",

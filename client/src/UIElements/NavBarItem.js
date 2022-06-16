@@ -1,7 +1,5 @@
 import {Link as RouterLink, NavLink} from 'react-router-dom';
-import { Flex, Icon, Link, Menu, MenuButton, Text } from "@chakra-ui/react";
-import React from "react";
-
+import { Flex, Icon, Link, Text } from "@chakra-ui/react";
 
 export default function NavBarItem({
   icon,
@@ -10,7 +8,6 @@ export default function NavBarItem({
 })
 {
   return (
-    
     //   Set some hover CSS in css file for ease of use
     <NavLink className={({isActive}) => (isActive ? 'active-Navlink' : 'not-Active-Navlink')  }  to={routerLink}>
     <Flex fontSize="lg" className="navbar-item"  color="gray.400" justifyContent="center" alignItems={"center"} mb={6} >

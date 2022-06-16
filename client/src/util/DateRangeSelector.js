@@ -1,17 +1,17 @@
 import { useState, useRef, useEffect } from "react";
+//
 import { DateRangePicker } from "react-date-range";
 import format from "date-fns/format";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
+//
 import {
-  Box,
   Button,
   Flex,
   Input,
   InputGroup,
   InputLeftElement,
-  InputRightElement,
-  Text
+  Text,
 } from "@chakra-ui/react";
 import { MdCalendarToday } from "react-icons/md";
 
@@ -58,25 +58,29 @@ const DateRangeSelector = ({ setDateRange, placeholderMessage }) => {
       className="calendarWrap"
       w="80%"
     >
-      <InputGroup size={['sm']}>
+      <InputGroup size={["sm"]}>
         <InputLeftElement
           pointerEvents="none"
           children={<MdCalendarToday />}
         ></InputLeftElement>
         <Input
           mb={1}
-          
           focusBorderColor="teal.400"
           fontSize={["xs", "xs", "sm"]}
           width={"100%"}
           textAlign="center"
           onClick={() => setOpen((open) => !open)}
-          placeholder={placeholderMessage ? placeholderMessage : "Set Chart Date Range"}
+          placeholder={
+            placeholderMessage ? placeholderMessage : "Set Chart Date Range"
+          }
           // If there's a value selected by the user, display that value
           // otherwise, make an empty string so that the user sees the placeholder
           value={
             range[0].startDate !== null && range[0].endDate !== null
-              ? ` ${format(range[0].startDate, "yyyy/MM/dd" )} to ${format(range[0].endDate, "yyyy/MM/dd" )}`
+              ? ` ${format(range[0].startDate, "yyyy/MM/dd")} to ${format(
+                  range[0].endDate,
+                  "yyyy/MM/dd"
+                )}`
               : ""
           }
           className="inputBox"
@@ -101,21 +105,25 @@ const DateRangeSelector = ({ setDateRange, placeholderMessage }) => {
             ranges={range}
             months={1}
             direction="vertical"
-            display='none'
-            
+            display="none"
             className="calendarElement"
           />
         )}
       </div>
-      <Flex justifyContent={["center"]} alignItems="center" width={"100%"} flexDir={["column", "column", "row", "row", "row"]}>
+      <Flex
+        justifyContent={["center"]}
+        alignItems="center"
+        width={"100%"}
+        flexDir={["column", "column", "row", "row", "row"]}
+      >
         <Button
-        m={[0,0,2]}
+          m={[0, 0, 2]}
           variant="solid"
           colorScheme="teal"
           size="sm"
           isDisabled={(range[0]["startDate"] && range[0]["endDate"]) == null}
-          // Sets the date range manually in parent element to trickle down to charts 
-          // unnecessary maybe since refactored to change on click? 
+          // Sets the date range manually in parent element to trickle down to charts
+          // unnecessary maybe since refactored to change on click?
           onClick={() => {
             setDateRange({
               startDate: format(range[0].startDate, "yyyy-MM-dd"),
@@ -123,13 +131,12 @@ const DateRangeSelector = ({ setDateRange, placeholderMessage }) => {
             });
           }}
         >
-          <Text fontSize={[ "xs", "sm", "sm"]}>Confirm Date Range</Text>
-          
+          <Text fontSize={["xs", "sm", "sm"]}>Confirm Date Range</Text>
         </Button>
         {/* This resets the parent element (so charts will cover all time) and the input fields */}
         {/* Also resets the range in the datepicker */}
         <Button
-        m={[0,0,2]}
+          m={[0, 0, 2]}
           size="sm"
           onClick={() => {
             // reset daterange in parent element
@@ -147,7 +154,7 @@ const DateRangeSelector = ({ setDateRange, placeholderMessage }) => {
             ]);
           }}
         >
-          <Text fontSize={[ "xs", "sm", "sm"]}>Reset</Text>
+          <Text fontSize={["xs", "sm", "sm"]}>Reset</Text>
         </Button>
       </Flex>
     </Flex>

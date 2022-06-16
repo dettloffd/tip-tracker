@@ -1,9 +1,5 @@
 import React, { useState, useContext } from "react";
-import { AuthContext } from "./AuthContext";
-import { Formik, Form, Field } from "formik";
-import { userValidationSchemas } from "./userValidationSchema";
-import { authInputTextFields } from "./authInputTextFields";
-import { authSubmitHandler } from "./api/authApi";
+//
 import {
   Box,
   Button,
@@ -15,12 +11,19 @@ import {
   Icon,
   Input,
   Text,
-  useQuery,
 } from "@chakra-ui/react";
-import { useQueryClient, useMutation } from "react-query";
+//
+import { AuthContext } from "./AuthContext";
+import { userValidationSchemas } from "./userValidationSchema";
+import { authInputTextFields } from "./authInputTextFields";
+import { authSubmitHandler } from "./api/authApi";
 import { useModalHook } from "../hooks/useModalHook";
-import { MdClose } from "react-icons/md";
+//
 import { ModalContainer } from "../UIElements/ModalContainer";
+//
+import { MdClose } from "react-icons/md";
+import { useQueryClient, useMutation } from "react-query";
+import { Formik, Form, Field } from "formik";
 import SyncLoader from "react-spinners/SyncLoader";
 
 const Auth = () => {
@@ -136,41 +139,37 @@ const Auth = () => {
           >
             {(props) => (
               <Form height="100%" width="100%">
-                
                 <Flex direction={"column"} height="20rem">
-                {authInputTextFields[
-                  isLoginMode ? "authLogin" : "authSignup"
-                ].map((inputField) => (
-                  <Field
-                    name={inputField.id}
-                    id={inputField.id}
-                    type={inputField.type}
-                    label={inputField.label}
-                  >
-                    {({ field, form, meta }) => (
-                      <FormControl id={inputField.id}>
-                        <FormLabel htmlFor={inputField.id}>
-                          {inputField.label}
-                        </FormLabel>
-                        <Input
-                          {...field}
-                          type={inputField.type}
-                          isInvalid={meta.touched && meta.error}
-                        ></Input>
-                        {/* <FormHelperText>{inputField.errortext}</FormHelperText> */}
-                        {/* {!meta.error  ? <FormHelperText>{inputField.helper}</FormHelperText> : <FormHelperText>{inputField.errortext}</FormHelperText>  } */}
-                        {!meta.error ? (
-                          <FormHelperText>{inputField.helper}</FormHelperText>
-                        ) : (
-                          <FormHelperText color={"red.300"}>
-                            {meta.error}
-                          </FormHelperText>
-                        )}
-                      </FormControl>
-                    )}
-                  </Field>
-                  
-                ))}
+                  {authInputTextFields[
+                    isLoginMode ? "authLogin" : "authSignup"
+                  ].map((inputField) => (
+                    <Field
+                      name={inputField.id}
+                      id={inputField.id}
+                      type={inputField.type}
+                      label={inputField.label}
+                    >
+                      {({ field, meta }) => (
+                        <FormControl id={inputField.id}>
+                          <FormLabel htmlFor={inputField.id}>
+                            {inputField.label}
+                          </FormLabel>
+                          <Input
+                            {...field}
+                            type={inputField.type}
+                            isInvalid={meta.touched && meta.error}
+                          ></Input>
+                          {!meta.error ? (
+                            <FormHelperText>{inputField.helper}</FormHelperText>
+                          ) : (
+                            <FormHelperText color={"red.300"}>
+                              {meta.error}
+                            </FormHelperText>
+                          )}
+                        </FormControl>
+                      )}
+                    </Field>
+                  ))}
                 </Flex>
                 <Button
                   isDisabled={!props.isValid}
@@ -183,28 +182,22 @@ const Auth = () => {
                   mt={4}
                 >
                   {isLoginMode ? "Log In" : "Sign up"}
-
                 </Button>
-
-
-
-
               </Form>
-              
             )}
           </Formik>
           <Button
-                  colorScheme="teal"
-                  size="md"
-                  type="submit"
-                  variant="solid"
-                  color="white"
-                  alignSelf="center"
-                  mt={4}
-                  onClick={switchModeHandler}
-                >
-                  {isLoginMode ? "LoginMode" : "!LoginMode"}
-                </Button>
+            colorScheme="teal"
+            size="md"
+            type="submit"
+            variant="solid"
+            color="white"
+            alignSelf="center"
+            mt={4}
+            onClick={switchModeHandler}
+          >
+            {isLoginMode ? "LoginMode" : "!LoginMode"}
+          </Button>
         </Container>
       </Flex>
     </>

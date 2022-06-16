@@ -1,22 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
+//
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import NoDataToDisplay from "highcharts/modules/no-data-to-display";
-
 import { MdOutlineTrendingDown, MdOutlineTrendingUp } from "react-icons/md";
-
 import { Box, Divider, Flex, Icon, Text } from "@chakra-ui/react";
-
-import useChartConstructorHook from "../../hooks/useChartConstructorHook";
-import useHighLowStatsHook from "../../hooks/useHighLowStatsHook";
-
 import { format, parseISO } from "date-fns";
 import { useQuery } from "react-query";
+//
+import useChartConstructorHook from "../../hooks/useChartConstructorHook";
+import useHighLowStatsHook from "../../hooks/useHighLowStatsHook";
 import {
   fetchChartDataBetweenDates,
   fetchChartDataNoDates,
 } from "../api/statsApi";
 import { AuthContext } from "../../auth/AuthContext";
+//
 const ChartConstructor = ({
   dateRange: { startDate, endDate },
   yKey,
@@ -59,11 +58,8 @@ const ChartConstructor = ({
     ];
     theQueryFn = fetchChartDataNoDates;
   }
-
   const { data } = useQuery(theQueryKey, theQueryFn);
-
   const { constructAxis } = useChartConstructorHook(xKey, yKey);
-
   const { extractHighAndLowValues } = useHighLowStatsHook(xKey, yKey);
 
   useEffect(() => {
@@ -181,7 +177,6 @@ const ChartConstructor = ({
         bg="white"
         p={1}
         m={1}
-        //   w={"lg"}
         borderRadius="lg"
         direction={"column"}
         
@@ -201,7 +196,6 @@ const ChartConstructor = ({
           maxW={"30rem"}
           justify={"space-between"}
           fontSize={["xs", "sm", "sm", "md", "md"]}
-          // flexDir={["column", "column", "row", "row", "row"]}
         >
           <Flex alignItems={"center"} justifyContent="space-between" >
             <Flex align={"center"} mr={2} >
@@ -235,48 +229,3 @@ const ChartConstructor = ({
 };
 
 export default ChartConstructor;
-        {/* <Flex
-          p={1}
-          alignSelf={"center"}
-          width={"100%"}
-          maxW={"25rem"}
-          justify={"space-between"}
-        >
-          <Flex align={"center"}>
-            <Icon
-              as={MdOutlineTrendingUp}
-              w={6}
-              h={6}
-              color="green.300"
-              m={2}
-            />
-            <Text>High value</Text>
-          </Flex>
-          <Flex align={"center"}>
-            {highAndLowValues.topValue.x} : {highAndLowValues.topValue.y}
-          </Flex>
-        </Flex>
-
-        <Divider /> */}
-
-        {/* <Flex
-          p={1}
-          alignSelf={"center"}
-          width={"100%"}
-          maxW={"25rem"}
-          justify={"space-between"}
-        >
-          <Flex align={"center"}>
-            <Icon
-              as={MdOutlineTrendingDown}
-              w={6}
-              h={6}
-              color="red.300"
-              m={2}
-            />
-            <Text>Low value</Text>
-          </Flex>
-          <Flex align={"center"}>
-            {highAndLowValues.bottomValue.x} : {highAndLowValues.bottomValue.y}
-          </Flex>
-        </Flex> */}

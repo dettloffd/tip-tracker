@@ -1,12 +1,14 @@
 import { useContext } from "react";
+//
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { format, parseISO } from "date-fns";
 import { useQuery } from "react-query";
-
 import { ResponsiveTimeRange } from "@nivo/calendar";
+import MoonLoader from "react-spinners/MoonLoader";
+//
 import { getAllEntriesByUserIdBetweenDates } from "../api/entriesApi";
 import { AuthContext } from "../../auth/AuthContext";
-import MoonLoader from "react-spinners/MoonLoader";
+
 
 export default function HeatMap({ numDays, mapwidth, mapheight }) {
   const today = new Date();
@@ -93,10 +95,8 @@ export default function HeatMap({ numDays, mapwidth, mapheight }) {
           from={startDate}
           to={endDate}
           emptyColor="#eeeeee"
-          // colors={[ '#61cdbb', '#97e3d5', '#e8c1a0', '#f47560' ]}
-          colors={["#319795", "#319795", "#319795", "#319795"]}
+          colors={["#319795"]}
           margin={{ top: 20, right: 20, bottom: 0, left: 20 }}
-          // margin={{ top: 60, right: 10, bottom: 0, left: 10 }}
           dayBorderWidth={2}
           dayBorderColor="#ffffff"
           weekdayLegendOffset={60}

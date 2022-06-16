@@ -63,9 +63,6 @@ const DeleteEntryForm = ({ _id, token }) => {
     <>
       <Box p={4}>
         <Flex direction={"column"}>
-          {/* <Heading pb={6} as="h4" size="md">
-            Delete Entry
-          </Heading> */}
           <Text pb={6} fontSize="lg">
             Are you sure? You cannot undo this action once completed.
           </Text>

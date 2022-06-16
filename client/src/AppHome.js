@@ -1,5 +1,9 @@
-import { Box, Button, Divider, Flex, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
+//
+import { Box, Button, Divider, Flex, Text } from "@chakra-ui/react";
+//
+import { BrowserRouter, Link, Navigate, Route, Routes } from "react-router-dom";
+//
 import { AuthContext } from "./auth/AuthContext";
 import { useAuthHook } from "./hooks/useAuthHook";
 import EntryInputForm from "./entries/components/EntryInputForm";
@@ -9,15 +13,12 @@ import EntryPage from "./entries/pages/EntryPage";
 import StatsDisplay from "./stats/pages/StatsDisplay";
 import StatsPage from "./stats/pages/StatsPage";
 import NavBar from "./UIElements/NavBar";
-import { BrowserRouter, Link, Navigate, Route, Routes } from "react-router-dom";
-
 import DateRangeSelector from "./util/DateRangeSelector";
 import Auth from "./auth/Auth";
 
 const AppHome = () => {
-  const {token, login, logout, userId} = useAuthHook();
+  const { token, login, logout, userId } = useAuthHook();
   const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
-
 
   let routes;
 
@@ -122,9 +123,7 @@ const AppHome = () => {
           element={
             <Flex w={["100%", "100%", "90%"]}>
               {/* If page is in vertical mode, take up 100% of width */}
-              <EntryPage
-                numResults={30}
-              />
+              <EntryPage numResults={30} />
             </Flex>
           }
         />
@@ -193,8 +192,12 @@ const AppHome = () => {
               // Height controls how far down the page the logout button goes
             >
               <NavBar />
-              <Button onClick={logout} mb={2} size={"xs"} display={token ? "inline-flex" : "none"} >
-               
+              <Button
+                onClick={logout}
+                mb={2}
+                size={"xs"}
+                display={token ? "inline-flex" : "none"}
+              >
                 Logout
               </Button>
             </Flex>

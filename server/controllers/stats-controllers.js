@@ -1,6 +1,4 @@
 const Entry = require("../models/Entry");
-// const { validationResult } = require("express-validator");
-// const { json } = require("express");
 const mongoose = require("mongoose");
 
 // Cast creator string to mongodb objectId type
@@ -116,7 +114,6 @@ const avgVarByTimeGetAll = async (req, res, next) => {
     count: results.length,
     results: results,
     params: { statVar, timeVar },
-    // dateStuff: { startDate, endDate },
   });
 };
 
@@ -142,7 +139,6 @@ const testing = async (req, res, next) => {
       { $group: { _id: "$day", Avg: { $avg: "$AvgTips" } } },
       // { $group: { _id: "$month", Avg: { $avg: "$AvgTips" } } },
       //{ $group: { _id: "$year", Avg: { $avg: "$AvgTips" } } },
-
       //    { $project: { _id: 1, AvgTips: { $round: ["$Avg", 2] } } },
       //   { $sort: { _id: 1 } },
     ]);

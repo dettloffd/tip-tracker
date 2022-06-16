@@ -22,5 +22,3 @@ export const userValidationSchemas = {
   userLoginValidationSchema,
   userSignupValidationSchema,
 };
-
-//export default userValidationSchema;

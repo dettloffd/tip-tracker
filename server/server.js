@@ -28,23 +28,17 @@ app.use((req, res, next) => {
 //import routes
 const entriesRoutes = require("./routes/entries-routes");
 const usersRoutes = require("./routes/users-routes")
-// const insightsRoutes = require("./routes/insights-routes");
 const statsRoutes = require("./routes/stats-routes");
-const HttpError = require("./models/http-error");
 
 app.use("/api/entries", entriesRoutes);
 app.use("/api/user", usersRoutes)
-// app.use("/api/insights", insightsRoutes)
 app.use("/api/stats", statsRoutes)
 
 app.use((req, res, next) => {
-    // return res.status(404).json({
-    //     success: false,
-    //     message: "Could not locate this route"
-    // })
-    const error = new HttpError('Could not locate this route', 404);
-    //console.log(error.message);
-    throw error;
+    return res.status(404).json({
+        success: false,
+        message: "Could not locate this route"
+    })
 })
 
 app.use((error, req, res, next) => {
@@ -56,9 +50,7 @@ app.use((error, req, res, next) => {
     res.status(error.code || 500)
     //error.code property is set up in custom error handling class 'http-error'...
     //if none found, fall back to 500
-    res.json({message: error.message || 'some unknown error boi; this is from server.js'})
+    res.json({message: error.message || 'Uknown error occurred; this error is originating at the server.'})
     //if no error.message property set up, fall back to this default
 })
-//message = ((`Systems fuuuunctional on port`, `${PORT}`, `boiiiii`))
 app.listen(`${PORT}`, console.log(`Systems functional on port`.rainbow.bold, `${PORT}`.rainbow.bold));
-//app.listen(`${PORT}`, console.log(message));

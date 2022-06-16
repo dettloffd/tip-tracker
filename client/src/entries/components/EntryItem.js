@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+//
 import {
   Box,
   Button,
@@ -17,22 +18,19 @@ import {
   MdDelete,
   MdOutlinePriceCheck,
 } from "react-icons/md";
-//
-import useToggleStateHook from "../../hooks/useToggleStateHook";
-import GeneralModal from "../../UIElements/GeneralModal";
-import EditEntryInputForm from "./EditEntryForm";
-import DeleteEntryForm from "./DeleteEntryForm";
-//
 import { format, parseISO } from "date-fns";
+//
 import { AuthContext } from "../../auth/AuthContext";
 import { ModalContainer } from "../../UIElements/ModalContainer";
+import useToggleStateHook from "../../hooks/useToggleStateHook";
+import EditEntryInputForm from "./EditEntryForm";
+import DeleteEntryForm from "./DeleteEntryForm";
 
 const entryIcons = [MdToday, MdReceipt, MdAttachMoney, MdOutlinePriceCheck];
 
 const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
   const { token } = useContext(AuthContext);
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { onClose } = useDisclosure();
 
   const [isEditing, toggleEditing] = useToggleStateHook(false);
   const [isDeleting, toggleDeleting] = useToggleStateHook(false);
@@ -45,11 +43,6 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
     mapEntryData("Number of Transactions", numTransactions),
     mapEntryData("Tips Total", tipsTotal),
     mapEntryData("Average Tip", (tipsTotal / numTransactions).toFixed(2)),
-  ];
-
-  const entryButtons = [
-    { name: "Edit", functionality: toggleEditing, icon: <MdModeEditOutline /> },
-    { name: "Delete", functionality: toggleDeleting, icon: <MdDelete /> },
   ];
 
   return (
@@ -82,16 +75,6 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
         />
       )}
 
-      {/* {isDeleting && (
-        <ModalContainer
-          modalContent={<DeleteEntryForm _id={_id} token={token} />}
-          isOpen={isDeleting}
-          onClose={onClose}
-          toggleMutationState={toggleDeleting}
-          title={"Delete Entry"}
-        />
-      )} */}
-
       <Box
         boxShadow="lg"
         bg="white"
@@ -109,7 +92,6 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
           <ListItem _hover={{ bg: "gray.100" }}>
             <Flex justify="space-between" alignItems="center">
               <Box>
-                {/* <ListIcon size="lg">{entryIcons[index]}</ListIcon> {row.name} */}
                 {/* This flex keeps the icon and field name centered horizontally  */}
                 <Flex alignItems="center">
                   <Icon
@@ -171,26 +153,10 @@ const EntryItem = ({ numTransactions, date, tipsTotal, _id }) => {
                   display={["md", "md", "md", "none", "none"]}
                 />
               </Button>
-
-              {/* {entryButtons.map((button) => (
-                <Button
-                  onClick={button.functionality}
-                  variant="solid"
-                  colorScheme="teal"
-                  size={"xs"}
-                  ml={2}
-                  mt={3}
-                >
-                  
-                  <Icon ></Icon>
-                </Button>
-              ))} */}
             </Box>
           </Flex>
         </ListItem>
       </Box>
-      {/* <p>{_id}</p>
-        <p>{(tipsTotal/numTransactions).toFixed(2)}</p> */}
     </>
   );
 };

@@ -1,7 +1,6 @@
-//const HttpError = require("../models/http-error");
-const { validationResult } = require("express-validator");
-const HttpError = require("../models/http-error");
 const User = require("../models/User");
+//
+const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -152,6 +151,5 @@ const login = async (req, res, next) => {
   });
 };
 
-//exports.getUsers = getUsers;
 exports.signup = signup;
 exports.login = login;
