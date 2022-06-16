@@ -1,11 +1,9 @@
 import React, { useState, useContext } from "react";
-// import { AuthContext } from "../../contexts/AuthContext";
 import { AuthContext } from "./AuthContext";
 import { Formik, Form, Field } from "formik";
 import { userValidationSchemas } from "./userValidationSchema";
 import { authInputTextFields } from "./authInputTextFields";
 import { authSubmitHandler } from "./api/authApi";
-
 import {
   Box,
   Button,
@@ -13,35 +11,50 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
+  Flex,
+  Icon,
   Input,
   Text,
   useQuery,
 } from "@chakra-ui/react";
 import { useQueryClient, useMutation } from "react-query";
+import { useModalHook } from "../hooks/useModalHook";
+import { MdClose } from "react-icons/md";
+import { ModalContainer } from "../UIElements/ModalContainer";
+import SyncLoader from "react-spinners/SyncLoader";
+
 
 const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const auth = useContext(AuthContext);
   const queryClient = useQueryClient();
-  // const { mutate , isError, isLoading } = useMutation(authSubmitHandler, {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries();
-      
-  //   },
-  // });
 
-  const { isLoading, isSuccess, mutate, isError } = useMutation(
+  const {
+    onClose,
+    errorAlert,
+    toggleErrorAlert,
+    returnedError,
+    setReturnedError,
+  } = useModalHook();
+
+  const { isLoading, mutate} = useMutation(
     async (authData) => {
       const response = await authSubmitHandler(authData);
+      if (isLoginMode){
+        auth.login(response.data.existingUser._id, response.data.token);
+      } else{
+        auth.login(response.data.createdUser._id, response.data.token);
+      }
       return response;
+      // response is being returned to the onSuccess and onError functions below
     },
     {
-      onSuccess: () => {
+      onSuccess: (data) => {
         queryClient.invalidateQueries();
-        // console.log(data);
       },
       onError: (error) => {
-        console.log(error);
+        setReturnedError(error.response.data.message);
+        toggleErrorAlert();
       },
     }
   );
@@ -50,11 +63,9 @@ const Auth = () => {
     const userData = {
       email: values.email,
       password: values.password,
-      username: values.username
-
+      username: values.username,
     };
-    mutate({userData: userData, isLoginMode: isLoginMode, authLogin: auth.login})
-    // auth.login();
+    mutate({ userData: userData, isLoginMode: isLoginMode });
     resetForm();
   };
 
@@ -68,17 +79,40 @@ const Auth = () => {
     password: "",
   };
 
-  if (isError){
-
-    return (<>
-    <Container>
-      <h1>Error has occurred. Please reload and try again.</h1>
-    </Container>
-    </>)
+  if (isLoading) {
+    return (
+      <Flex width="100%" alignItems={"center"} justify={"center"} p={6}>
+        <SyncLoader size={25} color={"#4FD1C5"} loading={true} />
+      </Flex>
+    );
   }
 
   return (
     <>
+      {errorAlert && (
+        <ModalContainer
+          isOpen={errorAlert}
+          setReturnedError={setReturnedError}
+          modalContent={
+            <Box p={3} textAlign="center">
+              <Flex alignItems={"center"} justifyContent={"center"} pb={5}>
+                <Icon
+                  w={12}
+                  h={12}
+                  paddingRight={3}
+                  as={MdClose}
+                  color="red.500"
+                />
+                <Text fontSize="lg">{returnedError}</Text>
+              </Flex>
+            </Box>
+          }
+          onClose={onClose}
+          toggleOpenState={toggleErrorAlert}
+          title={"Error"}
+        />
+      )}
+
       <Container
         bg="white"
         p={6}
@@ -122,9 +156,13 @@ const Auth = () => {
                       ></Input>
                       {/* <FormHelperText>{inputField.errortext}</FormHelperText> */}
                       {/* {!meta.error  ? <FormHelperText>{inputField.helper}</FormHelperText> : <FormHelperText>{inputField.errortext}</FormHelperText>  } */}
-                      {!meta.error  ? <FormHelperText>{inputField.helper}</FormHelperText> : <FormHelperText color={'red.300'}>{meta.error}</FormHelperText>  }
-
-                      
+                      {!meta.error ? (
+                        <FormHelperText>{inputField.helper}</FormHelperText>
+                      ) : (
+                        <FormHelperText color={"red.300"}>
+                          {meta.error}
+                        </FormHelperText>
+                      )}
                     </FormControl>
                   )}
                 </Field>
@@ -140,10 +178,10 @@ const Auth = () => {
                 // width="50%"
                 alignSelf="center"
                 mt={4}
-                
               >
-                <Text fontSize={[ "sm", "sm", "md"]}>{isLoginMode ? 'Log In' : 'Sign up'}</Text>
-                
+                <Text fontSize={["sm", "sm", "md"]}>
+                  {isLoginMode ? "Log In" : "Sign up"}
+                </Text>
               </Button>
             </Form>
           )}

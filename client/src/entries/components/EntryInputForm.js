@@ -49,6 +49,7 @@ const EntryInputForm = (props) => {
       const response = await addEntry(newEntryData);
       return response;
     },
+    // response is being returned to the onSuccess and onError functions below
     {
       onSuccess: (data) => {
         queryClient.invalidateQueries();

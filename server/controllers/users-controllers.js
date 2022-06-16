@@ -116,7 +116,7 @@ const login = async (req, res, next) => {
     return res.status(500).json({
       // Serverside error: will only return error in case of server error
       success: false,
-      message: "Could not log you in.. please check credentials and try again",
+      message: "Could not log you in! Please check credentials and try again",
     });
 
   }
@@ -125,7 +125,7 @@ const login = async (req, res, next) => {
     return res.status(401).json({
       // Credentials error: will only return error in case of incorrect credentials/password
       success: false,
-      message: "Invalid credentials! Please check password and try again",
+      message: "Invalid credentials! Please check your password and try again.",
     });
 
   }
@@ -137,7 +137,7 @@ const login = async (req, res, next) => {
   } catch (err){
     return res.status(500).json({
       success: false,
-      message: "Logging in failed due to server issue; please try later",
+      message: "Logging in failed due to server issue! Please try later.",
     });
   }
 
