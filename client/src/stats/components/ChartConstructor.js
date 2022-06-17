@@ -3,10 +3,11 @@ import React, { useContext, useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import NoDataToDisplay from "highcharts/modules/no-data-to-display";
+import SyncLoader from "react-spinners/SyncLoader";
 import { MdOutlineTrendingDown, MdOutlineTrendingUp } from "react-icons/md";
 import { Box, Divider, Flex, Icon, Text } from "@chakra-ui/react";
 import { format, parseISO } from "date-fns";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 //
 import useChartConstructorHook from "../../hooks/useChartConstructorHook";
 import useHighLowStatsHook from "../../hooks/useHighLowStatsHook";
@@ -39,7 +40,6 @@ const ChartConstructor = ({
   NoDataToDisplay(Highcharts);
 
   const {userId} = useContext(AuthContext);
-  const queryClient = useQueryClient();
 
   const dateRangeProvided = startDate !== "";
   let theQueryKey;
@@ -48,7 +48,7 @@ const ChartConstructor = ({
   if (dateRangeProvided) {
     theQueryKey = [
       `fetchChartDataBetweenDates_${xKey}_${yKey}`,
-      {userId: "123"},
+      {userId},
       { startDate, endDate, statVar: yKey, timeVar: xKey },
     ];
     theQueryFn = fetchChartDataBetweenDates;
@@ -61,14 +61,9 @@ const ChartConstructor = ({
     theQueryFn = fetchChartDataNoDates;
   }
 
-
-
-
   const { data, isLoading, isError, error } = useQuery(theQueryKey, theQueryFn, {
     onSuccess: (data) => {
-      console.log(data);
-      // queryClient.invalidateQueries();
-      if (data.status == 200){
+      // console.log(data);
         if (data.data.count === 0) {
           // set x and y axis to empty arrays
           // this will inform highcharts that there is no data triggering a noData message
@@ -99,70 +94,32 @@ const ChartConstructor = ({
             bottomValue: { x: values.bottomValue.x, y: values.bottomValue.y },
           });
         }
-
-      }
-
-
-      
     },
-    onError: (error) => {
-      // QueryClient.inv
-      console.log(error);
-    }
+    // onError: (error) => {
+    //   toast({
+    //     title: "Error!",
+    //     description: `Error fetching chart data. `,
+    //     status: "error",
+    //     duration: 3000,
+    //     isClosable: true,
+    //     position: "bottom",
+    //   });
+    // }
   });
-
-
-  // const { data, isLoading, isError, error } = useQuery(theQueryKey, theQueryFn);
-  // console.log(data);
-
-
-  // useEffect(() => {
-  //   if (data) {
-  //     console.log(data.status);
-  //     // if no data returned from database call..
-  //     if (data.data.count === 0) {
-  //       // set x and y axis to empty arrays
-  //       // this will inform highcharts that there is no data triggering a noData message
-  //       let chartData = { xAxis: [], yAxis: [] };
-  //       setChartData({
-  //         categories: chartData.xAxis,
-  //         yValues: chartData.yAxis,
-  //       });
-  //       setHighAndLowValues({
-  //         topValue: { x: null, y: null },
-  //         bottomValue: { x: null, y: null },
-  //       });
-  //     } else {
-  //       let values = extractHighAndLowValues(data);
-  //       let chartData = constructAxis(data);
-  //       setChartData({
-  //         categories: chartData.xAxis,
-  //         yValues: chartData.yAxis,
-  //       });
-  //       //Much more succint but less explicit version of above..
-  //       // setChartData({
-  //       //   categories: constructAxis(chartResponse).xAxis,
-  //       //   yValues: constructAxis(chartResponse).yAxis,
-  //       // });
-
-  //       setHighAndLowValues({
-  //         topValue: { x: values.topValue.x, y: values.topValue.y },
-  //         bottomValue: { x: values.bottomValue.x, y: values.bottomValue.y },
-  //       });
-  //     }
-  //   }
-  // }, [data]);
-
 
   const { constructAxis } = useChartConstructorHook(xKey, yKey);
   const { extractHighAndLowValues } = useHighLowStatsHook(xKey, yKey);
 
   if (isError){
-    return <h1>Error</h1>
+    return <Text>{error.response.data.message}</Text>
   }
 
-  if (isLoading){
-    return <h1>YOOOOO</h1>
+  if (isLoading) {
+    return (
+      <Flex width="100%" justify={"center"} p={6}>
+        <SyncLoader size={10} color={"#4FD1C5"} loading={true} />
+      </Flex>
+    );
   }
 
   if (data){
@@ -250,6 +207,7 @@ const ChartConstructor = ({
           
         >
           <Box>
+            {/* {isError && <Text>{error.response.data.message}</Text>} */}
             <HighchartsReact
               highcharts={Highcharts}
               options={options}
@@ -265,6 +223,7 @@ const ChartConstructor = ({
             justify={"space-between"}
             fontSize={["xs", "sm", "sm", "md", "md"]}
           >
+            
             <Flex alignItems={"center"} justifyContent="space-between" >
               <Flex align={"center"} mr={2} >
               <Icon as={MdOutlineTrendingUp} w={6} h={6} color="teal.500" m={2} />

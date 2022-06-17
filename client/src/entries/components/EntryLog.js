@@ -23,7 +23,8 @@ const EntryLog = ({ numResults, dateRange }) => {
   if (dateRangeProvided) {
     theQueryKey = [
       "getAllEntriesByUserIdBetweenDates",
-      { userId },
+      // { userId },
+      "34534534534",
       { startDate, endDate },
     ];
     theQueryFn = getAllEntriesByUserIdBetweenDates;
@@ -64,25 +65,6 @@ const EntryLog = ({ numResults, dateRange }) => {
   // } ); 
   
 
-  
-
-  // const { isLoading, isSuccess, mutate, isError } = useMutation(
-  //   async (deletionData) => {
-  //     // deletionData comes from input to mutate function
-  //     const response = await deleteEntry(deletionData);
-  //     return response;
-  //   },
-  //   {
-  //     onSuccess: (data) => {
-  //       queryClient.invalidateQueries();
-  //       console.log(data);
-  //     },
-  //     onError: (error) => {
-  //       console.log(error);
-  //     },
-  //   }
-  // );
-  console.log(error);
 
   if (isLoading) {
     return (
@@ -93,7 +75,6 @@ const EntryLog = ({ numResults, dateRange }) => {
   }
 
   if (isError) {
-
 
     if (error.response.data.message){
       return (<Text>{error.response.data.message}</Text>)

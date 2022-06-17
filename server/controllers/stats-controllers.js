@@ -54,18 +54,31 @@ const avgVarByTimeBetweenDates = async (req, res, next) => {
       { $sort: { [timeVar]: 1 } }, // return the results sorted in ascending order by the time variable - day, month, year, etc
     ]);
   } catch (err) {
-    res.json({ message: err });
+    // console.log(err);
+    if (err.name === "ValidationError") {
+      const messages = Object.values(err.errors).map((val) => val.message);
+      return res.status(422).json({
+        success: false,
+        message: "Creation failed; required parameters missing",
+        messages: messages,
+      });
+    } else {
+      return res.status(500).json({
+        success: false,
+        message: "Server Error! Please try again later.",
+      });
+    }
   }
-
-  let count; 
+  let count;
 
   if (results){
     count = results.length;
+
   } else{
     count = 0;
   }
 
-  res.json({
+   res.json({
     count: count,
     results: results,
     params: { statVar, timeVar },
@@ -115,18 +128,31 @@ const avgVarByTimeGetAll = async (req, res, next) => {
       { $sort: { [timeVar]: 1 } }, // return the results sorted in ascending order by the time variable - day, month, year, etc
     ]);
   } catch (err) {
-    res.json({ message: err });
+    // console.log(err);
+    if (err.name === "ValidationError") {
+      const messages = Object.values(err.errors).map((val) => val.message);
+      return res.status(422).json({
+        success: false,
+        message: "Creation failed; required parameters missing",
+        messages: messages,
+      });
+    } else {
+      return res.status(500).json({
+        success: false,
+        message: "Server Error! Please try again later.",
+      });
+    }
   }
-
-  let count; 
+  let count;
 
   if (results){
     count = results.length;
+
   } else{
     count = 0;
   }
 
-  res.json({
+   res.json({
     count: count,
     results: results,
     params: { statVar, timeVar },
@@ -159,12 +185,14 @@ const testing = async (req, res, next) => {
       //   { $sort: { _id: 1 } },
     ]);
   } catch (err) {
-    res.json({ message: err });
+    return res.json({ message: err });
   }
 
-  res.json({ count: results.length, results: results });
+   res.json({ count: results.length, results: results });
 };
 
 exports.testing = testing;
 exports.avgVarByTimeBetweenDates = avgVarByTimeBetweenDates;
 exports.avgVarByTimeGetAll = avgVarByTimeGetAll;
+
+
