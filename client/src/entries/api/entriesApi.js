@@ -9,53 +9,85 @@ function myValidateStatus(status) {
 // without it, react query would handle the error but we wouldn't get the object containing
 // the error code and error message that was set up on the server 
 
-export const getAllEntries = async () => {
-  try {
-    const response = await axios({
-      reqMethod: "GET",
-      url: `http://localhost:5000/api/entries`,
-      data: null,
-      headers: {},
-    });
-    return response;
-  } catch (err) {}
-};
 
-export const getAllEntriesBetweenDates = ({ queryKey }) => {
-  const [_key, { startDate, endDate }] = queryKey;
-    const response =  axios({
-      reqMethod: "GET",
-      url: `http://localhost:5000/api/entries/between/?startDate=${startDate}&endDate=${endDate}`,
-      data: null,
-      headers: {},
-    });
-    return response;
-};
-
-export const getAllEntriesByUserId = ({ queryKey }) => {
+export const getAllEntriesByUserId = async ({ queryKey }) => {
   const [_key, { userId }] = queryKey;
 
-    const response = axios({
-      reqMethod: "GET",
+  try {
+    const response = await axios({
+      method: "GET",
       url: `http://localhost:5000/api/entries/user/${userId}`,
       data: null,
       headers: {},
     });
     return response;
+  } catch (err) {
+    throw err;
+  }
 };
 
 export const getAllEntriesByUserIdBetweenDates =  ({ queryKey }) => {
   const [_key, { userId }, { startDate, endDate }] = queryKey;
 
+  try{
     const response = axios({
-      reqMethod: "GET",
+      method: "GET",
       url: `http://localhost:5000/api/entries/user/${userId}/between/?startDate=${startDate}&endDate=${endDate}`,
       data: null,
       headers: {},
     });
     return response;
 
+  } catch (err){
+    throw err;
+
+  }
 };
+
+
+
+
+
+
+// export const getAllEntries = async () => {
+//   try {
+//     const response = await axios({
+//       reqMethod: "GET",
+//       url: `http://localhost:5000/api/entries`,
+//       data: null,
+//       headers: {},
+//     });
+//     return response;
+//   } catch (err) {}
+// };
+
+export const getAllEntriesBetweenDates = ({ queryKey }) => {
+  const [_key, { startDate, endDate }] = queryKey;
+    const response =  axios({
+      method: "GET",
+      url: `http://localhost:5000/api/entries/between/?startDate=${startDate}&endDate=${endDate}`,
+      data: null,
+      validateStatus: myValidateStatus,
+      headers: {},
+    });
+    return response;
+};
+
+// export const getAllEntriesByUserId = ({ queryKey }) => {
+//   const [_key, { userId }] = queryKey;
+
+//     const response = axios({
+//       method: "GET",
+//       url: `http://localhost:5000/api/entries/user/${userId}`,
+//       data: null,
+//       validateStatus: myValidateStatus,
+//       headers: {},
+//     });
+//     return response;
+// };
+
+
+
 
 export const addEntry = (newEntryData) => {
   const {newEntry, token} = newEntryData;

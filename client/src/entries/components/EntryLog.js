@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 //
 import { Flex, List, Text } from "@chakra-ui/react";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import MoonLoader from "react-spinners/MoonLoader";
 //
 import {
@@ -14,36 +14,75 @@ import EntryItem from "./EntryItem";
 const EntryLog = ({ numResults, dateRange }) => {
   const { startDate, endDate } = dateRange;
   const { userId } = useContext(AuthContext);
+  const queryClient = useQueryClient();
 
   const dateRangeProvided = dateRange.startDate !== "";
   let theQueryKey;
   let theQueryFn;
 
-  // if (dateRangeProvided) {
-  //   theQueryKey = [
-  //     "getAllEntriesByUserIdBetweenDates",
-  //     { userId },
-  //     { startDate, endDate },
-  //   ];
-  //   theQueryFn = getAllEntriesByUserIdBetweenDates;
-  // } else {
-  //   theQueryKey = ["getAllEntriesByUserId", { userId }];
-  //   theQueryFn = getAllEntriesByUserId;
-  // }
-
   if (dateRangeProvided) {
     theQueryKey = [
       "getAllEntriesByUserIdBetweenDates",
-      "12345",
+      { userId },
       { startDate, endDate },
     ];
     theQueryFn = getAllEntriesByUserIdBetweenDates;
   } else {
-    theQueryKey = ["getAllEntriesByUserId", "12345"];
+    theQueryKey = ["getAllEntriesByUserId", { userId }];
     theQueryFn = getAllEntriesByUserId;
   }
 
-  const { data, isLoading, isError, error } = useQuery(theQueryKey, theQueryFn);
+  // if (dateRangeProvided) {
+  //   theQueryKey = [
+  //     "getAllEntriesByUserIdBetweenDates",
+  //     "12345",
+  //     { startDate, endDate },
+  //   ];
+  //   theQueryFn = getAllEntriesByUserIdBetweenDates;
+  // } else {
+  //   theQueryKey = ["getAllEntriesByUserId", "12345"];
+  //   theQueryFn = getAllEntriesByUserId;
+  // }
+
+  const { data, isLoading, isError, error } = useQuery( theQueryKey, theQueryFn);
+
+  // const { data, isLoading, isError, error } = useQuery( theQueryKey, async () => {
+
+  //   const response = await theQueryFn;
+  //   return response;
+
+
+
+  // },       {
+  //   onSuccess: (data) => {
+  //     // queryClient.invalidateQueries();
+  //     console.log(data);
+  //   },
+  //   onError: (error) => {
+  //     console.log(error);
+  //   },
+  // } ); 
+  
+
+  
+
+  // const { isLoading, isSuccess, mutate, isError } = useMutation(
+  //   async (deletionData) => {
+  //     // deletionData comes from input to mutate function
+  //     const response = await deleteEntry(deletionData);
+  //     return response;
+  //   },
+  //   {
+  //     onSuccess: (data) => {
+  //       queryClient.invalidateQueries();
+  //       console.log(data);
+  //     },
+  //     onError: (error) => {
+  //       console.log(error);
+  //     },
+  //   }
+  // );
+  console.log(error);
 
   if (isLoading) {
     return (
@@ -54,7 +93,13 @@ const EntryLog = ({ numResults, dateRange }) => {
   }
 
   if (isError) {
-    return <Text>{error.response.data.message}</Text>;
+
+
+    if (error.response.data.message){
+      return (<Text>{error.response.data.message}</Text>)
+    } else{
+      return (<Text>Error has occurred!</Text>)
+    }
   }
 
   if (data.data.entries) {

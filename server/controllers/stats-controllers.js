@@ -57,8 +57,16 @@ const avgVarByTimeBetweenDates = async (req, res, next) => {
     res.json({ message: err });
   }
 
+  let count; 
+
+  if (results){
+    count = results.length;
+  } else{
+    count = 0;
+  }
+
   res.json({
-    count: results.length,
+    count: count,
     results: results,
     params: { statVar, timeVar },
     dateStuff: { startDate, endDate },
@@ -110,8 +118,16 @@ const avgVarByTimeGetAll = async (req, res, next) => {
     res.json({ message: err });
   }
 
+  let count; 
+
+  if (results){
+    count = results.length;
+  } else{
+    count = 0;
+  }
+
   res.json({
-    count: results.length,
+    count: count,
     results: results,
     params: { statVar, timeVar },
   });
