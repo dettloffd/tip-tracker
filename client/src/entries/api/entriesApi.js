@@ -15,7 +15,7 @@ export const getAllEntriesByUserId = async ({ queryKey }) => {
   try {
     const response = await axios({
       method: "GET",
-      url: `http://localhost:5000/api/entries/user/${userId}`,
+      url: `${process.env.REACT_APP_SERVER_URL}/entries/user/${userId}`,
       data: null,
       headers: {},
     });
@@ -31,7 +31,7 @@ export const getAllEntriesByUserIdBetweenDates =  ({ queryKey }) => {
   try{
     const response = axios({
       method: "GET",
-      url: `http://localhost:5000/api/entries/user/${userId}/between/?startDate=${startDate}&endDate=${endDate}`,
+      url: `${process.env.REACT_APP_SERVER_URL}/entries/user/${userId}/between/?startDate=${startDate}&endDate=${endDate}`,
       data: null,
       headers: {},
     });
@@ -47,7 +47,7 @@ export const getAllEntriesBetweenDates = ({ queryKey }) => {
   const [_key, { startDate, endDate }] = queryKey;
     const response =  axios({
       method: "GET",
-      url: `http://localhost:5000/api/entries/between/?startDate=${startDate}&endDate=${endDate}`,
+      url: `${process.env.REACT_APP_SERVER_URL}/entries/between/?startDate=${startDate}&endDate=${endDate}`,
       data: null,
       validateStatus: myValidateStatus,
       headers: {},
@@ -58,7 +58,7 @@ export const getAllEntriesBetweenDates = ({ queryKey }) => {
 export const addEntry = (newEntryData) => {
   const {newEntry, token} = newEntryData;
   const response = axios({
-    url: "http://localhost:5000/api/entries",
+    url: `${process.env.REACT_APP_SERVER_URL}/entries`,
     method: "POST",
     data: newEntry,
     validateStatus: myValidateStatus,
@@ -71,7 +71,7 @@ export const editEntry = (editData) => {
   const {editedEntry, token} = editData;
   const response = axios({
     method: "PATCH",
-    url: `http://localhost:5000/api/entries/${editedEntry._id}`,
+    url: `${process.env.REACT_APP_SERVER_URL}/entries/${editedEntry._id}`,
     data: editedEntry,
     validateStatus: myValidateStatus,
 
@@ -83,7 +83,7 @@ export const editEntry = (editData) => {
 export const deleteEntry = (deletionData) => {
   const {_id, token} = deletionData;
   const response = axios({
-    url: `http://localhost:5000/api/entries/${_id}`,
+    url: `${process.env.REACT_APP_SERVER_URL}/entries/${_id}`,
     method: "DELETE",
     data: null,
     validateStatus: myValidateStatus,

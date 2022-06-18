@@ -10,7 +10,7 @@ export const fetchChartDataBetweenDates = async ({ queryKey }) => {
   try{
     const response = await axios({
       method: "GET",
-      url: `http://localhost:5000/api/stats/user/${userId}/avgBetweenDates/?startDate=${startDate}&endDate=${endDate}&statVar=${statVar}&timeVar=${timeVar}`,
+      url: `${process.env.REACT_APP_SERVER_URL}/stats/user/${userId}/avgBetweenDates/?startDate=${startDate}&endDate=${endDate}&statVar=${statVar}&timeVar=${timeVar}`,
       data: null,
       headers: {},
     });
@@ -26,7 +26,7 @@ export const fetchChartDataNoDates = async ({ queryKey }) => {
   try{
     const response = await axios({
       method: "GET",
-      url: `http://localhost:5000/api/stats/user/${userId}/avg/?statVar=${statVar}&timeVar=${timeVar}`,
+      url: `${process.env.REACT_APP_SERVER_URL}/stats/user/${userId}/avg/?statVar=${statVar}&timeVar=${timeVar}`,
       data: null,
       validateStatus: myValidateStatus,
       headers: {},

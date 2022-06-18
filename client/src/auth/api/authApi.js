@@ -11,10 +11,9 @@ function myValidateStatus(status) {
 
 export const authSubmitHandler = (authData) => {
   const {userData, isLoginMode} = authData;
-    
     if (isLoginMode) {
         const response = axios({
-          url: "http://localhost:5000/api/user/login",
+          url: `${process.env.REACT_APP_SERVER_URL}/user/login`,
           method: "POST",
           data: {
             email: userData.email,
@@ -28,7 +27,7 @@ export const authSubmitHandler = (authData) => {
       
     } else {
         const response = axios({
-          url: "http://localhost:5000/api/user/signup",
+          url: `${process.env.REACT_APP_SERVER_URL}/user/signup`,
           method: "POST",
           data: {
             username: userData.username,

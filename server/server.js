@@ -8,11 +8,10 @@ const connectDB = require("./config/db");
 require('dotenv').config();
 
 const NODE_ENV = process.env.NODE_ENV || "development";
-const PORT = process.env.PORT || 1234;
-const MONGO_URI = process.env.MONGO_URI;
+const PORT = process.env.PORT || 5000;
 
 //connect to db
-connectDB(MONGO_URI);
+connectDB();
 
 const app = express();
 //Bodyparser middleware

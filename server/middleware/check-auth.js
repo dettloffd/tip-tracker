@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+require('dotenv').config();
 
 module.exports = (req, res, next) => {
     // required to allow post requests to move along
@@ -17,7 +18,7 @@ module.exports = (req, res, next) => {
               });
               // if there's an error with the split, it won't make it past here...
         }
-        let decodedToken = jwt.verify(token, 'super_secret_key' );
+        let decodedToken = jwt.verify(token, `${process.env.USER_TOKEN_KEY}` );
         // Key here must be same as set in users-controllers jwt settings **
         // includes the id and email, which was set previosly
         req.userData = {userId: decodedToken.userId};

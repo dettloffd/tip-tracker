@@ -3,6 +3,7 @@ const User = require("../models/User");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+require('dotenv').config();
 
 const signup = async (req, res, next) => {
   const errors = validationResult(req);
@@ -69,7 +70,7 @@ const signup = async (req, res, next) => {
 
   let token;
   try{
-    token = jwt.sign({userId: createdUser.id, email: createdUser.email}, 'super_secret_key', {expiresIn: "1h"});
+    token = jwt.sign({userId: createdUser.id, email: createdUser.email}, `${process.env.USER_TOKEN_KEY}`, {expiresIn: "1h"});
     // "id" provided by mongoose for every document created..
   } catch (err){
     return res.status(500).json({
@@ -131,7 +132,7 @@ const login = async (req, res, next) => {
 
   let token;
   try{
-    token = jwt.sign({userId: existingUser.id, email: existingUser.email}, 'super_secret_key', {expiresIn: "1h"});
+    token = jwt.sign({userId: existingUser.id, email: existingUser.email}, `${process.env.USER_TOKEN_KEY}`, {expiresIn: "1h"});
     // "id" provided by mongoose for every document created..
   } catch (err){
     return res.status(500).json({
