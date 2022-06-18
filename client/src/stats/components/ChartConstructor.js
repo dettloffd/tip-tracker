@@ -39,7 +39,7 @@ const ChartConstructor = ({
   // necessary import in order for noData module to work correctly
   NoDataToDisplay(Highcharts);
 
-  const {userId} = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
 
   const dateRangeProvided = startDate !== "";
   let theQueryKey;
@@ -48,22 +48,24 @@ const ChartConstructor = ({
   if (dateRangeProvided) {
     theQueryKey = [
       `fetchChartDataBetweenDates_${xKey}_${yKey}`,
-      {userId},
+      { userId },
       { startDate, endDate, statVar: yKey, timeVar: xKey },
     ];
     theQueryFn = fetchChartDataBetweenDates;
   } else {
     theQueryKey = [
       `fetchChartDataNoDates_${xKey}_${yKey}`,
-      {userId},
+      { userId },
       { statVar: yKey, timeVar: xKey },
     ];
     theQueryFn = fetchChartDataNoDates;
   }
 
-  const { data, isLoading, isError, error } = useQuery(theQueryKey, theQueryFn, {
-    onSuccess: (data) => {
-      // console.log(data);
+  const { data, isLoading, isError, error } = useQuery(
+    theQueryKey,
+    theQueryFn,
+    {
+      onSuccess: (data) => {
         if (data.data.count === 0) {
           // set x and y axis to empty arrays
           // this will inform highcharts that there is no data triggering a noData message
@@ -88,30 +90,21 @@ const ChartConstructor = ({
           //   categories: constructAxis(chartResponse).xAxis,
           //   yValues: constructAxis(chartResponse).yAxis,
           // });
-  
+
           setHighAndLowValues({
             topValue: { x: values.topValue.x, y: values.topValue.y },
             bottomValue: { x: values.bottomValue.x, y: values.bottomValue.y },
           });
         }
-    },
-    // onError: (error) => {
-    //   toast({
-    //     title: "Error!",
-    //     description: `Error fetching chart data. `,
-    //     status: "error",
-    //     duration: 3000,
-    //     isClosable: true,
-    //     position: "bottom",
-    //   });
-    // }
-  });
+      },
+    }
+  );
 
   const { constructAxis } = useChartConstructorHook(xKey, yKey);
   const { extractHighAndLowValues } = useHighLowStatsHook(xKey, yKey);
 
-  if (isError){
-    return <Text>{error.response.data.message}</Text>
+  if (isError) {
+    return <Text>{error.response.data.message}</Text>;
   }
 
   if (isLoading) {
@@ -122,7 +115,7 @@ const ChartConstructor = ({
     );
   }
 
-  if (data){
+  if (data) {
     const options = {
       chart: {
         type: `${chartType}`,
@@ -150,7 +143,7 @@ const ChartConstructor = ({
           color: "#38B2AC",
         },
       },
-  
+
       yAxis: {
         // In order to keep the bar graph more readable
         // Take the lowest of all the y values and divide in half
@@ -194,17 +187,15 @@ const ChartConstructor = ({
     };
     return (
       <>
-      {/* This is the container for the chart */}
+        {/* This is the container for the chart */}
         <Flex
-        
-        width={"100%"}
+          width={"100%"}
           boxShadow="md"
           bg="white"
           p={1}
           m={1}
           borderRadius="lg"
           direction={"column"}
-          
         >
           <Box>
             {/* {isError && <Text>{error.response.data.message}</Text>} */}
@@ -214,7 +205,7 @@ const ChartConstructor = ({
             ></HighchartsReact>
           </Box>
           <Divider></Divider>
-  
+
           <Flex
             p={1}
             alignSelf={"center"}
@@ -223,42 +214,43 @@ const ChartConstructor = ({
             justify={"space-between"}
             fontSize={["xs", "sm", "sm", "md", "md"]}
           >
-            
-            <Flex alignItems={"center"} justifyContent="space-between" >
-              <Flex align={"center"} mr={2} >
-              <Icon as={MdOutlineTrendingUp} w={6} h={6} color="teal.500" m={2} />
-              <Text>High Value: </Text>
+            <Flex alignItems={"center"} justifyContent="space-between">
+              <Flex align={"center"} mr={2}>
+                <Icon
+                  as={MdOutlineTrendingUp}
+                  w={6}
+                  h={6}
+                  color="teal.500"
+                  m={2}
+                />
+                <Text>High Value: </Text>
               </Flex>
-              <Text >
+              <Text>
                 {highAndLowValues.topValue.x}: {highAndLowValues.topValue.y}
               </Text>
             </Flex>
-  
-            <Flex alignItems={"center"} justifyContent="space-between" >
-            <Flex align={"center"} mr={2} >
-              <Icon
-                as={MdOutlineTrendingDown}
-                w={6}
-                h={6}
-                color="teal.500"
-                m={2}
-              />
-              <Text>Low Value: </Text>
+
+            <Flex alignItems={"center"} justifyContent="space-between">
+              <Flex align={"center"} mr={2}>
+                <Icon
+                  as={MdOutlineTrendingDown}
+                  w={6}
+                  h={6}
+                  color="teal.500"
+                  m={2}
+                />
+                <Text>Low Value: </Text>
               </Flex>
-              <Text >{highAndLowValues.bottomValue.x}: {highAndLowValues.bottomValue.y}</Text>
-              
+              <Text>
+                {highAndLowValues.bottomValue.x}:{" "}
+                {highAndLowValues.bottomValue.y}
+              </Text>
             </Flex>
           </Flex>
-  
         </Flex>
       </>
     );
-
   }
-
-
-
-
 };
 
 export default ChartConstructor;
