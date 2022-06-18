@@ -51,7 +51,7 @@ const Auth = () => {
       // response is being returned to the onSuccess and onError functions below
     },
     {
-      onSuccess: (data) => {
+      onSuccess: () => {
         queryClient.invalidateQueries();
       },
       onError: (error) => {
@@ -196,7 +196,7 @@ const Auth = () => {
             mt={4}
             onClick={switchModeHandler}
           >
-            {isLoginMode ? "LoginMode" : "!LoginMode"}
+            {isLoginMode ? "Click to Sign Up!" : "Already have an account?"}
           </Button>
         </Container>
       </Flex>
