@@ -6,6 +6,7 @@ import { BiStats } from "react-icons/bi";
 //
 import { AuthContext } from "../auth/AuthContext";
 import NavBarItem from "./NavBarItem";
+import { Link } from "react-router-dom";
 
 export default function NavBar() {
   const auth = useContext(AuthContext);
@@ -34,7 +35,9 @@ export default function NavBar() {
           alignSelf="center"
           letterSpacing={"tight"}
         >
+          <Link to="/">
           <Text color={"teal.500"}>$</Text>
+          </Link>
         </Heading>
         <Flex
           className="navbar-items-container"
