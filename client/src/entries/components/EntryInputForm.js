@@ -123,9 +123,9 @@ const EntryInputForm = () => {
         p={6}
         borderRadius="lg"
         width={"100%"}
-        textAlign="center"
         boxShadow={"lg"}
       >
+        <Text fontSize={'lg'} pb={4}>Create New Entry</Text>
         <Formik
           enableReinitialize
           initialValues={initialFormState}
@@ -136,7 +136,7 @@ const EntryInputForm = () => {
             <Form>
               <Flex direction="column">
                 <Field id="date" label="date" type="date" name="date">
-                  {({ field, form, meta }) => (
+                  {({ field, meta }) => (
                     <FormControl pb={3}>
                       <Input
                         {...field}
@@ -171,7 +171,7 @@ const EntryInputForm = () => {
                       </NumberInput>
 
                       <FormHelperText fontSize={["sm", "sm", "md", "md", "md"]}>
-                        Enter the value of all tips received for this shift.
+                        Enter the total value of all tips received on this date.
                       </FormHelperText>
                     </FormControl>
                   )}
@@ -199,7 +199,7 @@ const EntryInputForm = () => {
                         </NumberInputStepper>
                       </NumberInput>
                       <FormHelperText fontSize={["sm", "sm", "md", "md", "md"]}>
-                        Enter the total number of transactions for this shift.
+                        Enter the total number of transactions on this date.
                       </FormHelperText>
                     </FormControl>
                   )}

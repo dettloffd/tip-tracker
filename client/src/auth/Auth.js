@@ -181,7 +181,7 @@ const Auth = () => {
                   alignSelf="center"
                   mt={4}
                 >
-                  {isLoginMode ? "Log In" : "Sign up"}
+                  {isLoginMode ? "Log In" : "Create"}
                 </Button>
               </Form>
             )}
@@ -196,7 +196,7 @@ const Auth = () => {
             mt={4}
             onClick={switchModeHandler}
           >
-            {isLoginMode ? "Click to Sign Up!" : "Already have an account?"}
+            {isLoginMode ? "Click to Create Account" : "Already Have an Account?"}
           </Button>
         </Container>
       </Flex>
