@@ -8,7 +8,7 @@ const connectDB = require("./config/db");
 require('dotenv').config();
 
 const NODE_ENV = process.env.NODE_ENV || "development";
-const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 5000;
 
 //connect to db
 connectDB();
@@ -52,4 +52,4 @@ app.use((error, req, res, next) => {
     res.json({message: error.message || 'Uknown error occurred; this error is originating at the server.'})
     //if no error.message property set up, fall back to this default
 })
-app.listen(`${PORT}`, console.log(`Systems functional on port`.rainbow.bold, `${PORT}`.rainbow.bold));
+app.listen((process.env.PORT || 5000), console.log(`Systems functional on port`.rainbow.bold));
