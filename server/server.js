@@ -3,6 +3,7 @@ const colors = require("colors");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const connectDB = require("./config/db");
+const path = require('path');
 
 
 require('dotenv').config();
@@ -24,14 +25,28 @@ app.use((req, res, next) => {
     next();
 })
 
+// any request which reaches backend not handled by below routes..
+// now handled by this route
+// returns content of public folder
+app.use(express.static(path.join('public')));
+
 //import routes
 const entriesRoutes = require("./routes/entries-routes");
 const usersRoutes = require("./routes/users-routes")
 const statsRoutes = require("./routes/stats-routes");
 
+// backend route, these kick in:
 app.use("/api/entries", entriesRoutes);
 app.use("/api/user", usersRoutes)
 app.use("/api/stats", statsRoutes)
+
+
+// anything else, send the single page
+app.use((req, res, next) => {
+    res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+
+} );
+
 
 app.use((req, res, next) => {
     return res.status(404).json({
