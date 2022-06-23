@@ -281,9 +281,9 @@ const deleteEntry = async (req, res, next) => {
 const testing = async (req, res, next) => {
   //  Apply creator objectId to all entries
   try {
-    userIdString = "62afd38d29d5f0a5be72768e";
+    userIdString = "62b3ac2a65762acd39a815d7";
 
-    let id = mongoose.Types.ObjectId("62afd38d29d5f0a5be72768e");
+    let id = mongoose.Types.ObjectId("62b3ac2a65762acd39a815d7");
     entries = await Entry.updateMany(
       { $match: { creator: userIdString } },
       { creator: id }
