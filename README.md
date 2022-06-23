@@ -22,7 +22,17 @@ In order to demo the application without requiring signup, enter "demo@demo.com"
 
 ![HomePage](./client/screenshots/tips_ss.png)
 
-SS2
+#### Interactive Heatmap:  
+
+![Heatmap](./client/screenshots/heatmap_ss.png)
+
+#### Charts & Insights:  
+
+![Charts](./client/screenshots/chart_ss.png)
+
+#### All Standard CRUD Operations Supported:  
+
+![CRUD](./client/screenshots/editEntry_ss.png)
 
 ## Installation and Setup Instructions 
 
