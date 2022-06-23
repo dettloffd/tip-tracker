@@ -18,26 +18,24 @@ In order to demo the application without requiring signup, enter "demo@demo.com"
 
 ## Project Screen Shot(s)
 
-#### Example:   
+#### Home Page:   
 
-SS1
+![HomePage](./client/screenshots/tips_ss.png)
 
 SS2
 
-## Installation and Setup Instructions
+## Installation and Setup Instructions 
 
-#### Example:  
+To clone this repository, you will need `node` and `npm` installed globally on your machine.  
 
-Clone down this repository. You will need `node` and `npm` installed globally on your machine.  
-
-Installation will require running
+#### Installation will require running
 
 `npm install`  
 
 both in the client and server folders in order to install dependencies for both.
 
 
-To Start Server:
+#### To Start Server:
 
 `npm run server`
 
@@ -45,11 +43,11 @@ will initiate a script which runs
 
 `nodemon server.js`
 
-To Start Client and Server Concurrently:
+#### To Start Client and Server Concurrently:
 
 `npm run dev`
 
-To Visit App:
+#### To visit app demo live:
 
 `https://tip-tracker-mern.herokuapp.com/`  
 
