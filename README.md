@@ -20,7 +20,7 @@ In order to demo the application without requiring signup, enter "demo@demo.com"
 
 #### Home Page:   
 
-![HomePage](./client/screenshots/tips_ss.png)
+![HomePage](./client/screenshots/tips_ss.png | width=50)
 
 #### Interactive Heatmap:  
 
