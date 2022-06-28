@@ -22,7 +22,7 @@ const EntryPage = ({ numResults }) => {
           flexDir="column"
           alignItems={"center"}
           bg="white"
-          mt={"3rem"}
+          mt={"6.5rem"}
         >
           <HeatMap
             numDays={width < 760 ? 150 : 365}
