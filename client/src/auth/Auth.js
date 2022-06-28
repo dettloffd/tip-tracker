@@ -75,10 +75,11 @@ const Auth = () => {
     setIsLoginMode((currentMode) => !currentMode);
   };
 
+  // FOR DEMO PURPOSES
   const initialFormState = {
-    username: "",
-    email: "",
-    password: "",
+    username: "demo",
+    email: "demo@demo.com",
+    password: "demo1234",
   };
 
   if (isLoading) {
